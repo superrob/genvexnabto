@@ -31,6 +31,8 @@ class GenvexNabto():
     LISTEN_THREAD = None
     LISTEN_THREAD_OPEN = False
 
+    VALUES = {}
+
     DISCOVERED_DEVICES = {}
 
     def __init__(self, email = "", device_ip = None, deviceID = None) -> None:
@@ -116,22 +118,25 @@ class GenvexNabto():
                 return False
             await asyncio.sleep(0.2)
 
+    async def waitForData(self):
+        """Wait for data to be available"""
+        dataTimeout = time.time() + 12
+        while True:
+            if 'temp_supply' in self.VALUES: # TODO Add setpoint data check
+                return True
+            if time.time() > dataTimeout:
+                return False
+            await asyncio.sleep(0.2)
+
     def processDataPayload(self, payload):
-        tilluft = (int.from_bytes(payload[2:4], 'big')-300)/10
-        udeluft = (int.from_bytes(payload[4:6], 'big')-300)/10
-        afkastluft = (int.from_bytes(payload[6:8], 'big')-300)/10
-        fraluft = (int.from_bytes(payload[8:10], 'big')-300)/10
-        humidity = int.from_bytes(payload[10:12], 'big')
-        tilluftPWM = int.from_bytes(payload[12:14], 'big')/100
-        fraluftPWM = int.from_bytes(payload[14:16], 'big')/100
-        bypassActive = int.from_bytes(payload[16:18], 'big')
-        print("Tilført luft:",tilluft,"*")
-        print("Udtrukket luft:",fraluft,"*")    
-        print("Udendørs luft:",udeluft,"*")
-        print("Afkastet luft:",afkastluft,"*")    
-        print("Luftfugtighed:",humidity, "%")    
-        print("Tilluft PWM:", tilluftPWM, "      Fraluft PWM: ", fraluftPWM)
-        print("Bypass status:",bypassActive)
+        self.VALUES['temp_supply'] = (int.from_bytes(payload[2:4], 'big')-300)/10
+        self.VALUES['temp_outside'] = (int.from_bytes(payload[4:6], 'big')-300)/10
+        self.VALUES['temp_returnair'] = (int.from_bytes(payload[6:8], 'big')-300)/10
+        self.VALUES['temp_exhaust'] = (int.from_bytes(payload[8:10], 'big')-300)/10
+        self.VALUES['humidity'] = int.from_bytes(payload[10:12], 'big')
+        self.VALUES['dutycycle_supply'] = int.from_bytes(payload[12:14], 'big')/100
+        self.VALUES['dutycycle_exhaust'] = int.from_bytes(payload[14:16], 'big')/100
+        self.VALUES['bypass_active'] = int.from_bytes(payload[16:18], 'big')
 
     def processSetpointPayload(self, payload):
         status = payload[0]
@@ -168,6 +173,7 @@ class GenvexNabto():
                 print('Connected successfully!')
                 self.SERVER_ID = message[24:28]
                 self.IS_CONNECTED = True
+                self.sendDataStateRequest()
             else:
                 print("Received unsucessfull response")
                 self.CONNECTION_ERROR = GenvexNabtoConnectionErrorType.AUTHENTICATION_ERROR
@@ -188,7 +194,13 @@ class GenvexNabto():
                 print("Not an interresting data packet.")
         else:
             print("Unknown packet type. Ignoring")
-        
+
+    def sendDataStateRequest(self):
+        ReadlistCmd = GenvexCommandDatapointReadList()
+        Payload = GenvexPayloadCrypt()
+        Payload.setData(ReadlistCmd.buildCommand([(0, 20), (0, 21), (0, 22), (0, 23), (0, 26), (0, 18), (0, 19), (0, 53)]))
+        self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 1337, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
+
     def handleRecieve(self):
         try:
             message, address = self.SOCKET.recvfrom(512)
@@ -204,7 +216,5 @@ class GenvexNabto():
             if self.IS_CONNECTED:
                 if time.time() - self.LAST_RESPONCE > 10:
                     print("Sending data request..")
-                    ReadlistCmd = GenvexCommandDatapointReadList()
-                    Payload = GenvexPayloadCrypt()
-                    Payload.setData(ReadlistCmd.buildCommand([(0, 20), (0, 21), (0, 22), (0, 23), (0, 26), (0, 18), (0, 19), (0, 53)]))
-                    self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 1337, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
+                    self.sendDataStateRequest()
+                    
