@@ -4,7 +4,8 @@ import socket
 import threading
 import time
 
-from .protocol import GenvexPacketType, GenvexDiscovery, GenvexPayloadIPX, GenvexPayloadCrypt, GenvexPayloadCP_ID, GenvexPacket, GenvexPacketKeepAlive, GenvexCommandDatapointReadList
+from .protocol import (GenvexPacketType, GenvexDiscovery, GenvexPayloadIPX, GenvexPayloadCrypt, GenvexPayloadCP_ID, 
+                       GenvexPacket, GenvexPacketKeepAlive, GenvexCommandDatapointReadList, GenvexCommandSetpointReadList)
 
 class GenvexNabtoConnectionErrorType:
     TIMEOUT = "timeout"
@@ -122,7 +123,7 @@ class GenvexNabto():
         """Wait for data to be available"""
         dataTimeout = time.time() + 12
         while True:
-            if 'temp_supply' in self.VALUES: # TODO Add setpoint data check
+            if 'temp_supply' in self.VALUES and 'fan_set' in self.VALUES: # TODO Add setpoint data check
                 return True
             if time.time() > dataTimeout:
                 return False
@@ -139,12 +140,8 @@ class GenvexNabto():
         self.VALUES['bypass_active'] = int.from_bytes(payload[16:18], 'big')
 
     def processSetpointPayload(self, payload):
-        status = payload[0]
-        print(payload)
-        fanset = int.from_bytes(payload[3:5], 'big')
-        tempset = (int.from_bytes(payload[5:7], 'big')+100)/10
-        print("Fansetpoint:",fanset)
-        print("Tempset point:", tempset, "*")
+        self.VALUES['fan_set'] = int.from_bytes(payload[3:5], 'big')
+        self.VALUES['temp_setpoint'] = (int.from_bytes(payload[5:7], 'big')+100)/10
 
     def processReceivedMessage(self, message, address):
         if message[0:4] == b'\x00\x80\x00\x01': # This might be a discovery packet responce!
@@ -174,6 +171,7 @@ class GenvexNabto():
                 self.SERVER_ID = message[24:28]
                 self.IS_CONNECTED = True
                 self.sendDataStateRequest()
+                self.sendSetpointStateRequest()
             else:
                 print("Received unsucessfull response")
                 self.CONNECTION_ERROR = GenvexNabtoConnectionErrorType.AUTHENTICATION_ERROR
@@ -201,6 +199,12 @@ class GenvexNabto():
         Payload.setData(ReadlistCmd.buildCommand([(0, 20), (0, 21), (0, 22), (0, 23), (0, 26), (0, 18), (0, 19), (0, 53)]))
         self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 1337, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
 
+    def sendSetpointStateRequest(self):
+        ReadlistCmd = GenvexCommandSetpointReadList()
+        Payload = GenvexPayloadCrypt()
+        Payload.setData(ReadlistCmd.buildCommand([(0, 7), (0, 1)]))
+        self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 420, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
+
     def handleRecieve(self):
         try:
             message, address = self.SOCKET.recvfrom(512)
@@ -217,4 +221,5 @@ class GenvexNabto():
                 if time.time() - self.LAST_RESPONCE > 10:
                     print("Sending data request..")
                     self.sendDataStateRequest()
+                    self.sendSetpointStateRequest()
                     

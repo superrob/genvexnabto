@@ -5,6 +5,7 @@ from .payload_cp_id import ( GenvexPayloadCP_ID )
 from .payload_crypt import ( GenvexPayloadCrypt )
 from .discovery import ( GenvexDiscovery )
 from .cmd_datapoint_readlist import ( GenvexCommandDatapointReadList )
+from .cmd_setpoint_readlist import ( GenvexCommandSetpointReadList )
 from .cmd_keepalive import ( GenvexCommandKeepAlive)
 from .packet_keepalive import ( GenvexPacketKeepAlive )
 
@@ -18,6 +19,7 @@ __all__ = [
     "GenvexPayloadCrypt"
     "GenvexDiscovery",
     "GenvexCommandDatapointReadList",
+    "GenvexCommandSetpointReadList",
     "GenvexCommandKeepAlive",
     "GenvexPacketKeepAlive"
 ]

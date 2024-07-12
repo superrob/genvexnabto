@@ -6,6 +6,7 @@ class GenvexPayloadType:
 
 class GenvexCommandType:    
     DATAPOINT_READLIST = b'\x2d'
+    SETPOINT_READLIST = b'\x2a'
     KEEP_ALIVE = b'\x02'
 
 class GenvexPayload():
