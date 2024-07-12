@@ -1,4 +1,4 @@
-from lib.protocol.payload import GenvexPayload, GenvexCommandType
+from .payload import GenvexPayload, GenvexCommandType
 
 class GenvexCommandDatapointReadList():
     

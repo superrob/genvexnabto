@@ -1,4 +1,4 @@
-from lib.protocol.payload import GenvexPayload, GenvexPayloadType
+from .payload import GenvexPayload, GenvexPayloadType
 
 class GenvexPayloadCrypt(GenvexPayload):
     
