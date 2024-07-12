@@ -110,7 +110,7 @@ class GenvexNabto():
 
     async def waitForDiscovery(self):
         """Wait for discovery of ip to be done"""
-        discoveryTimeout = time.time() + 2
+        discoveryTimeout = time.time() + 3
         while True:
             if self.DEVICE_ID in self.DISCOVERED_DEVICES and self.DEVICE_IP is not None:
                 return True
@@ -131,11 +131,11 @@ class GenvexNabto():
     def processDataPayload(self, payload):
         self.VALUES['temp_supply'] = (int.from_bytes(payload[2:4], 'big')-300)/10
         self.VALUES['temp_outside'] = (int.from_bytes(payload[4:6], 'big')-300)/10
-        self.VALUES['temp_return'] = (int.from_bytes(payload[6:8], 'big')-300)/10
+        self.VALUES['temp_extract'] = (int.from_bytes(payload[6:8], 'big')-300)/10
         self.VALUES['temp_exhaust'] = (int.from_bytes(payload[8:10], 'big')-300)/10
         self.VALUES['humidity'] = int.from_bytes(payload[10:12], 'big')
         self.VALUES['dutycycle_supply'] = int.from_bytes(payload[12:14], 'big')/100
-        self.VALUES['dutycycle_exhaust'] = int.from_bytes(payload[14:16], 'big')/100
+        self.VALUES['dutycycle_extract'] = int.from_bytes(payload[14:16], 'big')/100
         self.VALUES['bypass_active'] = int.from_bytes(payload[16:18], 'big')
 
     def processSetpointPayload(self, payload):
