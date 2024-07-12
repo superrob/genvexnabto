@@ -36,6 +36,8 @@ class GenvexNabto():
         return
 
     def openSocket(self):
+        if self.SOCKET is not None:
+            return
         self.SOCKET = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)  # UDP
         self.SOCKET.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1) # Allows for sending broadcasts
         self.SOCKET.settimeout(1)
@@ -45,7 +47,7 @@ class GenvexNabto():
         if self.LISTEN_THREAD_OPEN:
             return False
         if self.SOCKET == None:
-            return False
+            self.openSocket()
         self.LISTEN_THREAD = threading.Thread(target=self.receiveThread)
         self.LISTEN_THREAD_OPEN = True
         self.LISTEN_THREAD.start()
@@ -53,6 +55,10 @@ class GenvexNabto():
 
     def stopListening(self):
         self.LISTEN_THREAD_OPEN = False
+
+    def closeSocket(self):
+        self.SOCKET.close()
+        self.SOCKET = None
 
     # Broadcasts a discovery packet. Any device listening should respond.
     def sendDiscovery(self, specificDevice = None): 
@@ -73,6 +79,7 @@ class GenvexNabto():
         # Check if we already know the IP from earlier
         if self.DEVICE_ID in self.DISCOVERED_DEVICES:
             self.DEVICE_IP = self.DISCOVERED_DEVICES[self.DEVICE_ID][0]
+            self.DEVICE_PORT = self.DISCOVERED_DEVICES[self.DEVICE_ID][1]
         else:
             self.sendDiscovery(self.DEVICE_ID)
 
@@ -145,6 +152,7 @@ class GenvexNabto():
                 print('Connected successfully!')
                 self.SERVER_ID = message[24:28]
                 self.IS_CONNECTED = True
+                self.CONNECTION_TIMEOUT = None
             else:
                 print("Received unsucessfull response")
                 self.CONNECTION_ERROR = True
@@ -185,5 +193,6 @@ class GenvexNabto():
                     Payload = GenvexPayloadCrypt()
                     Payload.setData(ReadlistCmd.buildCommand([(0, 20), (0, 21), (0, 22), (0, 23), (0, 26), (0, 18), (0, 19), (0, 53)]))
                     self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 1337, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
-            elif time.time() > self.CONNECTION_TIMEOUT:
-                self.CONNECTION_ERROR = True
+            elif self.CONNECTION_TIMEOUT is not None and self.IS_CONNECTED is False and time.time() > self.CONNECTION_TIMEOUT:
+                self.CONNECTION_ERROR = True                
+                self.CONNECTION_TIMEOUT = None
