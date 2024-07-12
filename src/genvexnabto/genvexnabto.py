@@ -25,6 +25,7 @@ class GenvexNabto():
     CONNECTION_ERROR = False
     LAST_RESPONCE = 0
 
+    DISCOVERY_TIMEOUT = None
     DISCOVERY_PORT = 5570
 
     SOCKET = None
@@ -55,7 +56,6 @@ class GenvexNabto():
         self.LISTEN_THREAD = threading.Thread(target=self.receiveThread)
         self.LISTEN_THREAD_OPEN = True
         self.LISTEN_THREAD.start()
-        self.getDeviceIP()
 
     def stopListening(self):
         self.LISTEN_THREAD_OPEN = False
@@ -102,6 +102,18 @@ class GenvexNabto():
     async def waitForConnection(self):
         """Wait for connection to be tried"""
         while self.CONNECTION_ERROR is False and self.IS_CONNECTED is False:
+            if time.time() > self.CONNECTION_TIMEOUT:
+                self.CONNECTION_ERROR = GenvexNabtoConnectionErrorType.TIMEOUT                
+                self.CONNECTION_TIMEOUT = None
+            await asyncio.sleep(0.2)
+
+    async def waitForDiscovery(self):
+        """Wait for discovery of ip to be done"""
+        while self.DISCOVERY_TIMEOUT is not None:
+            if self.DEVICE_ID in self.DISCOVERED_DEVICES:
+                return True
+            if time.time() > self.DISCOVERY_TIMEOUT:
+                return False
             await asyncio.sleep(0.2)
 
     def processDataPayload(self, payload):
@@ -197,6 +209,3 @@ class GenvexNabto():
                     Payload = GenvexPayloadCrypt()
                     Payload.setData(ReadlistCmd.buildCommand([(0, 20), (0, 21), (0, 22), (0, 23), (0, 26), (0, 18), (0, 19), (0, 53)]))
                     self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 1337, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
-            elif self.CONNECTION_TIMEOUT is not None and self.IS_CONNECTED is False and time.time() > self.CONNECTION_TIMEOUT:
-                self.CONNECTION_ERROR = GenvexNabtoConnectionErrorType.TIMEOUT                
-                self.CONNECTION_TIMEOUT = None
