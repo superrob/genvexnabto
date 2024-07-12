@@ -131,7 +131,7 @@ class GenvexNabto():
     def processDataPayload(self, payload):
         self.VALUES['temp_supply'] = (int.from_bytes(payload[2:4], 'big')-300)/10
         self.VALUES['temp_outside'] = (int.from_bytes(payload[4:6], 'big')-300)/10
-        self.VALUES['temp_returnair'] = (int.from_bytes(payload[6:8], 'big')-300)/10
+        self.VALUES['temp_return'] = (int.from_bytes(payload[6:8], 'big')-300)/10
         self.VALUES['temp_exhaust'] = (int.from_bytes(payload[8:10], 'big')-300)/10
         self.VALUES['humidity'] = int.from_bytes(payload[10:12], 'big')
         self.VALUES['dutycycle_supply'] = int.from_bytes(payload[12:14], 'big')/100
