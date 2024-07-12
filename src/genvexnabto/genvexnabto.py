@@ -25,7 +25,6 @@ class GenvexNabto():
     CONNECTION_ERROR = False
     LAST_RESPONCE = 0
 
-    DISCOVERY_TIMEOUT = None
     DISCOVERY_PORT = 5570
 
     SOCKET = None
@@ -93,7 +92,6 @@ class GenvexNabto():
         if self.LISTEN_THREAD_OPEN == False:
             return False
         self.CONNECTION_ERROR = False
-        self.CONNECTION_TIMEOUT = time.time() + 3
         IPXPayload = GenvexPayloadIPX()
         CP_IDPayload = GenvexPayloadCP_ID()
         CP_IDPayload.setEmail(self.AUTHORIZED_EMAIL)
@@ -101,18 +99,20 @@ class GenvexNabto():
 
     async def waitForConnection(self):
         """Wait for connection to be tried"""
+        connectionTimeout = time.time() + 3
         while self.CONNECTION_ERROR is False and self.IS_CONNECTED is False:
-            if time.time() > self.CONNECTION_TIMEOUT:
+            if time.time() > connectionTimeout:
                 self.CONNECTION_ERROR = GenvexNabtoConnectionErrorType.TIMEOUT                
-                self.CONNECTION_TIMEOUT = None
+                connectionTimeout = None
             await asyncio.sleep(0.2)
 
     async def waitForDiscovery(self):
         """Wait for discovery of ip to be done"""
-        while self.DISCOVERY_TIMEOUT is not None:
+        discoveryTimeout = time.time() + 2
+        while True:
             if self.DEVICE_ID in self.DISCOVERED_DEVICES:
                 return True
-            if time.time() > self.DISCOVERY_TIMEOUT:
+            if time.time() > discoveryTimeout:
                 return False
             await asyncio.sleep(0.2)
 
@@ -168,7 +168,6 @@ class GenvexNabto():
                 print('Connected successfully!')
                 self.SERVER_ID = message[24:28]
                 self.IS_CONNECTED = True
-                self.CONNECTION_TIMEOUT = None
             else:
                 print("Received unsucessfull response")
                 self.CONNECTION_ERROR = GenvexNabtoConnectionErrorType.AUTHENTICATION_ERROR
