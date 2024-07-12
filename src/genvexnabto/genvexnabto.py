@@ -16,7 +16,9 @@ class GenvexNabto():
     DEVICE_IP = None
     DEVICE_PORT = 5570
 
+    CONNECTION_TIMEOUT = None
     IS_CONNECTED = False
+    CONNECTION_ERROR = False
     LAST_RESPONCE = 0
 
     DISCOVERY_PORT = 5570
@@ -79,10 +81,17 @@ class GenvexNabto():
             return False
         if self.LISTEN_THREAD_OPEN == False:
             return False
+        self.CONNECTION_ERROR = False
+        self.CONNECTION_TIMEOUT = time.time() + 2
         IPXPayload = GenvexPayloadIPX()
         CP_IDPayload = GenvexPayloadCP_ID()
         CP_IDPayload.setEmail(self.AUTHORIZED_EMAIL)
         self.SOCKET.sendto(GenvexPacket.build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.U_CONNECT, 0, [IPXPayload, CP_IDPayload]), (self.DEVICE_IP, self.DEVICE_PORT))
+
+    async def waitForConnection(self):
+        """Wait for connection to be tried"""
+        while self.CONNECTION_ERROR is False and self.IS_CONNECTED is False:
+            await asyncio.sleep(0.2)
 
     def processDataPayload(self, payload):
         tilluft = (int.from_bytes(payload[2:4], 'big')-300)/10
@@ -138,6 +147,7 @@ class GenvexNabto():
                 self.IS_CONNECTED = True
             else:
                 print("Received unsucessfull response")
+                self.CONNECTION_ERROR = True
 
         elif (packetType == GenvexPacketType.DATA): # 0x16
             print("Data packet", message[16])
@@ -167,11 +177,13 @@ class GenvexNabto():
 
     def receiveThread(self):
         while self.LISTEN_THREAD_OPEN:
-            self.handleRecieve()                
-            if (self.IS_CONNECTED):
+            self.handleRecieve()          
+            if self.IS_CONNECTED:
                 if time.time() - self.LAST_RESPONCE > 10:
                     print("Sending data request..")
                     ReadlistCmd = GenvexCommandDatapointReadList()
                     Payload = GenvexPayloadCrypt()
                     Payload.setData(ReadlistCmd.buildCommand([(0, 20), (0, 21), (0, 22), (0, 23), (0, 26), (0, 18), (0, 19), (0, 53)]))
                     self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 1337, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
+            elif time.time() > self.CONNECTION_TIMEOUT:
+                self.CONNECTION_ERROR = True
