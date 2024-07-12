@@ -110,7 +110,7 @@ class GenvexNabto():
         """Wait for discovery of ip to be done"""
         discoveryTimeout = time.time() + 2
         while True:
-            if self.DEVICE_ID in self.DISCOVERED_DEVICES:
+            if self.DEVICE_ID in self.DISCOVERED_DEVICES and self.DEVICE_IP is not None:
                 return True
             if time.time() > discoveryTimeout:
                 return False
