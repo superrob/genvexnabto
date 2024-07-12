@@ -1,4 +1,5 @@
-from .genvexnabto import ( GenvexNabto )
+from .genvexnabto import ( GenvexNabto, GenvexNabtoConnectionErrorType )
 __ALL__ = [
-    "GenvexNabto"
+    "GenvexNabto",
+    "GenvexNabtoConnectionErrorType"
 ]

@@ -6,6 +6,10 @@ import time
 
 from .protocol import GenvexPacketType, GenvexDiscovery, GenvexPayloadIPX, GenvexPayloadCrypt, GenvexPayloadCP_ID, GenvexPacket, GenvexPacketKeepAlive, GenvexCommandDatapointReadList
 
+class GenvexNabtoConnectionErrorType:
+    TIMEOUT = "timeout"
+    AUTHENTICATION_ERROR = "authentication_error"
+
 class GenvexNabto():
     AUTHORIZED_EMAIL = ""
 
@@ -89,7 +93,7 @@ class GenvexNabto():
         if self.LISTEN_THREAD_OPEN == False:
             return False
         self.CONNECTION_ERROR = False
-        self.CONNECTION_TIMEOUT = time.time() + 2
+        self.CONNECTION_TIMEOUT = time.time() + 3
         IPXPayload = GenvexPayloadIPX()
         CP_IDPayload = GenvexPayloadCP_ID()
         CP_IDPayload.setEmail(self.AUTHORIZED_EMAIL)
@@ -155,7 +159,7 @@ class GenvexNabto():
                 self.CONNECTION_TIMEOUT = None
             else:
                 print("Received unsucessfull response")
-                self.CONNECTION_ERROR = True
+                self.CONNECTION_ERROR = GenvexNabtoConnectionErrorType.AUTHENTICATION_ERROR
 
         elif (packetType == GenvexPacketType.DATA): # 0x16
             print("Data packet", message[16])
@@ -194,5 +198,5 @@ class GenvexNabto():
                     Payload.setData(ReadlistCmd.buildCommand([(0, 20), (0, 21), (0, 22), (0, 23), (0, 26), (0, 18), (0, 19), (0, 53)]))
                     self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 1337, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
             elif self.CONNECTION_TIMEOUT is not None and self.IS_CONNECTED is False and time.time() > self.CONNECTION_TIMEOUT:
-                self.CONNECTION_ERROR = True                
+                self.CONNECTION_ERROR = GenvexNabtoConnectionErrorType.TIMEOUT                
                 self.CONNECTION_TIMEOUT = None
