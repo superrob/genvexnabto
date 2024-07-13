@@ -181,7 +181,7 @@ class GenvexNabto():
             print("U_CONNECT responce packet")
             if (message[20:24] == b'\x00\x00\x00\x01'):
                 print('Connected, pinging to get model number')
-                
+                self.sendPing()
                 self.SERVER_ID = message[24:28]
             else:
                 print("Received unsucessfull response")
