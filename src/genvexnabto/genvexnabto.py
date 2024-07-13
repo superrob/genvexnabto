@@ -146,6 +146,7 @@ class GenvexNabto():
     def processSetpointPayload(self, payload):
         self.VALUES['fan_set'] = int.from_bytes(payload[3:5], 'big')
         self.VALUES['temp_setpoint'] = (int.from_bytes(payload[5:7], 'big')+100)/10
+        self.VALUES['filter_days'] = int.from_bytes(payload[7:9], 'big')
 
     def processPingPayload(self, payload):
         self.DEVICE_MODEL = int.from_bytes(payload[8:12], 'big')
@@ -221,7 +222,7 @@ class GenvexNabto():
     def sendSetpointStateRequest(self):
         ReadlistCmd = GenvexCommandSetpointReadList()
         Payload = GenvexPayloadCrypt()
-        Payload.setData(ReadlistCmd.buildCommand([(0, 7), (0, 1)]))
+        Payload.setData(ReadlistCmd.buildCommand([(0, 7), (0, 1), (0, 100)]))
         self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 420, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
 
     def setTargetTemperature(self, target):
@@ -229,7 +230,7 @@ class GenvexNabto():
             return
         WritelistCmd = GenvexCommandSetpointWriteList()
         Payload = GenvexPayloadCrypt()
-        temperature = int(target * 10) + 100
+        temperature = int((target - 10) * 10)
         Payload.setData(WritelistCmd.buildCommand([(0, 12, temperature)]))
         self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 3, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
     
