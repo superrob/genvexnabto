@@ -7,7 +7,7 @@ class GenvexPayloadType:
 class GenvexCommandType:    
     DATAPOINT_READLIST = b'\x2d'
     SETPOINT_READLIST = b'\x2a'
-    SETPOINT_WRITELIST = b'\x16'
+    SETPOINT_WRITELIST = b'\x2b'
     KEEP_ALIVE = b'\x02'
     PING = b'\x11'
 
