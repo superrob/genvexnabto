@@ -4,12 +4,15 @@ import socket
 import threading
 import time
 
-from .protocol import (GenvexPacketType, GenvexDiscovery, GenvexPayloadIPX, GenvexPayloadCrypt, GenvexPayloadCP_ID, 
-                       GenvexPacket, GenvexPacketKeepAlive, GenvexCommandDatapointReadList, GenvexCommandSetpointReadList)
+
+from .protocol import (GenvexPacketType, GenvexDiscovery, GenvexPayloadIPX, GenvexPayloadCrypt, 
+                       GenvexPayloadCP_ID,  GenvexPacket, GenvexPacketKeepAlive, GenvexCommandDatapointReadList, 
+                       GenvexCommandSetpointReadList, GenvexCommandPing, GenvexCommandSetpointWriteList)
 
 class GenvexNabtoConnectionErrorType:
     TIMEOUT = "timeout"
     AUTHENTICATION_ERROR = "authentication_error"
+    UNSUPPORTED_MODEL = "unsupported_model"
 
 class GenvexNabto():
     AUTHORIZED_EMAIL = ""
@@ -20,6 +23,7 @@ class GenvexNabto():
     DEVICE_ID = None
     DEVICE_IP = None
     DEVICE_PORT = 5570
+    DEVICE_MODEL = None
 
     CONNECTION_TIMEOUT = None
     IS_CONNECTED = False
@@ -143,6 +147,15 @@ class GenvexNabto():
         self.VALUES['fan_set'] = int.from_bytes(payload[3:5], 'big')
         self.VALUES['temp_setpoint'] = (int.from_bytes(payload[5:7], 'big')+100)/10
 
+    def processPingPayload(self, payload):
+        self.DEVICE_MODEL = int.from_bytes(payload[8:12], 'big')
+        if self.DEVICE_MODEL == 2010: # Seems to be Optima 270
+            self.IS_CONNECTED = True
+            self.sendDataStateRequest()
+            self.sendSetpointStateRequest()
+        else:
+            self.CONNECTION_ERROR = GenvexNabtoConnectionErrorType.UNSUPPORTED_MODEL
+
     def processReceivedMessage(self, message, address):
         if message[0:4] == b'\x00\x80\x00\x01': # This might be a discovery packet responce!
             discoveryResponce = message[19:len(message)]
@@ -167,11 +180,9 @@ class GenvexNabto():
         if (packetType == GenvexPacketType.U_CONNECT):
             print("U_CONNECT responce packet")
             if (message[20:24] == b'\x00\x00\x00\x01'):
-                print('Connected successfully!')
+                print('Connected, pinging to get model number')
+                
                 self.SERVER_ID = message[24:28]
-                self.IS_CONNECTED = True
-                self.sendDataStateRequest()
-                self.sendSetpointStateRequest()
             else:
                 print("Received unsucessfull response")
                 self.CONNECTION_ERROR = GenvexNabtoConnectionErrorType.AUTHENTICATION_ERROR
@@ -188,10 +199,18 @@ class GenvexNabto():
                     self.processDataPayload(payload)
                 elif (message[12:14] == b'\x01\xa4'): #420
                     self.processSetpointPayload(payload)
+                elif (message[12:14] == b'\x00\x64'): #100
+                    self.processPingPayload(payload)
             else:
                 print("Not an interresting data packet.")
         else:
             print("Unknown packet type. Ignoring")
+
+    def sendPing(self):
+        PingCmd = GenvexCommandPing()
+        Payload = GenvexPayloadCrypt()
+        Payload.setData(PingCmd.buildCommand())
+        self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 100, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
 
     def sendDataStateRequest(self):
         ReadlistCmd = GenvexCommandDatapointReadList()
@@ -204,6 +223,23 @@ class GenvexNabto():
         Payload = GenvexPayloadCrypt()
         Payload.setData(ReadlistCmd.buildCommand([(0, 7), (0, 1)]))
         self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 420, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
+
+    def setTargetTemperature(self, target: int):
+        if target < 10 or target > 30:
+            return
+        WritelistCmd = GenvexCommandSetpointWriteList()
+        Payload = GenvexPayloadCrypt()
+        temperature = (int(target) * 10) + 100
+        Payload.setData(WritelistCmd.buildCommand([(0, 12, temperature)]))
+        self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 3, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
+    
+    def setFanSpeed(self, target: int):
+        if target < 0 or target > 4:
+            return
+        WritelistCmd = GenvexCommandSetpointWriteList()
+        Payload = GenvexPayloadCrypt()
+        Payload.setData(WritelistCmd.buildCommand([(0, 24, int(target))]))
+        self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 3, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
 
     def handleRecieve(self):
         try:
