@@ -181,9 +181,8 @@ class GenvexNabto():
             print("U_CONNECT responce packet")
             if (message[20:24] == b'\x00\x00\x00\x01'):
                 print('Connected, pinging to get model number')
-                self.IS_CONNECTED = True
-                self.sendPing()
                 self.SERVER_ID = message[24:28]
+                self.sendPing()
             else:
                 print("Received unsucessfull response")
                 self.CONNECTION_ERROR = GenvexNabtoConnectionErrorType.AUTHENTICATION_ERROR
@@ -225,12 +224,12 @@ class GenvexNabto():
         Payload.setData(ReadlistCmd.buildCommand([(0, 7), (0, 1)]))
         self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 420, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
 
-    def setTargetTemperature(self, target: int):
+    def setTargetTemperature(self, target):
         if target < 10 or target > 30:
             return
         WritelistCmd = GenvexCommandSetpointWriteList()
         Payload = GenvexPayloadCrypt()
-        temperature = (int(target) * 10) + 100
+        temperature = int(target * 10) + 100
         Payload.setData(WritelistCmd.buildCommand([(0, 12, temperature)]))
         self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 3, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
     
