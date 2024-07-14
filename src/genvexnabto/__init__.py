@@ -1,6 +1,6 @@
 from .genvexnabto import ( GenvexNabto, GenvexNabtoConnectionErrorType )
 from .models import ( GenvexNabtoDatapointKey, GenvexNabtoSetpointKey )
-__ALL__ = [
+__all__ = [
     "GenvexNabto",
     "GenvexNabtoConnectionErrorType",
     "GenvexNabtoDatapointKey",
