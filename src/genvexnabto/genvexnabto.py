@@ -175,7 +175,7 @@ class GenvexNabto():
                 if deviceId not in self.DISCOVERED_DEVICES:
                     self.DISCOVERED_DEVICES[deviceId] = address
             if deviceId == self.DEVICE_ID:
-                self.SERVER_IP = address[0]
+                self.DEVICE_IP = address[0]
             return
         if message[0:4] != self.CLIENT_ID: # Not a packet intented for us
             return
