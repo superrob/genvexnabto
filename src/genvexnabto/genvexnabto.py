@@ -175,7 +175,7 @@ class GenvexNabto():
                 if deviceId not in self.DISCOVERED_DEVICES:
                     self.DISCOVERED_DEVICES[deviceId] = address
             if deviceId == self.DEVICE_ID:
-                self.SERVER_ID = address[0]
+                self.SERVER_IP = address[0]
             return
         if message[0:4] != self.CLIENT_ID: # Not a packet intented for us
             return
@@ -200,7 +200,7 @@ class GenvexNabto():
                 payload = message[22:20+length]
                 print(''.join(r'\x'+hex(letter)[2:] for letter in payload))
                 sequenceId = int.from_bytes(message[12:14], 'big')
-                if (sequenceId == 50): #50
+                if sequenceId == 50: #50
                     self.processPingPayload(payload)
                 else:
                     if self.MODEL_ADAPTER is not None:
