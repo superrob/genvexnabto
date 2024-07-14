@@ -1,4 +1,6 @@
-from .payload import GenvexPayload, GenvexCommandType
+from typing import List
+from .payload import GenvexCommandType
+from ..models import GenvexNabtoSetpoint
 
 class GenvexCommandSetpointWriteList():
     

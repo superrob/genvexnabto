@@ -1,13 +1,12 @@
 from typing import List
-from .payload import GenvexPayload, GenvexCommandType
-from ..models import GenvexNabtoDatapointKey, GenvexNabtoDatapoint
+from .payload import GenvexCommandType
+from ..models import GenvexNabtoDatapoint
 
 class GenvexCommandDatapointReadList():
     
     @staticmethod
     def buildCommand(datapoints: List[GenvexNabtoDatapoint] = []): 
         request = b""
-        print(datapoints)
         for datapoint in datapoints:
             request += datapoint['obj'].to_bytes(1, 'big') + datapoint['address'].to_bytes(4, 'big')
         return b"".join([

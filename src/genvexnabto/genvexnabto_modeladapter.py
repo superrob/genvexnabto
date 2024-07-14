@@ -42,10 +42,21 @@ class GenvexNabtoModelAdapter:
             returnList.append(self._loadedModel._datapoints[key])
         return returnList
     
+    def getSetpointRequestList(self, sequenceId):
+        if sequenceId not in self._currentSetpointList:
+            return False
+        returnList = []
+        for key in self._currentSetpointList[sequenceId]:
+            returnList.append(self._loadedModel._setpoints[key])
+        return returnList
+    
     def parseDataResponce(self, responceSeq, responcePayload):
+        print(f"Got dataresponce with sequence id: {responceSeq}")
         if responceSeq in self._currentDatapointList:
+            print(f"Is a datapoint responce")
             return self.parseDatapointResponce(responceSeq, responcePayload)
         if responceSeq in self._currentSetpointList:
+            print(f"Is a setpoint responce")
             return self.parseSetpointResponce(responceSeq, responcePayload)
 
     def parseDatapointResponce(self, responceSeq, responcePayload):
@@ -64,10 +75,10 @@ class GenvexNabtoModelAdapter:
         if responceSeq not in self._currentSetpointList:
             return False
         decodingKeys = self._currentSetpointList[responceSeq]
-        responceLength = int.from_bytes(responcePayload[0:2])
+        responceLength = int.from_bytes(responcePayload[1:3])
         for position in range(responceLength):
             valueKey = decodingKeys[position]
-            payloadSlice = responcePayload[2+position*2:4+position*2]
+            payloadSlice = responcePayload[3+position*2:5+position*2]
             self._VALUES[valueKey] = (int.from_bytes(payloadSlice, 'big') + self._loadedModel._setpoints[valueKey]['offset']) / self._loadedModel._setpoints[valueKey]['divider']
         return
 
