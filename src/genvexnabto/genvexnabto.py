@@ -152,11 +152,12 @@ class GenvexNabto():
 
     def processPingPayload(self, payload):
         self.DEVICE_MODEL = int.from_bytes(payload[8:12], 'big')
+        print(f"Got model: {self.DEVICE_MODEL}")
         if GenvexNabtoModelAdapter.providesModel(self.DEVICE_MODEL):
             self.IS_CONNECTED = True
             self.MODEL_ADAPTER = GenvexNabtoModelAdapter(self.DEVICE_MODEL)
-            self.sendDataStateRequest()
-            self.sendSetpointStateRequest()
+            self.sendDataStateRequest(100)
+            self.sendSetpointStateRequest(200)
         else:
             self.CONNECTION_ERROR = GenvexNabtoConnectionErrorType.UNSUPPORTED_MODEL
 
@@ -259,6 +260,6 @@ class GenvexNabto():
             if self.IS_CONNECTED:
                 if time.time() - self.LAST_RESPONCE > 10:
                     print("Sending data request..")
-                    self.sendDataStateRequest()
-                    self.sendSetpointStateRequest()
+                    self.sendDataStateRequest(100)
+                    self.sendSetpointStateRequest(200)
                     

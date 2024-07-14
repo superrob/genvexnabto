@@ -5,8 +5,9 @@ from ..models import GenvexNabtoDatapointKey, GenvexNabtoDatapoint
 class GenvexCommandDatapointReadList():
     
     @staticmethod
-    def buildCommand(self, datapoints = List[GenvexNabtoDatapoint]): 
+    def buildCommand(datapoints: List[GenvexNabtoDatapoint] = []): 
         request = b""
+        print(datapoints)
         for datapoint in datapoints:
             request += datapoint['obj'].to_bytes(1, 'big') + datapoint['address'].to_bytes(4, 'big')
         return b"".join([

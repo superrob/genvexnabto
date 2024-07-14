@@ -3,7 +3,7 @@ from .payload import GenvexPayload, GenvexCommandType
 class GenvexCommandSetpointWriteList():
     
     @staticmethod
-    def buildCommand(self, setpoints = []): 
+    def buildCommand(setpoints = []): 
         request = b""
         for setpoint in setpoints:
             request += setpoint[0].to_bytes(1, 'big') + setpoint[1].to_bytes(4, 'big') + setpoint[2].to_bytes(2, 'big')

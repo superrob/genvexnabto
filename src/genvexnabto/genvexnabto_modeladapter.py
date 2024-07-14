@@ -14,11 +14,11 @@ class GenvexNabtoModelAdapter:
             self._loadedModel = GenvexNabtoOptima270()
         else:
             raise "Invalid model"
-        self._currentDatapointList = {100: self._loadedModel.getDefaultDatapointRequest}
-        self._currentSetpointList = {200: self._loadedModel.getDefaultSetpointRequest}
+        self._currentDatapointList = {100: self._loadedModel.getDefaultDatapointRequest()}
+        self._currentSetpointList = {200: self._loadedModel.getDefaultSetpointRequest()}
 
     @staticmethod
-    def providesModel(self, model):
+    def providesModel(model):
         return model == 2010
     
     def providesValue(self, key: GenvexNabtoSetpointKey|GenvexNabtoDatapointKey):
@@ -52,11 +52,12 @@ class GenvexNabtoModelAdapter:
         if responceSeq not in self._currentDatapointList:
             return False
         decodingKeys = self._currentDatapointList[responceSeq]
+        print(decodingKeys)
         responceLength = int.from_bytes(responcePayload[0:2])
         for position in range(responceLength):
             valueKey = decodingKeys[position]
             payloadSlice = responcePayload[2+position*2:4+position*2]
-            self._VALUES[valueKey] = (int.from_bytes(payloadSlice, 'big') + self._loadedModel._datapoints[valueKey].offset) / self._loadedModel._datapoints[valueKey].divider
+            self._VALUES[valueKey] = (int.from_bytes(payloadSlice, 'big') + self._loadedModel._datapoints[valueKey]['offset']) / self._loadedModel._datapoints[valueKey]['divider']
         return
     
     def parseSetpointResponce(self, responceSeq, responcePayload):
@@ -67,6 +68,6 @@ class GenvexNabtoModelAdapter:
         for position in range(responceLength):
             valueKey = decodingKeys[position]
             payloadSlice = responcePayload[2+position*2:4+position*2]
-            self._VALUES[valueKey] = (int.from_bytes(payloadSlice, 'big') + self._loadedModel._setpoints[valueKey].offset) / self._loadedModel._setpoints[valueKey].divider
+            self._VALUES[valueKey] = (int.from_bytes(payloadSlice, 'big') + self._loadedModel._setpoints[valueKey]['offset']) / self._loadedModel._setpoints[valueKey]['divider']
         return
 
