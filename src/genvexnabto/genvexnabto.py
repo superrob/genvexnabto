@@ -4,7 +4,8 @@ import socket
 import threading
 import time
 
-
+from .models import ( GenvexNabtoDatapointKey, GenvexNabtoSetpointKey )
+from .genvexnabto_modeladapter import GenvexNabtoModelAdapter
 from .protocol import (GenvexPacketType, GenvexDiscovery, GenvexPayloadIPX, GenvexPayloadCrypt, 
                        GenvexPayloadCP_ID,  GenvexPacket, GenvexPacketKeepAlive, GenvexCommandDatapointReadList, 
                        GenvexCommandSetpointReadList, GenvexCommandPing, GenvexCommandSetpointWriteList)
@@ -25,6 +26,8 @@ class GenvexNabto():
     DEVICE_PORT = 5570
     DEVICE_MODEL = None
 
+    MODEL_ADAPTER = None
+
     CONNECTION_TIMEOUT = None
     IS_CONNECTED = False
     CONNECTION_ERROR = False
@@ -35,8 +38,6 @@ class GenvexNabto():
     SOCKET = None
     LISTEN_THREAD = None
     LISTEN_THREAD_OPEN = False
-
-    VALUES = {}
 
     DISCOVERED_DEVICES = {}
 
@@ -127,31 +128,33 @@ class GenvexNabto():
         """Wait for data to be available"""
         dataTimeout = time.time() + 12
         while True:
-            if 'temp_supply' in self.VALUES and 'fan_set' in self.VALUES: # TODO Add setpoint data check
-                return True
+            if self.MODEL_ADAPTER is not None:
+                if self.MODEL_ADAPTER.hasValue(GenvexNabtoDatapointKey.TEMP_SUPPLY) and self.MODEL_ADAPTER.hasValue(GenvexNabtoSetpointKey.TEMP_SETPOINT):
+                    return True
             if time.time() > dataTimeout:
                 return False
             await asyncio.sleep(0.2)
 
-    def processDataPayload(self, payload):
-        self.VALUES['temp_supply'] = (int.from_bytes(payload[2:4], 'big')-300)/10
-        self.VALUES['temp_outside'] = (int.from_bytes(payload[4:6], 'big')-300)/10
-        self.VALUES['temp_extract'] = (int.from_bytes(payload[6:8], 'big')-300)/10
-        self.VALUES['temp_exhaust'] = (int.from_bytes(payload[8:10], 'big')-300)/10
-        self.VALUES['humidity'] = int.from_bytes(payload[10:12], 'big')
-        self.VALUES['dutycycle_supply'] = int.from_bytes(payload[12:14], 'big')/100
-        self.VALUES['dutycycle_extract'] = int.from_bytes(payload[14:16], 'big')/100
-        self.VALUES['bypass_active'] = int.from_bytes(payload[16:18], 'big')
+    def providesValue(self, key: GenvexNabtoDatapointKey|GenvexNabtoSetpointKey):
+        if self.MODEL_ADAPTER is None:
+            return False
+        return self.MODEL_ADAPTER.providesModel()
 
-    def processSetpointPayload(self, payload):
-        self.VALUES['fan_set'] = int.from_bytes(payload[3:5], 'big')
-        self.VALUES['temp_setpoint'] = (int.from_bytes(payload[5:7], 'big')+100)/10
-        self.VALUES['filter_days'] = int.from_bytes(payload[7:9], 'big')
+    def hasValue(self, key: GenvexNabtoDatapointKey|GenvexNabtoSetpointKey):
+        if self.MODEL_ADAPTER is None:
+            return False
+        return self.MODEL_ADAPTER.hasValue(key)
+    
+    def getValue(self, key: GenvexNabtoDatapointKey|GenvexNabtoSetpointKey):
+        if self.MODEL_ADAPTER is None:
+            return False
+        return self.MODEL_ADAPTER.getValue(key)
 
     def processPingPayload(self, payload):
         self.DEVICE_MODEL = int.from_bytes(payload[8:12], 'big')
-        if self.DEVICE_MODEL == 2010: # Seems to be Optima 270
+        if GenvexNabtoModelAdapter.providesModel(self.DEVICE_MODEL):
             self.IS_CONNECTED = True
+            self.MODEL_ADAPTER = GenvexNabtoModelAdapter(self.DEVICE_MODEL)
             self.sendDataStateRequest()
             self.sendSetpointStateRequest()
         else:
@@ -161,9 +164,9 @@ class GenvexNabto():
         if message[0:4] == b'\x00\x80\x00\x01': # This might be a discovery packet responce!
             discoveryResponce = message[19:len(message)]
             deviceIdLength = 0
-            for b in discoveryResponce:
+            for b in discoveryResponce: # Loop until first string terminator
                 if b == 0x00:
-                    break;
+                    break
                 deviceIdLength += 1
             deviceId = discoveryResponce[0: deviceIdLength].decode("ascii")
             if "remote.lscontrol.dk" in deviceId:
@@ -196,12 +199,12 @@ class GenvexNabto():
                 length = int.from_bytes(message[18:20], 'big')
                 payload = message[22:20+length]
                 print(''.join(r'\x'+hex(letter)[2:] for letter in payload))
-                if (message[12:14] == b'\x05\x39'): #1337
-                    self.processDataPayload(payload)
-                elif (message[12:14] == b'\x01\xa4'): #420
-                    self.processSetpointPayload(payload)
-                elif (message[12:14] == b'\x00\x64'): #100
+                sequenceId = int.from_bytes(message[12:14], 'big')
+                if (sequenceId == 5): #50
                     self.processPingPayload(payload)
+                else:
+                    if self.MODEL_ADAPTER is not None:
+                        self.MODEL_ADAPTER.parseDataResponce(sequenceId, payload)
             else:
                 print("Not an interresting data packet.")
         else:
@@ -211,35 +214,36 @@ class GenvexNabto():
         PingCmd = GenvexCommandPing()
         Payload = GenvexPayloadCrypt()
         Payload.setData(PingCmd.buildCommand())
-        self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 100, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
+        self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 50, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
 
-    def sendDataStateRequest(self):
-        ReadlistCmd = GenvexCommandDatapointReadList()
+    def sendDataStateRequest(self, sequenceId):
+        if self.MODEL_ADAPTER is None:
+            return
+        datalist = self.MODEL_ADAPTER.getDatapointRequestList(sequenceId)
+        if datalist is False:
+            return
         Payload = GenvexPayloadCrypt()
-        Payload.setData(ReadlistCmd.buildCommand([(0, 20), (0, 21), (0, 22), (0, 23), (0, 26), (0, 18), (0, 19), (0, 53)]))
-        self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 1337, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
+        Payload.setData(GenvexCommandDatapointReadList.buildCommand(datalist))
+        self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, sequenceId, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
 
-    def sendSetpointStateRequest(self):
-        ReadlistCmd = GenvexCommandSetpointReadList()
+    def sendSetpointStateRequest(self, sequenceId):
         Payload = GenvexPayloadCrypt()
-        Payload.setData(ReadlistCmd.buildCommand([(0, 7), (0, 1), (0, 100)]))
-        self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 420, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
+        Payload.setData(GenvexCommandSetpointReadList.buildCommand([(0, 7), (0, 1), (0, 100)]))
+        self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, sequenceId, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
 
     def setTargetTemperature(self, target):
         if target < 10 or target > 30:
             return
-        WritelistCmd = GenvexCommandSetpointWriteList()
         Payload = GenvexPayloadCrypt()
         temperature = int((target - 10) * 10)
-        Payload.setData(WritelistCmd.buildCommand([(0, 12, temperature)]))
+        Payload.setData(GenvexCommandSetpointWriteList.buildCommand([(0, 12, temperature)]))
         self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 3, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
     
     def setFanSpeed(self, target: int):
         if target < 0 or target > 4:
             return
-        WritelistCmd = GenvexCommandSetpointWriteList()
         Payload = GenvexPayloadCrypt()
-        Payload.setData(WritelistCmd.buildCommand([(0, 24, int(target))]))
+        Payload.setData(GenvexCommandSetpointWriteList.buildCommand([(0, 24, int(target))]))
         self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 3, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
 
     def handleRecieve(self):

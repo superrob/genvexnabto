@@ -1,10 +1,9 @@
 from .payload import GenvexPayload, GenvexCommandType
+from ..models import GenvexNabtoDatapointKey, GenvexNabtoDatapoint
 
 class GenvexCommandSetpointReadList():
     
-    def __init__(self) -> None:
-        pass
-
+    @staticmethod
     def buildCommand(self, setpoints = []): 
         request = b""
         for setpoint in setpoints:

@@ -2,9 +2,7 @@ from .payload import GenvexPayload, GenvexCommandType
 
 class GenvexCommandSetpointWriteList():
     
-    def __init__(self) -> None:
-        pass
-
+    @staticmethod
     def buildCommand(self, setpoints = []): 
         request = b""
         for setpoint in setpoints:
