@@ -1,5 +1,6 @@
 from typing import Dict, List
-from .models import ( GenvexNabtoBaseModel, GenvexNabtoOptima270, GenvexNabtoDatapoint, GenvexNabtoDatapointKey, GenvexNabtoSetpoint, GenvexNabtoSetpointKey )
+from .models import ( GenvexNabtoBaseModel, GenvexNabtoOptima270, GenvexNabtoOptima260,
+                     GenvexNabtoDatapoint, GenvexNabtoDatapointKey, GenvexNabtoSetpoint, GenvexNabtoSetpointKey )
 
 class GenvexNabtoModelAdapter:
     _loadedModel: GenvexNabtoBaseModel = None
@@ -9,17 +10,27 @@ class GenvexNabtoModelAdapter:
 
     _VALUES = {}
 
-    def __init__(self, model):
-        if (model == 2010):
+    def __init__(self, model, deviceNumber, slaveDeviceNumber):
+        if model == 2010 and deviceNumber == 70810:
             self._loadedModel = GenvexNabtoOptima270()
+        elif model == 1040 and deviceNumber == 79250 and slaveDeviceNumber == 1:
+            self._loadedModel = GenvexNabtoOptima260()
         else:
             raise "Invalid model"
         self._currentDatapointList = {100: self._loadedModel.getDefaultDatapointRequest()}
         self._currentSetpointList = {200: self._loadedModel.getDefaultSetpointRequest()}
 
+    def getModelName(self):
+        return self._loadedModel.getModelName()
+
     @staticmethod
-    def providesModel(model):
-        return model == 2010
+    def providesModel(model, deviceNumber, slaveDeviceNumber):
+        if model == 2010 and deviceNumber == 70810:
+            return True
+        if model == 1040 and deviceNumber == 79250:
+            if slaveDeviceNumber == 1:
+                return True
+        return False
     
     def providesValue(self, key: GenvexNabtoSetpointKey|GenvexNabtoDatapointKey):
         if self._loadedModel.modelProvidesDatapoint(key) or self._loadedModel.modelProvidesSetpoint(key):

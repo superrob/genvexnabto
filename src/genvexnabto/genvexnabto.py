@@ -25,6 +25,8 @@ class GenvexNabto():
     DEVICE_IP = None
     DEVICE_PORT = 5570
     DEVICE_MODEL = None
+    DEVICE_NUMBER = None
+    SLAVEDEVICE_NUMBER = None
 
     MODEL_ADAPTER = None
 
@@ -151,11 +153,13 @@ class GenvexNabto():
         return self.MODEL_ADAPTER.getValue(key)
 
     def processPingPayload(self, payload):
+        self.DEVICE_NUMBER = int.from_bytes(payload[4:8], 'big')
         self.DEVICE_MODEL = int.from_bytes(payload[8:12], 'big')
+        self.SLAVEDEVICE_NUMBER = int.from_bytes(payload[16:20], 'big')
         print(f"Got model: {self.DEVICE_MODEL}")
-        if GenvexNabtoModelAdapter.providesModel(self.DEVICE_MODEL):
+        if GenvexNabtoModelAdapter.providesModel(self.DEVICE_MODEL, self.DEVICE_NUMBER, self.SLAVEDEVICE_NUMBER):
             self.IS_CONNECTED = True
-            self.MODEL_ADAPTER = GenvexNabtoModelAdapter(self.DEVICE_MODEL)
+            self.MODEL_ADAPTER = GenvexNabtoModelAdapter(self.DEVICE_MODEL, self.DEVICE_NUMBER, self.SLAVEDEVICE_NUMBER)
             self.sendDataStateRequest(100)
             self.sendSetpointStateRequest(200)
         else:

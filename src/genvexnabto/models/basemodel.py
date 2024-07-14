@@ -14,6 +14,7 @@ class GenvexNabtoSetpointKey:
     FAN_SPEED = "fan_speed"
     TEMP_SETPOINT = "temp_setpoint"
     FILTER_DAYS = "filter_days"
+    FILTER_MONTHS = "filter_months"
 
 class GenvexNabtoDatapoint(TypedDict):
     obj: int = 0
@@ -39,6 +40,9 @@ class GenvexNabtoBaseModel:
     def __init__(self):
         return
     
+    def getModelName(self):
+        return "Basemodel"
+
     def modelProvidesDatapoint(self, datapoint: GenvexNabtoDatapointKey) -> bool: 
         return datapoint in self._datapoints
     

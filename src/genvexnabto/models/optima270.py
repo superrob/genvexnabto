@@ -22,6 +22,9 @@ class GenvexNabtoOptima270(GenvexNabtoBaseModel):
             GenvexNabtoSetpointKey.FILTER_DAYS: GenvexNabtoSetpoint(read_obj=0, read_address=100, write_obj=0, write_address=210, divider=1, offset=0, min=0, max=65535)
         }
 
+    def getModelName(self):
+        return "Optima 270"
+
     def getDefaultDatapointRequest(self) -> List[GenvexNabtoDatapointKey]:
         return [
             GenvexNabtoDatapointKey.TEMP_SUPPLY,
