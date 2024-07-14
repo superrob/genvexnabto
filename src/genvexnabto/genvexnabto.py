@@ -200,7 +200,7 @@ class GenvexNabto():
                 payload = message[22:20+length]
                 print(''.join(r'\x'+hex(letter)[2:] for letter in payload))
                 sequenceId = int.from_bytes(message[12:14], 'big')
-                if (sequenceId == 5): #50
+                if (sequenceId == 50): #50
                     self.processPingPayload(payload)
                 else:
                     if self.MODEL_ADAPTER is not None:
