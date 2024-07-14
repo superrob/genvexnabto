@@ -231,19 +231,17 @@ class GenvexNabto():
         Payload.setData(GenvexCommandSetpointReadList.buildCommand([(0, 7), (0, 1), (0, 100)]))
         self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, sequenceId, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
 
-    def setTargetTemperature(self, target):
-        if target < 10 or target > 30:
-            return
+    def setSetpoint(self, setpointKey: GenvexNabtoSetpointKey, newValue) -> bool:
+        if self.MODEL_ADAPTER is None:
+            return False
+        if self.MODEL_ADAPTER.providesValue(setpointKey) is False:
+            return False
+        setpointData = self.MODEL_ADAPTER._loadedModel._setpoints[setpointKey]
+        newValue = int((newValue * setpointData["divider"]) - setpointData['offset'])
+        if newValue < setpointData['min'] or newValue > setpointData['max']:
+            return False
         Payload = GenvexPayloadCrypt()
-        temperature = int((target - 10) * 10)
-        Payload.setData(GenvexCommandSetpointWriteList.buildCommand([(0, 12, temperature)]))
-        self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 3, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
-    
-    def setFanSpeed(self, target: int):
-        if target < 0 or target > 4:
-            return
-        Payload = GenvexPayloadCrypt()
-        Payload.setData(GenvexCommandSetpointWriteList.buildCommand([(0, 24, int(target))]))
+        Payload.setData(GenvexCommandSetpointWriteList.buildCommand([(setpointData['write_obj'], setpointData['write_address'], newValue)]))
         self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 3, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
 
     def handleRecieve(self):
