@@ -22,10 +22,8 @@ class GenvexNabtoModelAdapter:
         return model == 2010
     
     def providesValue(self, key: GenvexNabtoSetpointKey|GenvexNabtoDatapointKey):
-        if key in GenvexNabtoDatapointKey:
-            return self._loadedModel.modelProvidesDatapoint(key)
-        if key in GenvexNabtoSetpointKey:
-            return self._loadedModel.modelProvidesSetpoint(key)
+        if self._loadedModel.modelProvidesDatapoint(key) or self._loadedModel.modelProvidesSetpoint(key):
+            return True 
         return False
 
     def hasValue(self, key: GenvexNabtoSetpointKey|GenvexNabtoDatapointKey) -> bool:
