@@ -138,7 +138,7 @@ class GenvexNabto():
     def providesValue(self, key: GenvexNabtoDatapointKey|GenvexNabtoSetpointKey):
         if self.MODEL_ADAPTER is None:
             return False
-        return self.MODEL_ADAPTER.providesModel()
+        return self.MODEL_ADAPTER.providesValue(key)
 
     def hasValue(self, key: GenvexNabtoDatapointKey|GenvexNabtoSetpointKey):
         if self.MODEL_ADAPTER is None:
