@@ -155,12 +155,12 @@ class GenvexNabto():
     def processPingPayload(self, payload):
         self.DEVICE_NUMBER = int.from_bytes(payload[4:8], 'big')
         self.DEVICE_MODEL = int.from_bytes(payload[8:12], 'big')
-        self.SLAVEDEVICE_NUMBER = int.from_bytes(payload[16:20], 'big')
-        print(f"Got model: {self.DEVICE_MODEL} with device number: {self.DEVICE_NUMBER} and slavedevice number: {self.SLAVEDEVICE_NUMBER}")
-        if GenvexNabtoModelAdapter.providesModel(self.DEVICE_MODEL, self.DEVICE_NUMBER, self.SLAVEDEVICE_NUMBER):
+        self.SLAVEDEVICE_MODEL = int.from_bytes(payload[20:24], 'big')
+        print(f"Got model: {self.DEVICE_MODEL} with device number: {self.DEVICE_NUMBER} and slavedevice model: {self.SLAVEDEVICE_MODEL}")
+        if GenvexNabtoModelAdapter.providesModel(self.DEVICE_MODEL, self.DEVICE_NUMBER, self.SLAVEDEVICE_MODEL):
             self.IS_CONNECTED = True
             print(f"Going to load model")
-            self.MODEL_ADAPTER = GenvexNabtoModelAdapter(self.DEVICE_MODEL, self.DEVICE_NUMBER, self.SLAVEDEVICE_NUMBER)
+            self.MODEL_ADAPTER = GenvexNabtoModelAdapter(self.DEVICE_MODEL, self.DEVICE_NUMBER, self.SLAVEDEVICE_MODEL)
             print(f"Loaded model for {self.MODEL_ADAPTER.getModelName()}")
             self.sendDataStateRequest(100)
             self.sendSetpointStateRequest(200)
