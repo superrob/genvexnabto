@@ -11,9 +11,9 @@ class GenvexNabtoModelAdapter:
     _VALUES = {}
 
     def __init__(self, model, deviceNumber, slaveDeviceNumber):
-        if model == 2010 and deviceNumber == 70810:
+        if model == 2010 and deviceNumber == 79250:
             self._loadedModel = GenvexNabtoOptima270()
-        elif model == 1040 and deviceNumber == 79250 and slaveDeviceNumber == 1:
+        elif model == 1040 and deviceNumber == 70810 and slaveDeviceNumber == 1:
             self._loadedModel = GenvexNabtoOptima260()
         else:
             raise "Invalid model"
@@ -25,9 +25,9 @@ class GenvexNabtoModelAdapter:
 
     @staticmethod
     def providesModel(model, deviceNumber, slaveDeviceNumber):
-        if model == 2010 and deviceNumber == 70810:
+        if model == 2010 and deviceNumber == 79250:
             return True
-        if model == 1040 and deviceNumber == 79250:
+        if model == 1040 and deviceNumber == 70810:
             if slaveDeviceNumber == 1:
                 return True
         return False
