@@ -40,13 +40,13 @@ class GenvexNabtoBaseModel:
         return
     
     def modelProvidesDatapoint(self, datapoint: GenvexNabtoDatapointKey) -> bool: 
-        return datapoint in self._datapoint
+        return datapoint in self._datapoints
     
     def getDefaultDatapointRequest(self) -> List[GenvexNabtoDatapointKey]:
         return {}
     
     def modelProvidesSetpoint(self, datapoint: GenvexNabtoSetpointKey) -> bool: 
-        return datapoint in self._datapoint
+        return datapoint in self._setpoints
     
     def getDefaultSetpointRequest(self) -> List[GenvexNabtoSetpointKey]:
         return {}
