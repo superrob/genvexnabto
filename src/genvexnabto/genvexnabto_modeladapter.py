@@ -57,12 +57,12 @@ class GenvexNabtoModelAdapter:
     
     def getMinValue(self, key: GenvexNabtoSetpointKey):
         if self._loadedModel.modelProvidesSetpoint(key): 
-            return self._loadedModel._setpoints[key]['min']
+            return (self._loadedModel._setpoints[key]['min'] + self._loadedModel._setpoints[key]['offset']) / self._loadedModel._setpoints['divider']
         return False
     
     def getMaxValue(self, key: GenvexNabtoSetpointKey):
         if self._loadedModel.modelProvidesSetpoint(key): 
-            return self._loadedModel._setpoints[key]['max']
+            return (self._loadedModel._setpoints[key]['max'] + self._loadedModel._setpoints[key]['offset']) / self._loadedModel._setpoints['divider']
         return False
     
     def getSetpointStep(self, key: GenvexNabtoSetpointKey):
