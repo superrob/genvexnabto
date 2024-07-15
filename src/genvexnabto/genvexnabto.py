@@ -11,6 +11,8 @@ from .protocol import (GenvexPacketType, GenvexDiscovery, GenvexPayloadIPX, Genv
                        GenvexPayloadCP_ID,  GenvexPacket, GenvexPacketKeepAlive, GenvexCommandDatapointReadList, 
                        GenvexCommandSetpointReadList, GenvexCommandPing, GenvexCommandSetpointWriteList)
 
+from .const import ( SOCKET_TIMEOUT, SOCKET_MAXSIZE, DATAPOINT_UPDATEINTERVAL, SETPOINT_UPDATEINTERVAL)
+
 class GenvexNabtoConnectionErrorType:
     TIMEOUT = "timeout"
     AUTHENTICATION_ERROR = "authentication_error"
@@ -46,10 +48,12 @@ class GenvexNabto():
 
     DISCOVERED_DEVICES = {}
 
-    def __init__(self, email = "", device_ip = None, deviceID = None) -> None:
+    def __init__(self, email = "", deviceID = None) -> None:
         self.AUTHORIZED_EMAIL = email
-        self.DEVICE_IP = device_ip
         self.DEVICE_ID = deviceID
+        if self.AUTHORIZED_EMAIL != "" and self.DEVICE_ID is not None:
+            self.startListening()
+            self.getDeviceIP()
         return
 
     def openSocket(self):
@@ -269,11 +273,12 @@ class GenvexNabto():
         Payload = GenvexPayloadCrypt()
         Payload.setData(GenvexCommandSetpointWriteList.buildCommand([(setpointData['write_obj'], setpointData['write_address'], newValue)]))
         self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 3, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
-        self.LAST_SETPOINTUPDATE = time.time() - 179 # Ensure updates are check for next thread loop.
+        self.LAST_DATAUPDATE = time.time() - DATAPOINT_UPDATEINTERVAL + 1 # Ensure updates are check for next thread loop.
+        self.LAST_SETPOINTUPDATE = time.time() - SETPOINT_UPDATEINTERVAL + 1
 
     def handleRecieve(self):
         try:
-            message, address = self.SOCKET.recvfrom(512)
+            message, address = self.SOCKET.recvfrom(SOCKET_MAXSIZE)
             if (len(message) < 16): # Not a valid packet
                 return 
             self.processReceivedMessage(message, address)
@@ -284,9 +289,9 @@ class GenvexNabto():
         while self.LISTEN_THREAD_OPEN:
             self.handleRecieve()          
             if self.IS_CONNECTED:
-                if time.time() - self.LAST_DATAUPDATE > 10:
+                if time.time() - self.LAST_DATAUPDATE > DATAPOINT_UPDATEINTERVAL:
                     print("Sending data request..")
                     self.sendDataStateRequest(100)
-                if time.time() - self.LAST_SETPOINTUPDATE > 180:                    
+                if time.time() - self.LAST_SETPOINTUPDATE > SETPOINT_UPDATEINTERVAL:                    
                     self.sendSetpointStateRequest(200)
                     
