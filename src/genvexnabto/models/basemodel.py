@@ -15,6 +15,7 @@ class GenvexNabtoSetpointKey:
     TEMP_SETPOINT = "temp_setpoint"
     FILTER_DAYS = "filter_days"
     FILTER_MONTHS = "filter_months"
+    FILTER_HOURS = "filter_hours"
 
 class GenvexNabtoDatapoint(TypedDict):
     obj: int = 0

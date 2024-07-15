@@ -1,4 +1,5 @@
 import asyncio
+from collections.abc import Callable
 from random import randint
 import socket
 import threading
@@ -34,6 +35,8 @@ class GenvexNabto():
     IS_CONNECTED = False
     CONNECTION_ERROR = False
     LAST_RESPONCE = 0
+    LAST_DATAUPDATE = 0
+    LAST_SETPOINTUPDATE = 0
 
     DISCOVERY_PORT = 5570
 
@@ -151,6 +154,14 @@ class GenvexNabto():
         if self.MODEL_ADAPTER is None:
             return False
         return self.MODEL_ADAPTER.getValue(key)
+    
+    def registerUpdateHandler(self, key: GenvexNabtoSetpointKey|GenvexNabtoDatapointKey, updateMethod: Callable[[int, int], None]):
+        if self.MODEL_ADAPTER is not None:
+            self.MODEL_ADAPTER.registerUpdateHandler(key, updateMethod)
+
+    def notifyAllUpdateHandlers(self):
+        if self.MODEL_ADAPTER is not None:
+            self.MODEL_ADAPTER.notifyAllUpdateHandlers()
 
     def processPingPayload(self, payload):
         self.DEVICE_NUMBER = int.from_bytes(payload[4:8], 'big')
@@ -213,6 +224,10 @@ class GenvexNabto():
                 else:
                     if self.MODEL_ADAPTER is not None:
                         self.MODEL_ADAPTER.parseDataResponce(sequenceId, payload)
+                    if sequenceId == 100:                        
+                        self.LAST_DATAUPDATE = time.time()
+                    if sequenceId == 200:                        
+                        self.LAST_SETPOINTUPDATE = time.time()
             else:
                 print("Not an interresting data packet.")
         else:
@@ -268,8 +283,9 @@ class GenvexNabto():
         while self.LISTEN_THREAD_OPEN:
             self.handleRecieve()          
             if self.IS_CONNECTED:
-                if time.time() - self.LAST_RESPONCE > 10:
+                if time.time() - self.LAST_DATAUPDATE > 10:
                     print("Sending data request..")
                     self.sendDataStateRequest(100)
+                if time.time() - self.LAST_SETPOINTUPDATE > 180:                    
                     self.sendSetpointStateRequest(200)
                     
