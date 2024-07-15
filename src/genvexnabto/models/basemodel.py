@@ -6,8 +6,8 @@ class GenvexNabtoDatapointKey:
     TEMP_EXHAUST = "temp_exhaust"
     TEMP_EXTRACT = "temp_extract"
     HUMIDITY = "humidity"
-    DUTYCYCLE_SUPPLY = "dutycycle_supply"
-    DUTYCYCLE_EXTRACT = "dutycycle_extract"
+    DUTYCYCLE_SUPPLY = "fan_speed_supply"
+    DUTYCYCLE_EXTRACT = "fan_speed_extract"
     BYPASS_ACTIVE = "bypass_active"
 
 class GenvexNabtoSetpointKey:
@@ -19,6 +19,15 @@ class GenvexNabtoSetpointKey:
     FILTER_DAYS = "filter_days"
     FILTER_MONTHS = "filter_months"
     FILTER_HOURS = "filter_hours"
+    SUPPLY_AIR_LEVEL1 = "supply_air_level1"
+    SUPPLY_AIR_LEVEL2 = "supply_air_level2"
+    SUPPLY_AIR_LEVEL3 = "supply_air_level3"
+    SUPPLY_AIR_LEVEL4 = "supply_air_level4"
+    EXTRACT_AIR_LEVEL1 = "extract_air_level1"
+    EXTRACT_AIR_LEVEL2 = "extract_air_level1"
+    EXTRACT_AIR_LEVEL3 = "extract_air_level1"
+    EXTRACT_AIR_LEVEL4 = "extract_air_level1"
+
 
 class GenvexNabtoDatapoint(TypedDict):
     obj: int
