@@ -18,7 +18,10 @@ class GenvexNabtoOptima270(GenvexNabtoBaseModel):
 
         self._setpoints = {
             GenvexNabtoSetpointKey.FAN_SPEED: GenvexNabtoSetpoint(read_obj=0, read_address=7, write_obj=0, write_address=24, divider=1, offset=0, min=0, max=4),
-            GenvexNabtoSetpointKey.TEMP_SETPOINT: GenvexNabtoSetpoint(read_obj=0, read_address=1, write_obj=0, write_address=12, divider=10, offset=100, min=0, max=200),
+            GenvexNabtoSetpointKey.TEMP_SETPOINT: GenvexNabtoSetpoint(read_obj=0, read_address=1, write_obj=0, write_address=12, divider=10, offset=100, min=0, max=200, step=0.5),
+            GenvexNabtoSetpointKey.BYPASS_OPENOFFSET: GenvexNabtoSetpoint(read_obj=0, read_address=21, write_obj=0, write_address=52, divider=10, offset=0, min=10, max=100, step=0.1),
+            GenvexNabtoSetpointKey.REHEATING: GenvexNabtoSetpoint(read_obj=0, read_address=3, write_obj=0, write_address=3, divider=16, offset=0, min=0, max=1),
+            GenvexNabtoSetpointKey.HUMIDITY_CONTROL: GenvexNabtoSetpoint(read_obj=0, read_address=6, write_obj=0, write_address=22, divider=1, offset=0, min=0, max=1),
             GenvexNabtoSetpointKey.FILTER_DAYS: GenvexNabtoSetpoint(read_obj=0, read_address=100, write_obj=0, write_address=210, divider=1, offset=0, min=0, max=65535)
         }
 
@@ -41,5 +44,8 @@ class GenvexNabtoOptima270(GenvexNabtoBaseModel):
         return [
             GenvexNabtoSetpointKey.FAN_SPEED,
             GenvexNabtoSetpointKey.TEMP_SETPOINT,
+            GenvexNabtoSetpointKey.BYPASS_OPENOFFSET,
+            GenvexNabtoSetpointKey.REHEATING,
+            GenvexNabtoSetpointKey.HUMIDITY_CONTROL,
             GenvexNabtoSetpointKey.FILTER_DAYS
         ]

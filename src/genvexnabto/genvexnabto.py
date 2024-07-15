@@ -156,6 +156,21 @@ class GenvexNabto():
             return False
         return self._model_adapter.getValue(key)
     
+    def getSetpointMinValue(self, key: GenvexNabtoDatapointKey|GenvexNabtoSetpointKey):
+        if self._model_adapter is None:
+            return False
+        return self._model_adapter.getMinValue(key)
+    
+    def getSetpointMaxValue(self, key: GenvexNabtoDatapointKey|GenvexNabtoSetpointKey):
+        if self._model_adapter is None:
+            return False
+        return self._model_adapter.getMaxValue(key)
+    
+    def getSetpointStep(self, key: GenvexNabtoDatapointKey|GenvexNabtoSetpointKey):
+        if self._model_adapter is None:
+            return False
+        return self._model_adapter.getSetpointStep(key)
+    
     def registerUpdateHandler(self, key: GenvexNabtoSetpointKey|GenvexNabtoDatapointKey, updateMethod: Callable[[int, int], None]):
         if self._model_adapter is not None:
             self._model_adapter.registerUpdateHandler(key, updateMethod)

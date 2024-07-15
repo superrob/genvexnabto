@@ -13,25 +13,30 @@ class GenvexNabtoDatapointKey:
 class GenvexNabtoSetpointKey:
     FAN_SPEED = "fan_speed"
     TEMP_SETPOINT = "temp_setpoint"
+    BYPASS_OPENOFFSET = "bypass_openoffset" # EE1
+    REHEATING = "reheating" # A1
+    HUMIDITY_CONTROL = "humidity_control" # A2
     FILTER_DAYS = "filter_days"
     FILTER_MONTHS = "filter_months"
     FILTER_HOURS = "filter_hours"
 
 class GenvexNabtoDatapoint(TypedDict):
-    obj: int = 0
+    obj: int
     address: int
-    divider: int = 1
-    offset: int = 0
+    divider: int
+    offset: int
 
 class GenvexNabtoSetpoint(TypedDict):
-    read_obj: int = 0
+    read_obj: int
     read_address: int
-    write_obj: int = 0
+    write_obj: int
     write_address: int
-    divider: int = 1
-    offset: int = 0
+    divider: int
+    offset: int
     min: int
     max: int
+    step: float
+
 
 
 class GenvexNabtoBaseModel:
