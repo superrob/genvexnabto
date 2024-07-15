@@ -24,9 +24,9 @@ class GenvexNabtoSetpointKey:
     SUPPLY_AIR_LEVEL3 = "supply_air_level3"
     SUPPLY_AIR_LEVEL4 = "supply_air_level4"
     EXTRACT_AIR_LEVEL1 = "extract_air_level1"
-    EXTRACT_AIR_LEVEL2 = "extract_air_level1"
-    EXTRACT_AIR_LEVEL3 = "extract_air_level1"
-    EXTRACT_AIR_LEVEL4 = "extract_air_level1"
+    EXTRACT_AIR_LEVEL2 = "extract_air_level2"
+    EXTRACT_AIR_LEVEL3 = "extract_air_level3"
+    EXTRACT_AIR_LEVEL4 = "extract_air_level4"
 
 
 class GenvexNabtoDatapoint(TypedDict):
