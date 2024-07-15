@@ -31,6 +31,9 @@ class GenvexNabtoModelAdapter:
 
     def getModelName(self):
         return self._loadedModel.getModelName()
+    
+    def getManufacturer(self):
+        return self._loadedModel.getManufacturer()
 
     @staticmethod
     def providesModel(model, deviceNumber, slaveDeviceModel):
