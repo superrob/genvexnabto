@@ -269,6 +269,7 @@ class GenvexNabto():
         Payload = GenvexPayloadCrypt()
         Payload.setData(GenvexCommandSetpointWriteList.buildCommand([(setpointData['write_obj'], setpointData['write_address'], newValue)]))
         self.SOCKET.sendto(GenvexPacket().build_packet(self.CLIENT_ID, self.SERVER_ID, GenvexPacketType.DATA, 3, [Payload]), (self.DEVICE_IP, self.DEVICE_PORT))
+        self.LAST_SETPOINTUPDATE = time.time() - 179 # Ensure updates are check for next thread loop.
 
     def handleRecieve(self):
         try:
