@@ -10,8 +10,8 @@ class GenvexNabtoModelAdapter:
     _currentDatapointList: Dict[int, List[GenvexNabtoDatapointKey]] = {}
     _currentSetpointList: Dict[int, List[GenvexNabtoSetpointKey]] = {}
 
-    _VALUES = {}
-    _UPDATE_HANDLERS: Dict[GenvexNabtoDatapointKey|GenvexNabtoSetpointKey, List[Callable[[int, int], None]]] = {}
+    _values = {}
+    _update_handlers: Dict[GenvexNabtoDatapointKey|GenvexNabtoSetpointKey, List[Callable[[int, int], None]]] = {}
 
     def __init__(self, model, deviceNumber, slaveDeviceModel):
         if model == 2010 and deviceNumber == 79265:
@@ -50,20 +50,20 @@ class GenvexNabtoModelAdapter:
         return False
 
     def hasValue(self, key: GenvexNabtoSetpointKey|GenvexNabtoDatapointKey) -> bool:
-        return key in self._VALUES
+        return key in self._values
     
     def getValue(self, key: GenvexNabtoSetpointKey|GenvexNabtoDatapointKey):
-        return self._VALUES[key]
+        return self._values[key]
     
     def registerUpdateHandler(self, key: GenvexNabtoSetpointKey|GenvexNabtoDatapointKey, updateMethod: Callable[[int, int], None]):
-        if key not in self._UPDATE_HANDLERS:
-            self._UPDATE_HANDLERS[key] = []
-        self._UPDATE_HANDLERS[key].append(updateMethod)
+        if key not in self._update_handlers:
+            self._update_handlers[key] = []
+        self._update_handlers[key].append(updateMethod)
 
     def notifyAllUpdateHandlers(self):
-        for key in self._UPDATE_HANDLERS:
-            for method in self._UPDATE_HANDLERS[key]:
-                method(-1, self._VALUES[key])
+        for key in self._update_handlers:
+            for method in self._update_handlers[key]:
+                method(-1, self._values[key])
 
     
     def getDatapointRequestList(self, sequenceId):
@@ -101,13 +101,13 @@ class GenvexNabtoModelAdapter:
             valueKey = decodingKeys[position]
             payloadSlice = responcePayload[2+position*2:4+position*2]
             oldValue = -1
-            if valueKey in self._VALUES:
-                oldValue = self._VALUES[valueKey]
-            self._VALUES[valueKey] = (int.from_bytes(payloadSlice, 'big') + self._loadedModel._datapoints[valueKey]['offset']) / self._loadedModel._datapoints[valueKey]['divider']
-            if oldValue != self._VALUES[valueKey]:
-                if valueKey in self._UPDATE_HANDLERS:
-                    for method in self._UPDATE_HANDLERS[valueKey]:
-                        method(oldValue, self._VALUES[valueKey])
+            if valueKey in self._values:
+                oldValue = self._values[valueKey]
+            self._values[valueKey] = (int.from_bytes(payloadSlice, 'big') + self._loadedModel._datapoints[valueKey]['offset']) / self._loadedModel._datapoints[valueKey]['divider']
+            if oldValue != self._values[valueKey]:
+                if valueKey in self._update_handlers:
+                    for method in self._update_handlers[valueKey]:
+                        method(oldValue, self._values[valueKey])
         return
     
     def parseSetpointResponce(self, responceSeq, responcePayload):
@@ -119,12 +119,12 @@ class GenvexNabtoModelAdapter:
             valueKey = decodingKeys[position]
             payloadSlice = responcePayload[3+position*2:5+position*2]
             oldValue = -1
-            if valueKey in self._VALUES:
-                oldValue = self._VALUES[valueKey]
-            self._VALUES[valueKey] = (int.from_bytes(payloadSlice, 'big') + self._loadedModel._setpoints[valueKey]['offset']) / self._loadedModel._setpoints[valueKey]['divider']
-            if oldValue != self._VALUES[valueKey]:
-                if valueKey in self._UPDATE_HANDLERS:
-                    for method in self._UPDATE_HANDLERS[valueKey]:
-                        method(oldValue, self._VALUES[valueKey])
+            if valueKey in self._values:
+                oldValue = self._values[valueKey]
+            self._values[valueKey] = (int.from_bytes(payloadSlice, 'big') + self._loadedModel._setpoints[valueKey]['offset']) / self._loadedModel._setpoints[valueKey]['divider']
+            if oldValue != self._values[valueKey]:
+                if valueKey in self._update_handlers:
+                    for method in self._update_handlers[valueKey]:
+                        method(oldValue, self._values[valueKey])
         return
 
