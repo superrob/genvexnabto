@@ -40,7 +40,7 @@ class GenvexNabtoModelAdapter:
             if slaveDeviceModel == 26 or slaveDeviceModel == 1 or slaveDeviceModel == 8:
                 return True
         if model == 1141 or model == 1140: #Nilan
-            if deviceNumber == 72270 or deviceNumber == 2763306: #72270  = CTS400 | 2763306 = CTS602
+            if deviceNumber == 72270: #72270  = CTS400 | 2763306 = CTS602 - Not even sure values are correct, so disabled for now!
                 return True
         return False
     

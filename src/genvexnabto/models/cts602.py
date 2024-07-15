@@ -15,12 +15,15 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
         }
 
         self._setpoints = {
-            GenvexNabtoSetpointKey.FAN_SPEED: GenvexNabtoSetpoint(read_obj=0, read_address=69, write_obj=0, write_address=69, divider=1, offset=0, min=0, max=4),
-            GenvexNabtoSetpointKey.TEMP_SETPOINT: GenvexNabtoSetpoint(read_obj=0, read_address=37, write_obj=0, write_address=37, divider=10, offset=0, min=0, max=200)
+            GenvexNabtoSetpointKey.FAN_SPEED: GenvexNabtoSetpoint(read_obj=0, read_address=1003, write_obj=0, write_address=1003, divider=1, offset=0, min=0, max=4),
+            GenvexNabtoSetpointKey.TEMP_SETPOINT: GenvexNabtoSetpoint(read_obj=0, read_address=1004, write_obj=0, write_address=1004, divider=10, offset=0, min=0, max=200)
         }
 
     def getModelName(self):
         return "CTS 602"
+    
+    def getManufacturer(self):
+        return "Nilan"
 
     def getDefaultDatapointRequest(self) -> List[GenvexNabtoDatapointKey]:
         return [

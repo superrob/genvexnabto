@@ -57,6 +57,9 @@ class GenvexNabtoBaseModel:
     
     def getModelName(self):
         return "Basemodel"
+    
+    def getManufacturer(self):
+        return ""
 
     def modelProvidesDatapoint(self, datapoint: GenvexNabtoDatapointKey) -> bool: 
         return datapoint in self._datapoints

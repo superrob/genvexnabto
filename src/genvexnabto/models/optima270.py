@@ -35,6 +35,9 @@ class GenvexNabtoOptima270(GenvexNabtoBaseModel):
 
     def getModelName(self):
         return "Optima 270"
+    
+    def getManufacturer(self):
+        return "Genvex"
 
     def getDefaultDatapointRequest(self) -> List[GenvexNabtoDatapointKey]:
         return [

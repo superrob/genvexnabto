@@ -22,11 +22,20 @@ class GenvexNabtoOptima251(GenvexNabtoBaseModel):
             GenvexNabtoSetpointKey.BYPASS_OPENOFFSET: GenvexNabtoSetpoint(read_obj=0, read_address=17, write_obj=0, write_address=17, divider=10, offset=0, min=10, max=100, step=0.1),
             GenvexNabtoSetpointKey.REHEATING: GenvexNabtoSetpoint(read_obj=0, read_address=2, write_obj=0, write_address=2, divider=1, offset=0, min=0, max=1),
             GenvexNabtoSetpointKey.HUMIDITY_CONTROL: GenvexNabtoSetpoint(read_obj=0, read_address=5, write_obj=0, write_address=5, divider=1, offset=0, min=0, max=1),
-            GenvexNabtoSetpointKey.FILTER_MONTHS: GenvexNabtoSetpoint(read_obj=0, read_address=4, write_obj=0, write_address=4, divider=1, offset=0, min=0, max=6)
+            GenvexNabtoSetpointKey.FILTER_MONTHS: GenvexNabtoSetpoint(read_obj=0, read_address=4, write_obj=0, write_address=4, divider=1, offset=0, min=0, max=6),            
+            GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL1: GenvexNabtoSetpoint(read_obj=0, read_address=6, write_obj=0, write_address=6, divider=1, offset=0, min=0, max=100, step=1),
+            GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL2: GenvexNabtoSetpoint(read_obj=0, read_address=7, write_obj=0, write_address=7, divider=1, offset=0, min=0, max=100, step=1),
+            GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL3: GenvexNabtoSetpoint(read_obj=0, read_address=8, write_obj=0, write_address=8, divider=1, offset=0, min=0, max=100, step=1),
+            GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL1: GenvexNabtoSetpoint(read_obj=0, read_address=9, write_obj=0, write_address=9, divider=1, offset=0, min=0, max=100, step=1),
+            GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL2: GenvexNabtoSetpoint(read_obj=0, read_address=10, write_obj=0, write_address=10, divider=1, offset=0, min=0, max=100, step=1),
+            GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL3: GenvexNabtoSetpoint(read_obj=0, read_address=11, write_obj=0, write_address=11, divider=1, offset=0, min=0, max=100, step=1)
         }
 
     def getModelName(self):
         return "Optima 251"
+    
+    def getManufacturer(self):
+        return "Genvex"
 
     def getDefaultDatapointRequest(self) -> List[GenvexNabtoDatapointKey]:
         return [
@@ -47,5 +56,11 @@ class GenvexNabtoOptima251(GenvexNabtoBaseModel):
             GenvexNabtoSetpointKey.BYPASS_OPENOFFSET,
             GenvexNabtoSetpointKey.REHEATING,
             GenvexNabtoSetpointKey.HUMIDITY_CONTROL,
-            GenvexNabtoSetpointKey.FILTER_MONTHS
+            GenvexNabtoSetpointKey.FILTER_MONTHS,
+            GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL1,
+            GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL2,
+            GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL3,
+            GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL1,
+            GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL2,
+            GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL3
         ]
