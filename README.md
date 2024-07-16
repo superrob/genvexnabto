@@ -48,3 +48,6 @@ However this old client binary connected to a different port on the device. To m
 From here i only had to implement the "Micro Nabto" protocol in my own portable libary.
 I have only been able to test the Optima 270 implementation as i only have an Genvex ventilation unit with the Optima 270 controller (Has the gateway built in). 
 However i have tried implementing the older controllers which should in theory be compatible. I have also added the Nilan CTS400 controller as the gateway for Nilan is built by the same company and uses the same command structure.
+
+# Obligatory statement
+I am not personally or in any way responsible for any damages should you choose to use the libary. No warranty provided. 
