@@ -5,16 +5,19 @@ This libary might also be able to be used on Nilan devices connected to a Nilan 
 The libary is built to be used by my Home Assistant custom component and is currently in alpha. Expect things to change and break anything you might build around it.
 
 ### Supported controller models
-|Controller     | Supported    | Tested  |
-|---------------|:------------:|:-------:|
-|Optima 250     | EXPERIMENTAL |         |
-|Optima 251     | EXPERIMENTAL |         |
-|Optima 260     | EXPERIMENTAL |         |
-|Optima 270     | ✅           | ✅     |
-|Optima 301     |              |         |
-|Optima 310     |              |         |
-|Optima 311-312 |              |         |
-|Nilan CTS400   | EXPERIMENTAL |         |
+|Controller     | Gateway requiured     | Supported       | Tested  |
+|--------------:|:---------------------:|:---------------:|:-------:|
+|Optima 250     | Yes, internet gateway | EXPERIMENTAL    |         |
+|Optima 251     | Yes, internet gateway | EXPERIMENTAL    |         |
+|Optima 260     | Yes, internet gateway | EXPERIMENTAL    |         |
+|Optima 270     | Built in              | ✅              | ✅     |
+|Optima 301     | Yes, internet gateway | Not implemented |         |
+|Optima 312     | Yes, internet gateway | Not implemented |         |
+|Optima 314     | Built in              | Not implemented |         |
+|Nilan CTS400   | Yes, nilan gateway    | EXPERIMENTAL    |         |
+|Nilan CTS602   | Yes, nilan gateway    | Not implemented |         |
+
+For any controllers that requires a gateway, it is mandetory that the device supports Modbus. Optima controllers delivered before 2014 might not have Modbus.
 
 # How i got here
 Genvex Connect and Nilan gateways both use the proprietary "Micro Nabto" protocol. Any mentions of it are very scarce online, with most official documentation being wiped from the internet after the companies release of "Nabto edge", which is highly incompatible with the older "Micro Nabto".
