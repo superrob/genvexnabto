@@ -5,17 +5,19 @@ This libary might also be able to be used on Nilan devices connected to a Nilan 
 The libary is built to be used by my Home Assistant custom component and is currently in alpha. Expect things to change and break anything you might build around it.
 
 ### Supported controller models
-|Controller     | Gateway requiured     | Supported       | Tested  |
-|--------------:|:---------------------:|:---------------:|:-------:|
-|Optima 250     | Yes, internet gateway | Should work     |         |
-|Optima 251     | Yes, internet gateway | ✅              | ✅      |
-|Optima 260     | Yes, internet gateway | Should work     |         |
-|Optima 270     | Built in              | ✅              | ✅     |
-|Optima 301     | Yes, internet gateway | Should work     |         |
-|Optima 312     | Yes, internet gateway | Should work     |         |
-|Optima 314     | Built in              | Should work     |         |
-|Nilan CTS400   | Yes, nilan gateway    | ✅              | ✅     |
-|Nilan CTS602   | Yes, nilan gateway    | Not implemented |         |
+|Controller         | Gateway requiured     | Supported       | Tested  |
+|------------------:|:---------------------:|:---------------:|:-------:|
+|Optima 250         | Yes, internet gateway | Should work     |         |
+|Optima 251         | Yes, internet gateway | ✅              | ✅      |
+|Optima 260         | Yes, internet gateway | Should work     |         |
+|Optima 270         | Built in              | ✅              | ✅     |
+|Optima 301         | Yes, internet gateway | Should work     |         |
+|Optima 312         | Yes, internet gateway | Should work     |         |
+|Optima 314         | Built in              | Should work     |         |
+|Nilan CTS400       | Yes, nilan gateway    | ✅              | ✅     |
+|Nilan CTS602       | Yes, nilan gateway    | EXPERIMENTAL    |         |
+|Nilan CTS602 Light | Yes, nilan gateway    | Not implemented |         |
+|Nilan CTS602 Geo   | Yes, nilan gateway    | Not implemented |         |
 
 For any controllers that requires a gateway, it is mandetory that the device supports Modbus. Optima controllers delivered before 2014 might not have Modbus.
 
