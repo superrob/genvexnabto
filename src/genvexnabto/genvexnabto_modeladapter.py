@@ -39,7 +39,7 @@ class GenvexNabtoModelAdapter:
     def providesModel(model, deviceNumber, slaveDeviceModel):
         if model == 2010 and deviceNumber == 79265:
             return True
-        if model == 1040 and deviceNumber == 70810:
+        if model == 1040 and (deviceNumber == 70810 or deviceNumber == 79250):
             if slaveDeviceModel == 26 or slaveDeviceModel == 1 or slaveDeviceModel == 8:
                 return True
         if model == 1141 or model == 1140: #Nilan
