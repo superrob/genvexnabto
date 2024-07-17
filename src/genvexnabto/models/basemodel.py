@@ -8,6 +8,8 @@ class GenvexNabtoDatapointKey:
     HUMIDITY = "humidity"
     DUTYCYCLE_SUPPLY = "fan_speed_supply"
     DUTYCYCLE_EXTRACT = "fan_speed_extract"
+    RPM_SUPPLY = "fan_rpm_supply"
+    RPM_EXTRACT = "fan_rpm_extract"
     BYPASS_ACTIVE = "bypass_active"
 
 class GenvexNabtoSetpointKey:

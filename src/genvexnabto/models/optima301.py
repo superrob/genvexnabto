@@ -13,6 +13,8 @@ class GenvexNabtoOptima301(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.HUMIDITY: GenvexNabtoDatapoint(obj=0, address=10, divider=1, offset=0),
             GenvexNabtoDatapointKey.DUTYCYCLE_SUPPLY: GenvexNabtoDatapoint(obj=0, address=102, divider=1, offset=0),
             GenvexNabtoDatapointKey.DUTYCYCLE_EXTRACT: GenvexNabtoDatapoint(obj=0, address=103, divider=1, offset=0),
+            GenvexNabtoDatapointKey.RPM_SUPPLY: GenvexNabtoDatapoint(obj=0, address=108, divider=1, offset=0),
+            GenvexNabtoDatapointKey.RPM_EXTRACT: GenvexNabtoDatapoint(obj=0, address=109, divider=1, offset=0),
             GenvexNabtoDatapointKey.BYPASS_ACTIVE: GenvexNabtoDatapoint(obj=0, address=104, divider=1, offset=0)
         }
 
@@ -42,6 +44,8 @@ class GenvexNabtoOptima301(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.HUMIDITY,
             GenvexNabtoDatapointKey.DUTYCYCLE_SUPPLY,
             GenvexNabtoDatapointKey.DUTYCYCLE_EXTRACT,
+            GenvexNabtoDatapointKey.RPM_SUPPLY,            
+            GenvexNabtoDatapointKey.RPM_EXTRACT,
             GenvexNabtoDatapointKey.BYPASS_ACTIVE
         ]
     

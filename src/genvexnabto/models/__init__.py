@@ -18,7 +18,7 @@ __all__ = [
     "GenvexNabtoOptima301",
     "GenvexNabtoOptima270",
     "GenvexNabtoOptima260",
-    "GenvexNabtoOptima251"
+    "GenvexNabtoOptima251",
     "GenvexNabtoOptima250",
     "GenvexNabtoCTS400"
 ]
