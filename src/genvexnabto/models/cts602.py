@@ -10,8 +10,13 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.TEMP_OUTSIDE: GenvexNabtoDatapoint(obj=0, address=39, divider=100, offset=0),
             GenvexNabtoDatapointKey.TEMP_EXHAUST: GenvexNabtoDatapoint(obj=0, address=34, divider=100, offset=0),
             GenvexNabtoDatapointKey.TEMP_EXTRACT: GenvexNabtoDatapoint(obj=0, address=35, divider=100, offset=0),
+            GenvexNabtoDatapointKey.TEMP_CONDENSER: GenvexNabtoDatapoint(obj=0, address=36, divider=100, offset=0),
+            GenvexNabtoDatapointKey.TEMP_EVAPORATOR: GenvexNabtoDatapoint(obj=0, address=37, divider=100, offset=0),
+            GenvexNabtoDatapointKey.TEMP_ROOM: GenvexNabtoDatapoint(obj=0, address=41, divider=100, offset=0),
             GenvexNabtoDatapointKey.HUMIDITY: GenvexNabtoDatapoint(obj=0, address=52, divider=100, offset=0),
-            GenvexNabtoDatapointKey.BYPASS_ACTIVE: GenvexNabtoDatapoint(obj=0, address=187, divider=1, offset=0)
+            GenvexNabtoDatapointKey.BYPASS_ACTIVE: GenvexNabtoDatapoint(obj=0, address=187, divider=1, offset=0),
+            GenvexNabtoDatapointKey.HOTWATER_TOP: GenvexNabtoDatapoint(obj=0, address=42, divider=1, offset=0),
+            GenvexNabtoDatapointKey.HOTWATER_BOTTOM: GenvexNabtoDatapoint(obj=0, address=43, divider=1, offset=0)
         }
 
         self._setpoints = {
@@ -31,8 +36,13 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.TEMP_OUTSIDE,
             GenvexNabtoDatapointKey.TEMP_EXHAUST,
             GenvexNabtoDatapointKey.TEMP_EXTRACT,
+            GenvexNabtoDatapointKey.TEMP_CONDENSER,
+            GenvexNabtoDatapointKey.TEMP_EVAPORATOR,            
+            GenvexNabtoDatapointKey.TEMP_ROOM,
             GenvexNabtoDatapointKey.HUMIDITY,
-            GenvexNabtoDatapointKey.BYPASS_ACTIVE
+            GenvexNabtoDatapointKey.BYPASS_ACTIVE,
+            GenvexNabtoDatapointKey.HOTWATER_TOP,
+            GenvexNabtoDatapointKey.HOTWATER_BOTTOM
         ]
     
     def getDefaultSetpointRequest(self) -> List[GenvexNabtoSetpointKey]:

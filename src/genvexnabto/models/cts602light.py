@@ -20,7 +20,7 @@ class GenvexNabtoCTS602Light(GenvexNabtoBaseModel):
         }
 
     def getModelName(self):
-        return "CTS 602"
+        return "CTS 602light"
     
     def getManufacturer(self):
         return "Nilan"

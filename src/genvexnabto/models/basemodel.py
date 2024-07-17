@@ -5,12 +5,17 @@ class GenvexNabtoDatapointKey:
     TEMP_OUTSIDE = "temp_outside"
     TEMP_EXHAUST = "temp_exhaust"
     TEMP_EXTRACT = "temp_extract"
+    TEMP_CONDENSER = "temp_condenser"
+    TEMP_EVAPORATOR = "temp_evaporator"
+    TEMP_ROOM = "temp_room"
     HUMIDITY = "humidity"
     DUTYCYCLE_SUPPLY = "fan_speed_supply"
     DUTYCYCLE_EXTRACT = "fan_speed_extract"
     RPM_SUPPLY = "fan_rpm_supply"
     RPM_EXTRACT = "fan_rpm_extract"
     BYPASS_ACTIVE = "bypass_active"
+    HOTWATER_TOP = "hotwater_top"
+    HOTWATER_BOTTOM = "hotwater_bottom"
 
 class GenvexNabtoSetpointKey:
     FAN_SPEED = "fan_speed"
