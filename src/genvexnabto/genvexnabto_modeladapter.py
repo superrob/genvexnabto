@@ -1,6 +1,6 @@
 from typing import Dict, List
 from collections.abc import Callable
-from .models import ( GenvexNabtoBaseModel, GenvexNabtoOptima270, GenvexNabtoOptima260, GenvexNabtoOptima251, GenvexNabtoOptima250, 
+from .models import ( GenvexNabtoBaseModel, GenvexNabtoOptima314, GenvexNabtoOptima312, GenvexNabtoOptima301, GenvexNabtoOptima270, GenvexNabtoOptima260, GenvexNabtoOptima251, GenvexNabtoOptima250, 
                      GenvexNabtoCTS400,
                      GenvexNabtoDatapoint, GenvexNabtoDatapointKey, GenvexNabtoSetpoint, GenvexNabtoSetpointKey )
 
@@ -14,18 +14,10 @@ class GenvexNabtoModelAdapter:
     _update_handlers: Dict[GenvexNabtoDatapointKey|GenvexNabtoSetpointKey, List[Callable[[int, int], None]]] = {}
 
     def __init__(self, model, deviceNumber, slaveDeviceNumber, slaveDeviceModel):
-        if model == 2010 and deviceNumber == 79265:
-            self._loadedModel = GenvexNabtoOptima270()
-        elif model == 1040 and slaveDeviceNumber == 70810 and slaveDeviceModel == 26:
-            self._loadedModel = GenvexNabtoOptima260()
-        elif model == 1040 and slaveDeviceNumber == 79250 and slaveDeviceModel == 8:
-            self._loadedModel = GenvexNabtoOptima251()
-        elif model == 1040 and slaveDeviceNumber == 79250 and slaveDeviceModel == 1:
-            self._loadedModel = GenvexNabtoOptima250()
-        elif (model == 1141 or model == 1140) and slaveDeviceNumber == 72270:
-            self._loadedModel = GenvexNabtoCTS400()
-        else:
-            self._loadedModel = GenvexNabtoBaseModel()
+        modelToLoad = GenvexNabtoModelAdapter.translateToModel(model, deviceNumber, slaveDeviceNumber, slaveDeviceModel)
+        if modelToLoad == None:
+            raise "Invalid model"
+        self._loadedModel = modelToLoad()
             
         self._currentDatapointList = {100: self._loadedModel.getDefaultDatapointRequest()}
         self._currentSetpointList = {200: self._loadedModel.getDefaultSetpointRequest()}
@@ -37,15 +29,43 @@ class GenvexNabtoModelAdapter:
         return self._loadedModel.getManufacturer()
 
     @staticmethod
+    def translateToModel(model, deviceNumber, slaveDeviceNumber, slaveDeviceModel) -> Callable:
+        if model == 2010:
+            if deviceNumber == 79265:
+                return GenvexNabtoOptima270
+        if model == 2020:
+            if deviceNumber == 79280:
+                return GenvexNabtoOptima314
+        if model == 1040:
+            if slaveDeviceNumber == 70810:
+                if slaveDeviceModel == 26:
+                    return GenvexNabtoOptima260
+            if slaveDeviceNumber == 79250:
+                if slaveDeviceModel == 9:
+                    return GenvexNabtoOptima312
+                if slaveDeviceModel == 8:
+                    return GenvexNabtoOptima251
+                if slaveDeviceModel == 5:
+                    return GenvexNabtoOptima301
+                if slaveDeviceModel == 1:
+                    return GenvexNabtoOptima250
+        if model == 1140 or model == 1141:
+            if slaveDeviceNumber == 72270:
+                if slaveDeviceModel == 1:
+                    return GenvexNabtoCTS400
+            if slaveDeviceNumber == 2763306:
+                if slaveDeviceModel == 2:
+                    return None # Not currently supported. CTS602 light
+                if slaveDeviceModel == 144 or slaveDeviceModel == 244:
+                    return None # Not currently supported. CTS602 Compact Geo Air
+                return None # Not currently supported CTS602
+            
+        return None
+
+    @staticmethod
     def providesModel(model, deviceNumber, slaveDeviceNumber, slaveDeviceModel):
-        if model == 2010 and deviceNumber == 79265:
+        if GenvexNabtoModelAdapter.translateToModel(model, deviceNumber, slaveDeviceNumber, slaveDeviceModel) is not None:
             return True
-        if model == 1040 and (slaveDeviceNumber == 70810 or slaveDeviceNumber == 79250):
-            if slaveDeviceModel == 26 or slaveDeviceModel == 1 or slaveDeviceModel == 8:
-                return True
-        if model == 1141 or model == 1140: #Nilan
-            if slaveDeviceNumber == 72270: #72270  = CTS400 | 2763306 = CTS602 - Not even sure values are correct, so disabled for now!
-                return True
         return False
     
     def providesValue(self, key: GenvexNabtoSetpointKey|GenvexNabtoDatapointKey):
