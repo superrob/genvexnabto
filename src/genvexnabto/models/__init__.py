@@ -7,6 +7,7 @@ from .optima260 import GenvexNabtoOptima260
 from .optima251 import GenvexNabtoOptima251
 from .optima250 import GenvexNabtoOptima250
 from .cts602 import GenvexNabtoCTS602
+from .cts602light import GenvexNabtoCTS602Light
 from .cts400 import GenvexNabtoCTS400
 __all__ = [
     "GenvexNabtoBaseModel",
@@ -22,5 +23,6 @@ __all__ = [
     "GenvexNabtoOptima251",
     "GenvexNabtoOptima250",
     "GenvexNabtoCTS602",
+    "GenvexNabtoCTS602Light",
     "GenvexNabtoCTS400"
 ]

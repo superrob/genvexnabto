@@ -1,7 +1,7 @@
 from typing import Dict, List
 from collections.abc import Callable
 from .models import ( GenvexNabtoBaseModel, GenvexNabtoOptima314, GenvexNabtoOptima312, GenvexNabtoOptima301, GenvexNabtoOptima270, GenvexNabtoOptima260, GenvexNabtoOptima251, GenvexNabtoOptima250, 
-                     GenvexNabtoCTS400, GenvexNabtoCTS602,
+                     GenvexNabtoCTS400, GenvexNabtoCTS602, GenvexNabtoCTS602Light,
                      GenvexNabtoDatapoint, GenvexNabtoDatapointKey, GenvexNabtoSetpoint, GenvexNabtoSetpointKey )
 
 class GenvexNabtoModelAdapter:
@@ -55,7 +55,7 @@ class GenvexNabtoModelAdapter:
                     return GenvexNabtoCTS400
             if slaveDeviceNumber == 2763306:
                 if slaveDeviceModel == 2:
-                    return None # Not currently supported. CTS602 light
+                    return GenvexNabtoCTS602Light
                 if slaveDeviceModel == 144 or slaveDeviceModel == 244:
                     return None # Not currently supported. CTS602 Compact Geo Air
                 return GenvexNabtoCTS602
