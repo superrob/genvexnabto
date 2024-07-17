@@ -13,19 +13,20 @@ class GenvexNabtoModelAdapter:
     _values = {}
     _update_handlers: Dict[GenvexNabtoDatapointKey|GenvexNabtoSetpointKey, List[Callable[[int, int], None]]] = {}
 
-    def __init__(self, model, deviceNumber, slaveDeviceModel):
+    def __init__(self, model, deviceNumber, slaveDeviceNumber, slaveDeviceModel):
         if model == 2010 and deviceNumber == 79265:
             self._loadedModel = GenvexNabtoOptima270()
-        elif model == 1040 and deviceNumber == 70810 and slaveDeviceModel == 26:
+        elif model == 1040 and slaveDeviceNumber == 70810 and slaveDeviceModel == 26:
             self._loadedModel = GenvexNabtoOptima260()
-        elif model == 1040 and deviceNumber == 79250 and slaveDeviceModel == 8:
+        elif model == 1040 and slaveDeviceNumber == 79250 and slaveDeviceModel == 8:
             self._loadedModel = GenvexNabtoOptima251()
-        elif model == 1040 and deviceNumber == 79250 and slaveDeviceModel == 1:
+        elif model == 1040 and slaveDeviceNumber == 79250 and slaveDeviceModel == 1:
             self._loadedModel = GenvexNabtoOptima250()
-        elif (model == 1141 or model == 1140) and deviceNumber == 72270:
+        elif (model == 1141 or model == 1140) and slaveDeviceNumber == 72270:
             self._loadedModel = GenvexNabtoCTS400()
         else:
-            raise "Invalid model"
+            self._loadedModel = GenvexNabtoBaseModel()
+            
         self._currentDatapointList = {100: self._loadedModel.getDefaultDatapointRequest()}
         self._currentSetpointList = {200: self._loadedModel.getDefaultSetpointRequest()}
 
@@ -36,14 +37,14 @@ class GenvexNabtoModelAdapter:
         return self._loadedModel.getManufacturer()
 
     @staticmethod
-    def providesModel(model, deviceNumber, slaveDeviceModel):
+    def providesModel(model, deviceNumber, slaveDeviceNumber, slaveDeviceModel):
         if model == 2010 and deviceNumber == 79265:
             return True
-        if model == 1040 and (deviceNumber == 70810 or deviceNumber == 79250):
+        if model == 1040 and (slaveDeviceNumber == 70810 or slaveDeviceNumber == 79250):
             if slaveDeviceModel == 26 or slaveDeviceModel == 1 or slaveDeviceModel == 8:
                 return True
         if model == 1141 or model == 1140: #Nilan
-            if deviceNumber == 72270: #72270  = CTS400 | 2763306 = CTS602 - Not even sure values are correct, so disabled for now!
+            if slaveDeviceNumber == 72270: #72270  = CTS400 | 2763306 = CTS602 - Not even sure values are correct, so disabled for now!
                 return True
         return False
     
