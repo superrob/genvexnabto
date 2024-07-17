@@ -1,4 +1,4 @@
-# Geckonabto
+# GenvexNabto
 Libary to locally interface with HVAC systems running Genvex Connect gateways. Usually those are only cloud accessible, however after lots of work i finally have a local solution ready.
 This libary might also be able to be used on Nilan devices connected to a Nilan Gateway as the same company made that interface. However i do not have such a device to test for.
 
