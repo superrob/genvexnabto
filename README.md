@@ -7,14 +7,14 @@ The libary is built to be used by my Home Assistant custom component and is curr
 ### Supported controller models
 |Controller     | Gateway requiured     | Supported       | Tested  |
 |--------------:|:---------------------:|:---------------:|:-------:|
-|Optima 250     | Yes, internet gateway | EXPERIMENTAL    |         |
-|Optima 251     | Yes, internet gateway | EXPERIMENTAL    |         |
-|Optima 260     | Yes, internet gateway | EXPERIMENTAL    |         |
+|Optima 250     | Yes, internet gateway | Should work     |         |
+|Optima 251     | Yes, internet gateway | ✅              | ✅      |
+|Optima 260     | Yes, internet gateway | Should work     |         |
 |Optima 270     | Built in              | ✅              | ✅     |
 |Optima 301     | Yes, internet gateway | Not implemented |         |
 |Optima 312     | Yes, internet gateway | Not implemented |         |
 |Optima 314     | Built in              | Not implemented |         |
-|Nilan CTS400   | Yes, nilan gateway    | EXPERIMENTAL    |         |
+|Nilan CTS400   | Yes, nilan gateway    | ✅              | ✅     |
 |Nilan CTS602   | Yes, nilan gateway    | Not implemented |         |
 
 For any controllers that requires a gateway, it is mandetory that the device supports Modbus. Optima controllers delivered before 2014 might not have Modbus.
