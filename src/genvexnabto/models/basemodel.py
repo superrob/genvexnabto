@@ -13,9 +13,12 @@ class GenvexNabtoDatapointKey:
     DUTYCYCLE_EXTRACT = "fan_speed_extract"
     RPM_SUPPLY = "fan_rpm_supply"
     RPM_EXTRACT = "fan_rpm_extract"
+    M3H_SUPPLY = "fan_m3h_supply"
+    M3H_EXTRACT = "fan_m3h_extract"
     BYPASS_ACTIVE = "bypass_active"
     HOTWATER_TOP = "hotwater_top"
     HOTWATER_BOTTOM = "hotwater_bottom"
+    SUMMER_MODE = "summer_mode"
 
 class GenvexNabtoSetpointKey:
     FAN_SPEED = "fan_speed"
@@ -23,9 +26,12 @@ class GenvexNabtoSetpointKey:
     BYPASS_OPENOFFSET = "bypass_openoffset" # EE1
     REHEATING = "reheating" # A1
     HUMIDITY_CONTROL = "humidity_control" # A2
+    BOOST_ENABLE = "boost_enable"
+    BOOST_TIME = "boost_time" # A3
     FILTER_DAYS = "filter_days"
     FILTER_MONTHS = "filter_months"
     FILTER_HOURS = "filter_hours"
+    FILTER_RESET = "filter_reset"
     SUPPLY_AIR_LEVEL1 = "supply_air_level1"
     SUPPLY_AIR_LEVEL2 = "supply_air_level2"
     SUPPLY_AIR_LEVEL3 = "supply_air_level3"
