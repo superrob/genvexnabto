@@ -17,8 +17,8 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.DUTYCYCLE_SUPPLY: GenvexNabtoDatapoint(obj=0, address=99, divider=1, offset=0),
             GenvexNabtoDatapointKey.DUTYCYCLE_EXTRACT: GenvexNabtoDatapoint(obj=0, address=100, divider=1, offset=0),
             GenvexNabtoDatapointKey.BYPASS_ACTIVE: GenvexNabtoDatapoint(obj=0, address=187, divider=1, offset=0),
-            GenvexNabtoDatapointKey.HOTWATER_TOP: GenvexNabtoDatapoint(obj=0, address=42, divider=1, offset=0),
-            GenvexNabtoDatapointKey.HOTWATER_BOTTOM: GenvexNabtoDatapoint(obj=0, address=43, divider=1, offset=0),
+            GenvexNabtoDatapointKey.HOTWATER_TOP: GenvexNabtoDatapoint(obj=0, address=42, divider=100, offset=0),
+            GenvexNabtoDatapointKey.HOTWATER_BOTTOM: GenvexNabtoDatapoint(obj=0, address=43, divider=100, offset=0),
             GenvexNabtoDatapointKey.SACRIFICIAL_ANODE: GenvexNabtoDatapoint(obj=0, address=142, divider=1, offset=0),
             GenvexNabtoDatapointKey.CO2_LEVEL: GenvexNabtoDatapoint(obj=0, address=53, divider=1, offset=0)
         }
