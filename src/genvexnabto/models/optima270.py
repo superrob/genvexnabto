@@ -25,7 +25,7 @@ class GenvexNabtoOptima270(GenvexNabtoBaseModel):
             GenvexNabtoSetpointKey.REHEATING: GenvexNabtoSetpoint(read_obj=0, read_address=3, write_obj=0, write_address=16, divider=1, offset=0, min=0, max=1),
             GenvexNabtoSetpointKey.HUMIDITY_CONTROL: GenvexNabtoSetpoint(read_obj=0, read_address=6, write_obj=0, write_address=22, divider=1, offset=0, min=0, max=1),
             GenvexNabtoSetpointKey.BOOST_ENABLE: GenvexNabtoSetpoint(read_obj=0, read_address=30, write_obj=0, write_address=70, divider=1, offset=0, min=0, max=1),
-            GenvexNabtoSetpointKey.BOOST_TIME: GenvexNabtoSetpoint(read_obj=0, read_address=70, write_obj=0, write_address=150, divider=1, offset=0, min=1, max=120),
+            GenvexNabtoSetpointKey.BOOST_TIME: GenvexNabtoSetpoint(read_obj=0, read_address=70, write_obj=0, write_address=150, divider=1, offset=0, min=1, max=120, step=1),
             GenvexNabtoSetpointKey.FILTER_DAYS: GenvexNabtoSetpoint(read_obj=0, read_address=100, write_obj=0, write_address=210, divider=1, offset=0, min=0, max=65535),
             GenvexNabtoSetpointKey.FILTER_RESET: GenvexNabtoSetpoint(read_obj=0, read_address=50, write_obj=0, write_address=110, divider=1, offset=0, min=0, max=2),
             GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL1: GenvexNabtoSetpoint(read_obj=0, read_address=10, write_obj=0, write_address=30, divider=1, offset=0, min=0, max=100, step=1),
