@@ -14,7 +14,8 @@ class GenvexNabtoCTS400(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.DUTYCYCLE_SUPPLY: GenvexNabtoDatapoint(obj=0, address=25, divider=10, offset=0),
             GenvexNabtoDatapointKey.DUTYCYCLE_EXTRACT: GenvexNabtoDatapoint(obj=0, address=24, divider=10, offset=0),
             GenvexNabtoDatapointKey.BYPASS_ACTIVE: GenvexNabtoDatapoint(obj=0, address=23, divider=1, offset=0),
-            GenvexNabtoDatapointKey.SUMMER_MODE: GenvexNabtoDatapoint(obj=0, address=72, divider=1, offset=0)
+            GenvexNabtoDatapointKey.SUMMER_MODE: GenvexNabtoDatapoint(obj=0, address=72, divider=1, offset=0),
+            GenvexNabtoDatapointKey.CO2_LEVEL: GenvexNabtoDatapoint(obj=0, address=47, divider=1, offset=0)
         }
 
         self._setpoints = {
@@ -48,7 +49,8 @@ class GenvexNabtoCTS400(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.DUTYCYCLE_SUPPLY,
             GenvexNabtoDatapointKey.DUTYCYCLE_EXTRACT,
             GenvexNabtoDatapointKey.BYPASS_ACTIVE,
-            GenvexNabtoDatapointKey.SUMMER_MODE
+            GenvexNabtoDatapointKey.SUMMER_MODE,
+            GenvexNabtoDatapointKey.CO2_LEVEL
         ]
     
     def getDefaultSetpointRequest(self) -> List[GenvexNabtoSetpointKey]:
