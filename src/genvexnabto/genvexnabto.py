@@ -11,7 +11,7 @@ from .protocol import (GenvexPacketType, GenvexDiscovery, GenvexPayloadIPX, Genv
                        GenvexPayloadCP_ID,  GenvexPacket, GenvexPacketKeepAlive, GenvexCommandDatapointReadList, 
                        GenvexCommandSetpointReadList, GenvexCommandPing, GenvexCommandSetpointWriteList)
 
-from .const import ( SOCKET_TIMEOUT, SOCKET_MAXSIZE, DATAPOINT_UPDATEINTERVAL, SETPOINT_UPDATEINTERVAL, DISCOVERY_PORT)
+from .const import ( SOCKET_TIMEOUT, SOCKET_MAXSIZE, DATAPOINT_UPDATEINTERVAL, SETPOINT_UPDATEINTERVAL, SECONDS_UNTILRECONNECT, DISCOVERY_PORT)
 
 class GenvexNabtoConnectionErrorType:
     TIMEOUT = "timeout"
@@ -221,9 +221,10 @@ class GenvexNabto():
         if (packetType == GenvexPacketType.U_CONNECT):
             print("U_CONNECT responce packet")
             if (message[20:24] == b'\x00\x00\x00\x01'):
-                print('Connected, pinging to get model number')
                 self._server_id = message[24:28]
-                self.sendPing()
+                print('Connected, pinging to get model number')
+                if not self._is_connected:
+                    self.sendPing()
             else:
                 print("Received unsucessfull response")
                 self._connection_error = GenvexNabtoConnectionErrorType.AUTHENTICATION_ERROR
@@ -308,4 +309,6 @@ class GenvexNabto():
                     self.sendDataStateRequest(100)
                 if time.time() - self._last_setpointupdate > SETPOINT_UPDATEINTERVAL:                    
                     self.sendSetpointStateRequest(200)
+                if time.time() - self._last_responce > SECONDS_UNTILRECONNECT:
+                    self.connectToDevice()
                     
