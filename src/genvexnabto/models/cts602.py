@@ -20,14 +20,18 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.HOTWATER_TOP: GenvexNabtoDatapoint(obj=0, address=42, divider=100, offset=0),
             GenvexNabtoDatapointKey.HOTWATER_BOTTOM: GenvexNabtoDatapoint(obj=0, address=43, divider=100, offset=0),
             GenvexNabtoDatapointKey.SACRIFICIAL_ANODE: GenvexNabtoDatapoint(obj=0, address=142, divider=1, offset=0),
-            GenvexNabtoDatapointKey.CO2_LEVEL: GenvexNabtoDatapoint(obj=0, address=53, divider=1, offset=0)
+            GenvexNabtoDatapointKey.CO2_LEVEL: GenvexNabtoDatapoint(obj=0, address=53, divider=1, offset=0),
+            GenvexNabtoDatapointKey.FILTER_DAYS_LEFT: GenvexNabtoSetpoint(read_obj=0, read_address=102, write_obj=0, write_address=102, divider=1, offset=0, min=0, max=999)
         }
 
         self._setpoints = {
             GenvexNabtoSetpointKey.FAN_SPEED: GenvexNabtoSetpoint(read_obj=0, read_address=139, write_obj=0, write_address=139, divider=1, offset=0, min=0, max=4),
             GenvexNabtoSetpointKey.TEMP_SETPOINT: GenvexNabtoSetpoint(read_obj=0, read_address=140, write_obj=0, write_address=140, divider=100, offset=0, min=0, max=3000),
-            GenvexNabtoSetpointKey.FILTER_DAYS_LEFT: GenvexNabtoSetpoint(read_obj=0, read_address=102, write_obj=0, write_address=102, divider=1, offset=0, min=0, max=365),
             GenvexNabtoSetpointKey.FILTER_RESET: GenvexNabtoSetpoint(read_obj=0, read_address=71, write_obj=0, write_address=71, divider=1, offset=0, min=0, max=1),
+            GenvexNabtoSetpointKey.HOTWATER_TEMP: GenvexNabtoSetpoint(read_obj=0, read_address=190, write_obj=0, write_address=190, divider=100, offset=0, min=2000, max=7000),
+            GenvexNabtoSetpointKey.HOTWATER_BOOSTTEMP: GenvexNabtoSetpoint(read_obj=0, read_address=189, write_obj=0, write_address=189, divider=100, offset=0, min=2000, max=7000),
+            GenvexNabtoSetpointKey.REHEATING: GenvexNabtoSetpoint(read_obj=0, read_address=281, write_obj=0, write_address=281, divider=1, offset=0, min=0, max=1)
+            
         }
 
     def getModelName(self):
@@ -52,12 +56,14 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.HOTWATER_TOP,
             GenvexNabtoDatapointKey.HOTWATER_BOTTOM,
             GenvexNabtoDatapointKey.SACRIFICIAL_ANODE,
-            GenvexNabtoDatapointKey.CO2_LEVEL
+            GenvexNabtoDatapointKey.CO2_LEVEL,
+            GenvexNabtoDatapointKey.FILTER_DAYS_LEFT
         ]
     
     def getDefaultSetpointRequest(self) -> List[GenvexNabtoSetpointKey]:
         return [
             GenvexNabtoSetpointKey.FAN_SPEED,
             GenvexNabtoSetpointKey.TEMP_SETPOINT,
-            GenvexNabtoSetpointKey.FILTER_DAYS_LEFT
+            GenvexNabtoSetpointKey.HOTWATER_TEMP,
+            GenvexNabtoSetpointKey.REHEATING
         ]

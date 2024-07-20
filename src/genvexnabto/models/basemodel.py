@@ -21,6 +21,7 @@ class GenvexNabtoDatapointKey:
     SUMMER_MODE = "summer_mode"
     SACRIFICIAL_ANODE = "sacrificial_anode"
     CO2_LEVEL = "co2_level"
+    FILTER_DAYS_LEFT = "filter_days_left"
 
 class GenvexNabtoSetpointKey:
     FAN_SPEED = "fan_speed"
@@ -33,7 +34,6 @@ class GenvexNabtoSetpointKey:
     FILTER_DAYS = "filter_days"
     FILTER_MONTHS = "filter_months"
     FILTER_HOURS = "filter_hours"
-    FILTER_DAYS_LEFT = "filter_days_left"
     FILTER_RESET = "filter_reset"
     SUPPLY_AIR_LEVEL1 = "supply_air_level1"
     SUPPLY_AIR_LEVEL2 = "supply_air_level2"
@@ -43,6 +43,8 @@ class GenvexNabtoSetpointKey:
     EXTRACT_AIR_LEVEL2 = "extract_air_level2"
     EXTRACT_AIR_LEVEL3 = "extract_air_level3"
     EXTRACT_AIR_LEVEL4 = "extract_air_level4"
+    HOTWATER_TEMP = "hotwater_temp"
+    HOTWATER_BOOSTTEMP = "hotwater_boosttemp"
 
 
 class GenvexNabtoDatapoint(TypedDict):
