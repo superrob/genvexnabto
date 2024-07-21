@@ -15,7 +15,7 @@ class CTS602WithNoQuirksTest(modelTester):
 class CTS602WithQuirksTest(modelTester):    
     def setUp(self):
         self.loadedModel = GenvexNabtoCTS602()
-        self.loadedModel.addDeviceQuirks(0,0,9)
+        self.loadedModel.addDeviceQuirks(0,0,12)
         self.expectedName = "CTS 602"
         self.expectedManufacturer = "Nilan"
 

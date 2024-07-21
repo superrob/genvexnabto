@@ -1,6 +1,9 @@
 from common import GenvexNabtoBaseModel, GenvexNabtoSetpointKey, GenvexNabtoDatapointKey
+import sys
 import unittest
-
+import logging
+logging.basicConfig( stream=sys.stderr )
+logging.getLogger( "SomeTest.testSomething" ).setLevel( logging.DEBUG )
 class modelTester(unittest.TestCase):
 
     def setUp(self):
@@ -15,8 +18,8 @@ class modelTester(unittest.TestCase):
         self.assertEqual(self.expectedManufacturer, self.loadedModel.getManufacturer())    
     
     def test_valid_setpoint_keys(self):
-        for key in self.loadedModel._setpoints:
-            currentSetpoint = self.loadedModel._setpoints[key]
+        for key in self.loadedModel._setpoints:            
+            currentSetpoint = self.loadedModel._setpoints[key]    
             self.assertIsNotNone(currentSetpoint["read_obj"])
             self.assertIsNotNone(currentSetpoint["read_address"])
             self.assertIsNotNone(currentSetpoint["write_obj"])
@@ -24,7 +27,8 @@ class modelTester(unittest.TestCase):
             self.assertIsNotNone(currentSetpoint["divider"])
             self.assertIsNotNone(currentSetpoint["min"])
             self.assertIsNotNone(currentSetpoint["max"])
-            return
+
+            self.assertNotEqual(currentSetpoint["divider"], 0)
         
     def test_valid_datapoint_keys(self):
         for key in self.loadedModel._datapoints:
@@ -33,7 +37,8 @@ class modelTester(unittest.TestCase):
             self.assertIsNotNone(currentDatapoint["address"])
             self.assertIsNotNone(currentDatapoint["divider"])
             self.assertIsNotNone(currentDatapoint["offset"])
-            return
+
+            self.assertNotEqual(currentDatapoint["divider"], 0)
         
     def test_datapoint_request_is_list(self):
         self.assertIsInstance(self.loadedModel.getDefaultDatapointRequest(), list)
