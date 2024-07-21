@@ -75,6 +75,17 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
                 9, 10, 11,  12,  13, 18, 19,
                 20, 21, 23,  30,  31, 32, 34,
                 38, 43, 44, 144, 244
+            ],
+            "summerTemperatures": [
+                2,  4,  9, 10, 12, 13, 19,  21,
+                26, 30, 31, 32, 33, 34, 35,  36,
+                38, 39, 40, 41, 43, 44, 45, 144,
+                244
+            ],
+            "coolingPriority": [
+                2,  9, 10, 12, 13,  30,
+                31, 32, 38, 43, 44, 144,
+                244
             ]
         }
         
@@ -104,7 +115,7 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
             self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.ANTILEGIONELLA_DAY)
 
         if self.deviceHasQuirk("hotwaterTempSet", slaveDeviceModel):  
-            self._setpoints[GenvexNabtoSetpointKey.HOTWATER_TEMP] = GenvexNabtoSetpoint(read_obj=0, read_address=190, write_obj=0, write_address=190, divider=100, offset=0, min=2000, max=7000, step=1),
+            self._setpoints[GenvexNabtoSetpointKey.HOTWATER_TEMP] = GenvexNabtoSetpoint(read_obj=0, read_address=190, write_obj=0, write_address=190, divider=100, offset=0, min=2000, max=7000, step=1)
             self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.HOTWATER_TEMP)
             self._setpoints[GenvexNabtoSetpointKey.HOTWATER_BOOSTTEMP] = GenvexNabtoSetpoint(read_obj=0, read_address=189, write_obj=0, write_address=189, divider=100, offset=0, min=2000, max=7000, step=1)
             self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.HOTWATER_BOOSTTEMP)
