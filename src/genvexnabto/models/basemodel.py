@@ -22,6 +22,8 @@ class GenvexNabtoDatapointKey:
     SACRIFICIAL_ANODE = "sacrificial_anode"
     CO2_LEVEL = "co2_level"
     FILTER_DAYS_LEFT = "filter_days_left"
+    DEFROST_ACTIVE = "defrost_active"
+    DEFORST_TIMESINCELAST = "defrost_timesincelast"
 
 class GenvexNabtoSetpointKey:
     FAN_SPEED = "fan_speed"
@@ -90,3 +92,6 @@ class GenvexNabtoBaseModel:
     
     def getDefaultSetpointRequest(self) -> List[GenvexNabtoSetpointKey]:
         return {}
+    
+    def addDeviceQuirks(self, deviceNumber, slaveDeviceNumber, slaveDeviceModel):
+        return
