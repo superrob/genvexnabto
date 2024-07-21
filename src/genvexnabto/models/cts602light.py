@@ -19,14 +19,7 @@ class GenvexNabtoCTS602Light(GenvexNabtoBaseModel):
             GenvexNabtoSetpointKey.TEMP_SETPOINT: GenvexNabtoSetpoint(read_obj=0, read_address=136, write_obj=0, write_address=136, divider=100, offset=0, min=0, max=3000)
         }
 
-    def getModelName(self):
-        return "CTS 602light"
-    
-    def getManufacturer(self):
-        return "Nilan"
-
-    def getDefaultDatapointRequest(self) -> List[GenvexNabtoDatapointKey]:
-        return [
+        self._defaultDatapointRequest = [
             GenvexNabtoDatapointKey.TEMP_SUPPLY,
             GenvexNabtoDatapointKey.TEMP_OUTSIDE,
             GenvexNabtoDatapointKey.TEMP_EXHAUST,
@@ -34,9 +27,14 @@ class GenvexNabtoCTS602Light(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.HUMIDITY,
             GenvexNabtoDatapointKey.BYPASS_ACTIVE
         ]
-    
-    def getDefaultSetpointRequest(self) -> List[GenvexNabtoSetpointKey]:
-        return [
+
+        self._defaultSetpointRequest = [
             GenvexNabtoSetpointKey.FAN_SPEED,
             GenvexNabtoSetpointKey.TEMP_SETPOINT
         ]
+
+    def getModelName(self):
+        return "CTS 602light"
+    
+    def getManufacturer(self):
+        return "Nilan"

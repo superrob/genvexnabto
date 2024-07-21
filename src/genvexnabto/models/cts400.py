@@ -35,14 +35,7 @@ class GenvexNabtoCTS400(GenvexNabtoBaseModel):
             GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL4: GenvexNabtoSetpoint(read_obj=0, read_address=66, write_obj=0, write_address=66, divider=10, offset=0, min=200, max=1000, step=1)
         }
 
-    def getModelName(self):
-        return "CTS 400"
-    
-    def getManufacturer(self):
-        return "Nilan"
-
-    def getDefaultDatapointRequest(self) -> List[GenvexNabtoDatapointKey]:
-        return [
+        self._defaultDatapointRequest = [
             GenvexNabtoDatapointKey.TEMP_SUPPLY,
             GenvexNabtoDatapointKey.TEMP_OUTSIDE,
             GenvexNabtoDatapointKey.TEMP_EXHAUST,
@@ -57,9 +50,8 @@ class GenvexNabtoCTS400(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.DEFROST_ACTIVE,
             GenvexNabtoDatapointKey.DEFORST_TIMESINCELAST
         ]
-    
-    def getDefaultSetpointRequest(self) -> List[GenvexNabtoSetpointKey]:
-        return [
+
+        self._getDefaultSetpointRequest = [
             GenvexNabtoSetpointKey.FAN_SPEED,
             GenvexNabtoSetpointKey.TEMP_SETPOINT,
             GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL1,
@@ -71,3 +63,9 @@ class GenvexNabtoCTS400(GenvexNabtoBaseModel):
             GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL3,
             GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL4
         ]
+
+    def getModelName(self):
+        return "CTS 400"
+    
+    def getManufacturer(self):
+        return "Nilan"

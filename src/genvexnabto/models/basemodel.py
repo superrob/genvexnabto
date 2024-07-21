@@ -71,6 +71,10 @@ class GenvexNabtoSetpoint(TypedDict):
 class GenvexNabtoBaseModel:
     _datapoints: Dict[GenvexNabtoDatapointKey, GenvexNabtoDatapoint] = {}
     _setpoints: Dict[GenvexNabtoSetpointKey, GenvexNabtoSetpoint] = {}
+    _quirks: Dict[str, list[int]] = {}
+
+    _defaultDatapointRequest: List[GenvexNabtoDatapointKey] = []
+    _defaultSetpointRequest: List[GenvexNabtoDatapointKey] = []
 
     def __init__(self):
         return
@@ -85,13 +89,18 @@ class GenvexNabtoBaseModel:
         return datapoint in self._datapoints
     
     def getDefaultDatapointRequest(self) -> List[GenvexNabtoDatapointKey]:
-        return {}
+        return self._defaultDatapointRequest
     
     def modelProvidesSetpoint(self, datapoint: GenvexNabtoSetpointKey) -> bool: 
         return datapoint in self._setpoints
     
     def getDefaultSetpointRequest(self) -> List[GenvexNabtoSetpointKey]:
-        return {}
+        return self._defaultSetpointRequest
     
+    def deviceHasQuirk(self, quirk, device) -> bool:
+        if quirk not in self._quirks:
+            return False
+        return device in self._quirks[quirk]
+
     def addDeviceQuirks(self, deviceNumber, slaveDeviceNumber, slaveDeviceModel):
         return
