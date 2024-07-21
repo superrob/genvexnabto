@@ -51,7 +51,7 @@ class GenvexNabtoCTS400(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.DEFORST_TIMESINCELAST
         ]
 
-        self._getDefaultSetpointRequest = [
+        self._defaultSetpointRequest = [
             GenvexNabtoSetpointKey.FAN_SPEED,
             GenvexNabtoSetpointKey.TEMP_SETPOINT,
             GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL1,
