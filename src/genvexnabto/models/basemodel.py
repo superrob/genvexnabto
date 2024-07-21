@@ -49,6 +49,9 @@ class GenvexNabtoSetpointKey:
     HOTWATER_TEMP = "hotwater_temp"
     HOTWATER_BOOSTTEMP = "hotwater_boosttemp"
     ANTILEGIONELLA_DAY = "antilegionella_day"
+    SUPPLYAIR_MIN_TEMP_SUMMER = "supplyair_min_temp_summer"
+    SUPPLYAIR_MAX_TEMP_SUMMER = "supplyair_max_temp_summer"
+    COOLING_PRIORITY = "cooling_priority"
 
 
 class GenvexNabtoDatapoint(TypedDict):

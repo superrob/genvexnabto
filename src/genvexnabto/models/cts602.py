@@ -104,10 +104,20 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
             self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.ANTILEGIONELLA_DAY)
 
         if self.deviceHasQuirk("hotwaterTempSet", slaveDeviceModel):  
-            self._setpoints[GenvexNabtoSetpointKey.HOTWATER_TEMP] = GenvexNabtoSetpoint(read_obj=0, read_address=190, write_obj=0, write_address=190, divider=100, offset=0, min=2000, max=7000),
+            self._setpoints[GenvexNabtoSetpointKey.HOTWATER_TEMP] = GenvexNabtoSetpoint(read_obj=0, read_address=190, write_obj=0, write_address=190, divider=100, offset=0, min=2000, max=7000, step=1),
             self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.HOTWATER_TEMP)
-            self._setpoints[GenvexNabtoSetpointKey.HOTWATER_BOOSTTEMP] = GenvexNabtoSetpoint(read_obj=0, read_address=189, write_obj=0, write_address=189, divider=100, offset=0, min=2000, max=7000)
+            self._setpoints[GenvexNabtoSetpointKey.HOTWATER_BOOSTTEMP] = GenvexNabtoSetpoint(read_obj=0, read_address=189, write_obj=0, write_address=189, divider=100, offset=0, min=2000, max=7000, step=1)
             self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.HOTWATER_BOOSTTEMP)
+
+        if self.deviceHasQuirk("summerTemperatures", slaveDeviceModel):
+            self._setpoints[GenvexNabtoSetpointKey.SUPPLYAIR_MIN_TEMP_SUMMER] = GenvexNabtoSetpoint(read_obj=0, read_address=171, write_obj=0, write_address=171, divider=100, offset=0, min=0, max=4000, step=1)
+            self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.SUPPLYAIR_MIN_TEMP_SUMMER)
+            self._setpoints[GenvexNabtoSetpointKey.SUPPLYAIR_MAX_TEMP_SUMMER] = GenvexNabtoSetpoint(read_obj=0, read_address=173, write_obj=0, write_address=173, divider=100, offset=0, min=0, max=4000, step=1)
+            self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.SUPPLYAIR_MAX_TEMP_SUMMER)
+
+        if self.deviceHasQuirk("coolingPriority", slaveDeviceModel):
+            self._setpoints[GenvexNabtoSetpointKey.COOLING_PRIORITY] = GenvexNabtoSetpoint(read_obj=0, read_address=191, write_obj=0, write_address=191, divider=1, offset=0, min=0, max=1)
+            self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.COOLING_PRIORITY)
         return
 
     def getModelName(self):
