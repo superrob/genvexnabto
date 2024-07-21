@@ -24,8 +24,7 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
             GenvexNabtoSetpointKey.FAN_SPEED: GenvexNabtoSetpoint(read_obj=0, read_address=139, write_obj=0, write_address=139, divider=1, offset=0, min=0, max=4),
             GenvexNabtoSetpointKey.TEMP_SETPOINT: GenvexNabtoSetpoint(read_obj=0, read_address=140, write_obj=0, write_address=140, divider=100, offset=0, min=0, max=3000),
             GenvexNabtoSetpointKey.FILTER_RESET: GenvexNabtoSetpoint(read_obj=0, read_address=71, write_obj=0, write_address=71, divider=1, offset=0, min=0, max=1),
-            GenvexNabtoSetpointKey.HOTWATER_TEMP: GenvexNabtoSetpoint(read_obj=0, read_address=190, write_obj=0, write_address=190, divider=100, offset=0, min=2000, max=7000),
-            GenvexNabtoSetpointKey.HOTWATER_BOOSTTEMP: GenvexNabtoSetpoint(read_obj=0, read_address=189, write_obj=0, write_address=189, divider=100, offset=0, min=2000, max=7000)
+            GenvexNabtoSetpointKey.FILTER_DAYS_SETTING: GenvexNabtoSetpoint(read_obj=0, read_address=159, write_obj=0, write_address=159, divider=1, offset=0, min=0, max=365, step=1)
         }
 
         self._defaultDatapointRequest = [
@@ -46,8 +45,7 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
         self._defaultSetpointRequest = [
             GenvexNabtoSetpointKey.FAN_SPEED,
             GenvexNabtoSetpointKey.TEMP_SETPOINT,
-            GenvexNabtoSetpointKey.HOTWATER_TEMP,
-            GenvexNabtoSetpointKey.HOTWATER_BOOSTTEMP,
+            GenvexNabtoSetpointKey.FILTER_DAYS_SETTING
         ]
 
         self._quirks = {
@@ -67,7 +65,17 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
                 34,  35,  36, 38, 39, 40, 41, 43, 44,
                 45, 144, 244
             ],
-            "exhaustTempSensor": [ 2, 13, 27, 31 ]
+            "exhaustTempSensor": [ 2, 13, 27, 31 ],
+            "antiLegionella": [
+                3,  4,  9, 10,  11,  12, 18,
+                19, 20, 21, 23,  30,  32, 34,
+                38, 43, 44, 45, 144, 244
+            ],
+            "hotwaterTempSet": [
+                9, 10, 11,  12,  13, 18, 19,
+                20, 21, 23,  30,  31, 32, 34,
+                38, 43, 44, 144, 244
+            ]
         }
         
     
@@ -91,6 +99,15 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
             self._datapoints[GenvexNabtoDatapointKey.TEMP_EXHAUST] = GenvexNabtoDatapoint(obj=0, address=34, divider=100, offset=0)
             self._defaultDatapointRequest.append(GenvexNabtoDatapointKey.TEMP_EXHAUST)
 
+        if self.deviceHasQuirk("antiLegionella", slaveDeviceModel):  
+            self._setpoints[GenvexNabtoSetpointKey.ANTILEGIONELLA_DAY] = GenvexNabtoSetpoint(read_obj=0, read_address=194, write_obj=0, write_address=194, divider=1, offset=0, min=7, max=1)
+            self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.ANTILEGIONELLA_DAY)
+
+        if self.deviceHasQuirk("hotwaterTempSet", slaveDeviceModel):  
+            self._setpoints[GenvexNabtoSetpointKey.HOTWATER_TEMP] = GenvexNabtoSetpoint(read_obj=0, read_address=190, write_obj=0, write_address=190, divider=100, offset=0, min=2000, max=7000),
+            self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.HOTWATER_TEMP)
+            self._setpoints[GenvexNabtoSetpointKey.HOTWATER_BOOSTTEMP] = GenvexNabtoSetpoint(read_obj=0, read_address=189, write_obj=0, write_address=189, divider=100, offset=0, min=2000, max=7000)
+            self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.HOTWATER_BOOSTTEMP)
         return
 
     def getModelName(self):

@@ -37,6 +37,7 @@ class GenvexNabtoSetpointKey:
     FILTER_MONTHS = "filter_months"
     FILTER_HOURS = "filter_hours"
     FILTER_RESET = "filter_reset"
+    FILTER_DAYS_SETTING = "filter_days_setting"
     SUPPLY_AIR_LEVEL1 = "supply_air_level1"
     SUPPLY_AIR_LEVEL2 = "supply_air_level2"
     SUPPLY_AIR_LEVEL3 = "supply_air_level3"
@@ -47,6 +48,7 @@ class GenvexNabtoSetpointKey:
     EXTRACT_AIR_LEVEL4 = "extract_air_level4"
     HOTWATER_TEMP = "hotwater_temp"
     HOTWATER_BOOSTTEMP = "hotwater_boosttemp"
+    ANTILEGIONELLA_DAY = "antilegionella_day"
 
 
 class GenvexNabtoDatapoint(TypedDict):
@@ -65,7 +67,6 @@ class GenvexNabtoSetpoint(TypedDict):
     min: int
     max: int
     step: float
-
 
 
 class GenvexNabtoBaseModel:
