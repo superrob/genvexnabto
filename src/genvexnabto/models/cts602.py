@@ -17,7 +17,7 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.DUTYCYCLE_EXTRACT: GenvexNabtoDatapoint(obj=0, address=100, divider=1, offset=0),
             GenvexNabtoDatapointKey.BYPASS_ACTIVE: GenvexNabtoDatapoint(obj=0, address=187, divider=1, offset=0),
             GenvexNabtoDatapointKey.CO2_LEVEL: GenvexNabtoDatapoint(obj=0, address=53, divider=1, offset=0),
-            GenvexNabtoDatapointKey.FILTER_DAYS_LEFT: GenvexNabtoSetpoint(read_obj=0, address=102, divider=1, offset=0)
+            GenvexNabtoDatapointKey.FILTER_DAYS_LEFT: GenvexNabtoDatapoint(obj=0, address=102, divider=1, offset=0)
         }
 
         self._setpoints = {
@@ -31,7 +31,6 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
         self._defaultDatapointRequest = [
             GenvexNabtoDatapointKey.TEMP_SUPPLY,
             GenvexNabtoDatapointKey.TEMP_OUTSIDE,
-            GenvexNabtoDatapointKey.TEMP_EXHAUST,
             GenvexNabtoDatapointKey.TEMP_EXTRACT,
             GenvexNabtoDatapointKey.TEMP_CONDENSER,
             GenvexNabtoDatapointKey.TEMP_EVAPORATOR,            
