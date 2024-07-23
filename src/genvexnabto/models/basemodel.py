@@ -25,6 +25,10 @@ class GenvexNabtoDatapointKey:
     DEFROST_ACTIVE = "defrost_active"
     DEFORST_TIMESINCELAST = "defrost_timesincelast"
     CONTROLSTATE_602 = "controlstate_602"
+    ALARM_OPTIMA270 = "alarm_optima270"
+    ALARM_CTS602NO1 = "alarm_cts602no1"
+    ALARM_CTS602NO2 = "alarm_cts602no2"
+    ALARM_CTS602NO3 = "alarm_cts602no3"
 
 class GenvexNabtoSetpointKey:
     FAN_SPEED = "fan_speed"
