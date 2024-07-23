@@ -18,7 +18,10 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.BYPASS_ACTIVE: GenvexNabtoDatapoint(obj=0, address=187, divider=1, offset=0),
             GenvexNabtoDatapointKey.CO2_LEVEL: GenvexNabtoDatapoint(obj=0, address=53, divider=1, offset=0),
             GenvexNabtoDatapointKey.FILTER_DAYS_LEFT: GenvexNabtoDatapoint(obj=0, address=102, divider=1, offset=0),
-            GenvexNabtoDatapointKey.CONTROLSTATE_602: GenvexNabtoDatapoint(obj=0, address=86, divider=1, offset=0)
+            GenvexNabtoDatapointKey.CONTROLSTATE_602: GenvexNabtoDatapoint(obj=0, address=86, divider=1, offset=0),
+            GenvexNabtoDatapointKey.ALARM_CTS602NO1: GenvexNabtoDatapoint(obj=0, address=65, divider=1, offset=0),
+            GenvexNabtoDatapointKey.ALARM_CTS602NO2: GenvexNabtoDatapoint(obj=0, address=68, divider=1, offset=0),
+            GenvexNabtoDatapointKey.ALARM_CTS602NO3: GenvexNabtoDatapoint(obj=0, address=71, divider=1, offset=0)
         }
 
         self._setpoints = {
@@ -41,7 +44,10 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.BYPASS_ACTIVE,
             GenvexNabtoDatapointKey.CO2_LEVEL,
             GenvexNabtoDatapointKey.FILTER_DAYS_LEFT,
-            GenvexNabtoDatapointKey.CONTROLSTATE_602
+            GenvexNabtoDatapointKey.CONTROLSTATE_602,
+            GenvexNabtoDatapointKey.ALARM_CTS602NO1,
+            GenvexNabtoDatapointKey.ALARM_CTS602NO2,
+            GenvexNabtoDatapointKey.ALARM_CTS602NO3
         ]
 
         self._defaultSetpointRequest = [
