@@ -24,6 +24,7 @@ class GenvexNabtoDatapointKey:
     FILTER_DAYS_LEFT = "filter_days_left"
     DEFROST_ACTIVE = "defrost_active"
     DEFORST_TIMESINCELAST = "defrost_timesincelast"
+    CONTROLSTATE_602 = "controlstate_602"
 
 class GenvexNabtoSetpointKey:
     FAN_SPEED = "fan_speed"
@@ -70,7 +71,6 @@ class GenvexNabtoSetpoint(TypedDict):
     min: int
     max: int
     step: float
-
 
 class GenvexNabtoBaseModel:
     _datapoints: Dict[GenvexNabtoDatapointKey, GenvexNabtoDatapoint] = {}
