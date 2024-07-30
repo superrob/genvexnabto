@@ -35,6 +35,7 @@ class GenvexNabtoSetpointKey:
     TEMP_SETPOINT = "temp_setpoint"
     BYPASS_OPENOFFSET = "bypass_openoffset" # EE1
     REHEATING = "reheating" # A1
+    PREHEATING = "preheating" # A1
     HUMIDITY_CONTROL = "humidity_control" # A2
     BOOST_ENABLE = "boost_enable"
     BOOST_TIME = "boost_time" # A3
@@ -57,6 +58,8 @@ class GenvexNabtoSetpointKey:
     SUPPLYAIR_MIN_TEMP_SUMMER = "supplyair_min_temp_summer"
     SUPPLYAIR_MAX_TEMP_SUMMER = "supplyair_max_temp_summer"
     COOLING_PRIORITY = "cooling_priority"
+    COOLING_ENABLE = "cooling_enable"
+    COOLING_TEMPERATURE = "cooling_temperature"
 
 
 class GenvexNabtoDatapoint(TypedDict):
