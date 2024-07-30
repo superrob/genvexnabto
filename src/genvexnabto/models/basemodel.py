@@ -40,9 +40,9 @@ class GenvexNabtoSetpointKey:
     BOOST_ENABLE = "boost_enable"
     BOOST_TIME = "boost_time" # A3
     FILTER_DAYS = "filter_days"
-    FILTER_MONTHS = "filter_months"
     FILTER_HOURS = "filter_hours"
     FILTER_RESET = "filter_reset"
+    FILTER_MONTHS_SETTING = "filter_months_setting"
     FILTER_DAYS_SETTING = "filter_days_setting"
     SUPPLY_AIR_LEVEL1 = "supply_air_level1"
     SUPPLY_AIR_LEVEL2 = "supply_air_level2"
