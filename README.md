@@ -16,8 +16,8 @@ The libary is built to be used by my Home Assistant custom component and is curr
 |Optima 314         | Built in              | ✅              |         |
 |Nilan CTS400       | Yes, nilan gateway    | ✅              | ✅     |
 |Nilan CTS602       | Yes, nilan gateway    | ✅              | ✅     |
-|Nilan CTS602 Light | Yes, nilan gateway    | EXPERIMENTAL    |         |
-|Nilan CTS602 Geo   | Yes, nilan gateway    | Not implemented |         |
+|Nilan CTS602 Light | Yes, nilan gateway    | ✅              |         |
+|Nilan CTS602 Geo   | Yes, nilan gateway    | ✅              |         |
 
 For any controllers that requires a gateway, it is mandetory that the device supports Modbus. Optima controllers delivered before 2014 might not have Modbus.
 
