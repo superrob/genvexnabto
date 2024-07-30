@@ -21,6 +21,7 @@ class GenvexNabtoOptima314(GenvexNabtoBaseModel):
         self._setpoints = {
             GenvexNabtoSetpointKey.FAN_SPEED: GenvexNabtoSetpoint(read_obj=0, read_address=7, write_obj=0, write_address=24, divider=1, offset=0, min=0, max=4),
             GenvexNabtoSetpointKey.TEMP_SETPOINT: GenvexNabtoSetpoint(read_obj=0, read_address=1, write_obj=0, write_address=12, divider=10, offset=100, min=0, max=200, step=0.5),
+            GenvexNabtoSetpointKey.HOTWATER_TEMP: GenvexNabtoSetpoint(read_obj=0, read_address=122, write_obj=0, write_address=254, divider=10, offset=0, min=0, max=550, step=1),
             GenvexNabtoSetpointKey.REHEATING: GenvexNabtoSetpoint(read_obj=0, read_address=3, write_obj=0, write_address=16, divider=1, offset=0, min=0, max=1),
             GenvexNabtoSetpointKey.HUMIDITY_CONTROL: GenvexNabtoSetpoint(read_obj=0, read_address=6, write_obj=0, write_address=22, divider=1, offset=0, min=0, max=1),
             GenvexNabtoSetpointKey.BOOST_ENABLE: GenvexNabtoSetpoint(read_obj=0, read_address=30, write_obj=0, write_address=70, divider=1, offset=0, min=0, max=1),
@@ -61,6 +62,7 @@ class GenvexNabtoOptima314(GenvexNabtoBaseModel):
         return [
             GenvexNabtoSetpointKey.FAN_SPEED,
             GenvexNabtoSetpointKey.TEMP_SETPOINT,
+            GenvexNabtoSetpointKey.HOTWATER_TEMP,
             GenvexNabtoSetpointKey.REHEATING,
             GenvexNabtoSetpointKey.HUMIDITY_CONTROL,
             GenvexNabtoSetpointKey.FILTER_DAYS,
