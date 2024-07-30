@@ -57,8 +57,6 @@ class GenvexNabtoModelAdapter:
             if slaveDeviceNumber == 2763306:
                 if slaveDeviceModel == 2:
                     return GenvexNabtoCTS602Light
-                if slaveDeviceModel == 144 or slaveDeviceModel == 244:
-                    return None # Not currently supported. CTS602 Compact Geo Air
                 return GenvexNabtoCTS602
             
         return None
