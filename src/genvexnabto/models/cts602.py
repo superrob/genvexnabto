@@ -94,6 +94,11 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
                 2,  9, 10, 12, 13,  30,
                 31, 32, 38, 43, 44, 144,
                 244
+            ],
+            "coolingOffset": [
+                4,  9, 10, 12, 19,  21,  26,
+                30, 32, 33, 35, 36,  38,  39,
+                40, 41, 43, 44, 45, 144, 244
             ]
         }
         
@@ -137,6 +142,10 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
         if self.deviceHasQuirk("coolingPriority", slaveDeviceModel):
             self._setpoints[GenvexNabtoSetpointKey.COOLING_PRIORITY] = GenvexNabtoSetpoint(read_obj=0, read_address=191, write_obj=0, write_address=191, divider=1, offset=0, min=0, max=1)
             self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.COOLING_PRIORITY)
+
+        if self.deviceHasQuirk("coolingOffset", slaveDeviceModel):
+            self._setpoints[GenvexNabtoSetpointKey.COOLING_OFFSET] = GenvexNabtoSetpoint(read_obj=0, read_address=170, write_obj=0, write_address=170, divider=1, offset=0, min=0, max=10)
+            self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.COOLING_OFFSET)
         return
 
     def getModelName(self):

@@ -62,6 +62,7 @@ class GenvexNabtoSetpointKey:
     COOLING_PRIORITY = "cooling_priority"
     COOLING_ENABLE = "cooling_enable"
     COOLING_TEMPERATURE = "cooling_temperature"
+    COOLING_OFFSET = "cooling_offset"
 
 
 class GenvexNabtoDatapoint(TypedDict):
