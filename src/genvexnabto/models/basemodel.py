@@ -9,6 +9,8 @@ class GenvexNabtoDatapointKey:
     TEMP_EVAPORATOR = "temp_evaporator"
     TEMP_ROOM = "temp_room"
     HUMIDITY = "humidity"
+    FAN_LEVEL_SUPPLY = "fan_level_supply"
+    FAN_LEVEL_EXTRACT = "fan_level_extract"
     DUTYCYCLE_SUPPLY = "fan_speed_supply"
     DUTYCYCLE_EXTRACT = "fan_speed_extract"
     RPM_SUPPLY = "fan_rpm_supply"
