@@ -17,6 +17,8 @@ class GenvexNabtoDatapointKey:
     RPM_EXTRACT = "fan_rpm_extract"
     M3H_SUPPLY = "fan_m3h_supply"
     M3H_EXTRACT = "fan_m3h_extract"
+    PREHEAT_PWM = "preheat_pwm"
+    REHEAT_PWM = "reheat_pwm"
     BYPASS_ACTIVE = "bypass_active"
     HOTWATER_TOP = "hotwater_top"
     HOTWATER_BOTTOM = "hotwater_bottom"
