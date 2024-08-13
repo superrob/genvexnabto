@@ -46,13 +46,20 @@ class GenvexNabto():
 
     _discovered_devices = {}
 
-    def __init__(self, _authorized_email = "", _device_id = None) -> None:
+    def __init__(self, _authorized_email = "") -> None:
         self._authorized_email = _authorized_email
-        self._device_id = _device_id
-        if self._authorized_email != "" and self._device_id is not None:
-            self.startListening()
-            self.getDeviceIP()
-        return
+        self.startListening()
+        return    
+    
+    def setDevice(self, device_id):
+        self._device_id = device_id
+        self.getDeviceIP()
+
+    def setManualIP(self, device_ip, device_port):
+        self._device_ip = device_ip
+        self._device_port = device_port
+        self._device_id = device_ip.replace(".", "")
+        self._discovered_devices[self._device_id] = (device_ip, device_port)
 
     def openSocket(self):
         if self._socket is not None:
@@ -84,14 +91,12 @@ class GenvexNabto():
             return
         self._socket.sendto(GenvexDiscovery.build_packet(specificDevice), ("255.255.255.255", DISCOVERY_PORT))
 
-    async def discoverDevices(self):
+    async def discoverDevices(self, clear=False):
+        if clear:
+            self._discovered_devices = {}
         self.sendDiscovery()
         await asyncio.sleep(0.5) # Allow for all devices to reply
         return self._discovered_devices
-    
-    def setDevice(self, device_id):
-        self._device_id = device_id
-        self.getDeviceIP()
 
     def getDeviceIP(self):
         # Check if we already know the IP from earlier
