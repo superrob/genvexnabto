@@ -18,7 +18,10 @@ class GenvexNabtoCTS400(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.CO2_LEVEL: GenvexNabtoDatapoint(obj=0, address=47, divider=1, offset=0),
             GenvexNabtoDatapointKey.FILTER_DAYS_LEFT: GenvexNabtoDatapoint(obj=0, address=110, divider=1, offset=0),
             GenvexNabtoDatapointKey.DEFROST_ACTIVE: GenvexNabtoDatapoint(obj=0, address=91, divider=1, offset=0),
-            GenvexNabtoDatapointKey.DEFORST_TIMESINCELAST: GenvexNabtoDatapoint(obj=0, address=89, divider=1, offset=0)               
+            GenvexNabtoDatapointKey.DEFORST_TIMESINCELAST: GenvexNabtoDatapoint(obj=0, address=89, divider=1, offset=0),
+            GenvexNabtoDatapointKey.ALARM_CTS400CRITICAL: GenvexNabtoDatapoint(obj=0, address=79, divider=1, offset=0),
+            GenvexNabtoDatapointKey.ALARM_CTS400WARNING: GenvexNabtoDatapoint(obj=0, address=80, divider=1, offset=0),
+            GenvexNabtoDatapointKey.ALARM_CTS400INFO: GenvexNabtoDatapoint(obj=0, address=82, divider=1, offset=0)             
         }
 
         self._setpoints = {
