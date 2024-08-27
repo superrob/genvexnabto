@@ -142,7 +142,10 @@ class GenvexNabtoModelAdapter:
             oldValue = -1
             if valueKey in self._values:
                 oldValue = self._values[valueKey]
-            self._values[valueKey] = (int.from_bytes(payloadSlice, 'big', signed=True) + self._loadedModel._datapoints[valueKey]['offset']) / self._loadedModel._datapoints[valueKey]['divider']
+            self._values[valueKey] = (int.from_bytes(payloadSlice, 'big', signed=True) + self._loadedModel._datapoints[valueKey]['offset'])
+            if self._loadedModel._datapoints[valueKey]['divider'] > 1:
+                self._values[valueKey] /= self._loadedModel._datapoints[valueKey]['divider']
+            
             if oldValue != self._values[valueKey]:
                 if valueKey in self._update_handlers:
                     for method in self._update_handlers[valueKey]:
@@ -160,7 +163,9 @@ class GenvexNabtoModelAdapter:
             oldValue = -1
             if valueKey in self._values:
                 oldValue = self._values[valueKey]
-            self._values[valueKey] = (int.from_bytes(payloadSlice, 'big') + self._loadedModel._setpoints[valueKey]['offset']) / self._loadedModel._setpoints[valueKey]['divider']
+            self._values[valueKey] = (int.from_bytes(payloadSlice, 'big') + self._loadedModel._setpoints[valueKey]['offset'])
+            if self._loadedModel._setpoints[valueKey]['divider'] > 1:
+                self._values[valueKey] /= self._loadedModel._setpoints[valueKey]['divider']
             if oldValue != self._values[valueKey]:
                 if valueKey in self._update_handlers:
                     for method in self._update_handlers[valueKey]:
