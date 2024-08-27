@@ -33,6 +33,7 @@ class GenvexNabtoDatapointKey:
     ALARM_CTS602NO1 = "alarm_cts602no1"
     ALARM_CTS602NO2 = "alarm_cts602no2"
     ALARM_CTS602NO3 = "alarm_cts602no3"
+    ALARM_ACTIVE = "alarm_active"
 
 class GenvexNabtoSetpointKey:
     FAN_SPEED = "fan_speed"
