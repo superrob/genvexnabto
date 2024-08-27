@@ -22,6 +22,7 @@ class GenvexNabtoCTS400(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.ALARM_CTS400CRITICAL: GenvexNabtoDatapoint(obj=0, address=79, divider=1, offset=0),
             GenvexNabtoDatapointKey.ALARM_CTS400WARNING: GenvexNabtoDatapoint(obj=0, address=80, divider=1, offset=0),
             GenvexNabtoDatapointKey.ALARM_CTS400INFO: GenvexNabtoDatapoint(obj=0, address=82, divider=1, offset=0)             
+            ,GenvexNabtoDatapointKey.ALARM_ACTIVE: GenvexNabtoDatapoint(obj=0, address=50, divider=1, offset=0)                   
         }
 
         self._setpoints = {
@@ -51,7 +52,8 @@ class GenvexNabtoCTS400(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.CO2_LEVEL,
             GenvexNabtoDatapointKey.FILTER_DAYS_LEFT,
             GenvexNabtoDatapointKey.DEFROST_ACTIVE,
-            GenvexNabtoDatapointKey.DEFORST_TIMESINCELAST
+            GenvexNabtoDatapointKey.DEFORST_TIMESINCELAST,
+            GenvexNabtoDatapointKey.ALARM_ACTIVE
         ]
 
         self._defaultSetpointRequest = [

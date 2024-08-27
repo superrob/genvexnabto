@@ -36,6 +36,7 @@ class GenvexNabtoDatapointKey:
     ALARM_CTS400CRITICAL = "alarm_cts400critical"
     ALARM_CTS400WARNING = "alarn_cts400warning"
     ALARM_CTS400INFO = "alarm_cts400info"
+    ALARM_ACTIVE = "alarm_active"
 
 class GenvexNabtoSetpointKey:
     FAN_SPEED = "fan_speed"
