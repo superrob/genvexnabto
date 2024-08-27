@@ -51,7 +51,10 @@ class GenvexNabtoCTS400(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.CO2_LEVEL,
             GenvexNabtoDatapointKey.FILTER_DAYS_LEFT,
             GenvexNabtoDatapointKey.DEFROST_ACTIVE,
-            GenvexNabtoDatapointKey.DEFORST_TIMESINCELAST
+            GenvexNabtoDatapointKey.DEFORST_TIMESINCELAST,
+            GenvexNabtoDatapointKey.ALARM_CTS400CRITICAL,
+            GenvexNabtoDatapointKey.ALARM_CTS400WARNING,
+            GenvexNabtoDatapointKey.ALARM_CTS400INFO
         ]
 
         self._defaultSetpointRequest = [
