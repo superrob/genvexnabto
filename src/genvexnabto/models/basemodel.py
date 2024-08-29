@@ -68,6 +68,7 @@ class GenvexNabtoSetpointKey:
     COOLING_ENABLE = "cooling_enable"
     COOLING_TEMPERATURE = "cooling_temperature"
     COOLING_OFFSET = "cooling_offset"
+    VENTILATION_ENABLE = "ventilation_enable"
 
 
 class GenvexNabtoDatapoint(TypedDict):
