@@ -36,7 +36,7 @@ class GenvexNabtoCTS400(GenvexNabtoBaseModel):
             GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL2: GenvexNabtoSetpoint(read_obj=0, read_address=64, write_obj=0, write_address=64, divider=10, offset=0, min=200, max=1000, step=1),
             GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL3: GenvexNabtoSetpoint(read_obj=0, read_address=65, write_obj=0, write_address=65, divider=10, offset=0, min=200, max=1000, step=1),
             GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL4: GenvexNabtoSetpoint(read_obj=0, read_address=66, write_obj=0, write_address=66, divider=10, offset=0, min=200, max=1000, step=1),
-            GenvexNabtoSetpointKey.VENTILATION_DISABLE: GenvexNabtoSetpoint(read_obj=0, read_address=70, write_obj=0, write_address=70, divider=1, offset=0, min=0, max=1, step=1)
+            GenvexNabtoSetpointKey.VENTILATION_ENABLE: GenvexNabtoSetpoint(read_obj=0, read_address=70, write_obj=0, write_address=70, divider=1, offset=0, min=0, max=1, step=1)
         }
 
         self._defaultDatapointRequest = [
@@ -69,7 +69,7 @@ class GenvexNabtoCTS400(GenvexNabtoBaseModel):
             GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL2,
             GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL3,
             GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL4,
-            GenvexNabtoSetpointKey.VENTILATION_DISABLE
+            GenvexNabtoSetpointKey.VENTILATION_ENABLE
         ]
 
     def getModelName(self):
