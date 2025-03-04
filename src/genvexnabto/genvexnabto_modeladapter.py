@@ -105,18 +105,12 @@ class GenvexNabtoModelAdapter:
     def getDatapointRequestList(self, sequenceId):
         if sequenceId not in self._currentDatapointList:
             return False
-        returnList = []
-        for key in self._currentDatapointList[sequenceId]:
-            returnList.append(self._loadedModel._datapoints[key])
-        return returnList
+        return [self._loadedModel._datapoints[key] for key in self._currentDatapointList[sequenceId]]
     
     def getSetpointRequestList(self, sequenceId):
         if sequenceId not in self._currentSetpointList:
             return False
-        returnList = []
-        for key in self._currentSetpointList[sequenceId]:
-            returnList.append(self._loadedModel._setpoints[key])
-        return returnList
+        return [self._loadedModel._setpoints[key] for key in self._currentSetpointList[sequenceId]] 
     
     def parseDataResponce(self, responceSeq, responcePayload):
         _LOGGER.debug(f"Got dataresponce with sequence id: {responceSeq}")
