@@ -28,7 +28,7 @@ class CTS602WithExtractTempSensor(modelTester):
         self.loadedModel.finishLoading()
 
     def test_extract_sensor_used(self):
-        self.assertEqual(self.loadedModel._datapoints[GenvexNabtoDatapointKey.TEMP_EXTRACT]['address'], 35)
+        self.assertEqual(self.loadedModel._datapoints[GenvexNabtoDatapointKey.TEMP_EXTRACT]['address'], 34)
 
 class CTS602WithQuirksTest(modelTester):    
     def setUp(self):

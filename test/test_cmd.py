@@ -1,5 +1,5 @@
 import unittest
-from common import GenvexCommandPing, GenvexCommandKeepAlive,
+from common import GenvexCommandPing, GenvexCommandKeepAlive
 
 class cmdTester(unittest.TestCase):
     def setUp(self):
