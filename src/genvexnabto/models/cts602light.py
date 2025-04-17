@@ -32,7 +32,6 @@ class GenvexNabtoCTS602Light(GenvexNabtoBaseModel):
 
         self._defaultDatapointRequest = [
             GenvexNabtoDatapointKey.TEMP_SUPPLY,
-            GenvexNabtoDatapointKey.TEMP_SUPPLY_AFTER_HEATER,
             GenvexNabtoDatapointKey.TEMP_OUTSIDE,
             GenvexNabtoDatapointKey.TEMP_EXHAUST,
             GenvexNabtoDatapointKey.TEMP_EXTRACT,
