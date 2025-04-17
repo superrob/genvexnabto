@@ -218,10 +218,10 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
             self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.CENTRALHEAT_SUPPLY_MAX)
             self._setpoints[GenvexNabtoSetpointKey.CENTRALHEAT_PUMP_MODE] = GenvexNabtoSetpoint(read_address=207, write_address=207, divider=1, min=0, max=1)
             self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.CENTRALHEAT_PUMP_MODE)
-            self._setpoints[GenvexNabtoSetpointKey.CENTRALHEAT_HEAT_TYPE] = GenvexNabtoSetpoint(read_address=208, write_address=208, divider=1, min=0, max=3)
-            self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.CENTRALHEAT_HEAT_TYPE)
-            self._setpoints[GenvexNabtoSetpointKey.CENTRALHEAT_HEAT_SELECT] = GenvexNabtoSetpoint(read_address=202, write_address=202, divider=1, min=0, max=2)
-            self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.CENTRALHEAT_HEAT_SELECT)
+            self._setpoints[GenvexNabtoSetpointKey.CENTRALHEAT_TYPE] = GenvexNabtoSetpoint(read_address=208, write_address=208, divider=1, min=0, max=3)
+            self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.CENTRALHEAT_TYPE)
+            self._setpoints[GenvexNabtoSetpointKey.CENTRALHEAT_SELECT] = GenvexNabtoSetpoint(read_address=202, write_address=202, divider=1, min=0, max=2)
+            self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.CENTRALHEAT_SELECT)
 
         return
 

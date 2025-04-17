@@ -111,8 +111,8 @@ class GenvexNabtoSetpointKey:
     CENTRALHEAT_SUPPLY_MIN = "centralheat_supply_min"
     CENTRALHEAT_SUPPLY_MAX = "centralheat_supply_max"
     CENTRALHEAT_PUMP_MODE = "centralheat_pump_mode"
-    CENTRALHEAT_HEAT_TYPE = "centralheat_heat_type"
-    CENTRALHEAT_HEAT_SELECT = "centralheat_heat_select"
+    CENTRALHEAT_TYPE = "centralheat_type"
+    CENTRALHEAT_SELECT = "centralheat_select"
 
 
 class GenvexNabtoDatapoint(TypedDict):
