@@ -223,10 +223,10 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
             self._setpoints[GenvexNabtoSetpointKey.CENTRALHEAT_SELECT] = GenvexNabtoSetpoint(read_address=202, write_address=202, divider=1, min=0, max=2)
             self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.CENTRALHEAT_SELECT)
 
-            self._datapoints[GenvexNabtoDatapointKey.CENTRALHEAT_TEMPERATURE_SUPPLY] = GenvexNabtoDatapoint(address=45, divider=100)
-            self._defaultDatapointRequest.append(GenvexNabtoDatapointKey.CENTRALHEAT_TEMPERATURE_SUPPLY) 
-            self._datapoints[GenvexNabtoDatapointKey.CENTRALHEAT_TEMPERATURE_RETURN] = GenvexNabtoDatapoint(address=44, divider=100)
-            self._defaultDatapointRequest.append(GenvexNabtoDatapointKey.CENTRALHEAT_TEMPERATURE_RETURN) 
+            self._datapoints[GenvexNabtoDatapointKey.CENTRALHEAT_TEMP_SUPPLY] = GenvexNabtoDatapoint(address=45, divider=100)
+            self._defaultDatapointRequest.append(GenvexNabtoDatapointKey.CENTRALHEAT_TEMP_SUPPLY) 
+            self._datapoints[GenvexNabtoDatapointKey.CENTRALHEAT_TEMP_RETURN] = GenvexNabtoDatapoint(address=44, divider=100)
+            self._defaultDatapointRequest.append(GenvexNabtoDatapointKey.CENTRALHEAT_TEMP_RETURN) 
 
         return
 
