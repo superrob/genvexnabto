@@ -137,7 +137,8 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
                 30, 32, 33, 35, 36,  38,  39,
                 40, 41, 43, 44, 45, 144, 244
             ],
-            "heatpumpData": [ 44, 144, 244 ]
+            "heatpumpData": [ 44, 144, 244 ],
+            "centralHeat": [ 20, 21, 23, 38, 43, 45 ]
         }
         
     
@@ -209,6 +210,19 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
             self._defaultDatapointRequest.append(GenvexNabtoDatapointKey.HPS_TEMP_HEATPUMP_OUTDOOR) 
             self._datapoints[GenvexNabtoDatapointKey.HPS_TEMP_PRESSURE_PIPE] = GenvexNabtoDatapoint(address=256, divider=10)
             self._defaultDatapointRequest.append(GenvexNabtoDatapointKey.HPS_TEMP_PRESSURE_PIPE) 
+
+        if self.deviceHasQuirk("centralHeat", self._slaveDeviceModel):
+            self._setpoints[GenvexNabtoSetpointKey.CENTRALHEAT_SUPPLY_MIN] = GenvexNabtoSetpoint(read_address=203, write_address=203, divider=100, min=0, max=6000)
+            self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.CENTRALHEAT_SUPPLY_MIN)
+            self._setpoints[GenvexNabtoSetpointKey.CENTRALHEAT_SUPPLY_MAX] = GenvexNabtoSetpoint(read_address=204, write_address=204, divider=100, min=0, max=6000)
+            self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.CENTRALHEAT_SUPPLY_MAX)
+            self._setpoints[GenvexNabtoSetpointKey.CENTRALHEAT_PUMP_MODE] = GenvexNabtoSetpoint(read_address=207, write_address=207, divider=1, min=0, max=1)
+            self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.CENTRALHEAT_PUMP_MODE)
+            self._setpoints[GenvexNabtoSetpointKey.CENTRALHEAT_HEAT_TYPE] = GenvexNabtoSetpoint(read_address=208, write_address=208, divider=1, min=0, max=3)
+            self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.CENTRALHEAT_HEAT_TYPE)
+            self._setpoints[GenvexNabtoSetpointKey.CENTRALHEAT_HEAT_SELECT] = GenvexNabtoSetpoint(read_address=202, write_address=202, divider=1, min=0, max=2)
+            self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.CENTRALHEAT_HEAT_SELECT)
+
         return
 
     def getModelName(self):
