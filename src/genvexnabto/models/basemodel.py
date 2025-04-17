@@ -108,6 +108,8 @@ class GenvexNabtoSetpointKey:
     COOLING_TEMPERATURE = "cooling_temperature"
     COOLING_OFFSET = "cooling_offset"
     VENTILATION_ENABLE = "ventilation_enable"
+    CENTRALHEAT_TEMPERATURE_SUPPLY = "centralheat_temperature_supply"
+    CENTRALHEAT_TEMPERATURE_RETURN = "centralheat_temperature_return"
     CENTRALHEAT_SUPPLY_MIN = "centralheat_supply_min"
     CENTRALHEAT_SUPPLY_MAX = "centralheat_supply_max"
     CENTRALHEAT_PUMP_MODE = "centralheat_pump_mode"
