@@ -75,6 +75,9 @@ class GenvexNabtoDatapointKey:
     HPS_TEMP_HEATPUMP_OUTDOOR = "hps_temp_heatpump_outdoor" # Heatpump equiped T20
     HPS_TEMP_PRESSURE_PIPE = "hps_temp_pressure_pipe" # Heatpump equiped T19
 
+    CENTRALHEAT_TEMP_SUPPLY = "centralheat_temp_supply"
+    CENTRALHEAT_TEMP_RETURN = "centralheat_temp_return"
+
 
 class GenvexNabtoSetpointKey:
     FAN_SPEED = "fan_speed"
@@ -108,8 +111,6 @@ class GenvexNabtoSetpointKey:
     COOLING_TEMPERATURE = "cooling_temperature"
     COOLING_OFFSET = "cooling_offset"
     VENTILATION_ENABLE = "ventilation_enable"
-    CENTRALHEAT_TEMP_SUPPLY = "centralheat_temp_supply"
-    CENTRALHEAT_TEMP_RETURN = "centralheat_temp_return"
     CENTRALHEAT_SUPPLY_MIN = "centralheat_supply_min"
     CENTRALHEAT_SUPPLY_MAX = "centralheat_supply_max"
     CENTRALHEAT_PUMP_MODE = "centralheat_pump_mode"
