@@ -6,8 +6,7 @@ class GenvexNabtoCTS602Light(GenvexNabtoBaseModel):
         super().__init__(slaveDeviceModel)
 
         self._datapoints = {
-            GenvexNabtoDatapointKey.TEMP_SUPPLY: GenvexNabtoDatapoint(address=32, divider=100),
-            GenvexNabtoDatapointKey.TEMP_SUPPLY_AFTER_HEATER: GenvexNabtoDatapoint(address=37, divider=100),
+            GenvexNabtoDatapointKey.TEMP_SUPPLY: GenvexNabtoDatapoint(address=37, divider=100),
             GenvexNabtoDatapointKey.TEMP_OUTSIDE: GenvexNabtoDatapoint(address=38, divider=100),
             GenvexNabtoDatapointKey.TEMP_EXHAUST: GenvexNabtoDatapoint(address=34, divider=100),
             GenvexNabtoDatapointKey.TEMP_EXTRACT: GenvexNabtoDatapoint(address=33, divider=100),
