@@ -14,7 +14,7 @@ class GenvexNabtoOptima270(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.DUTYCYCLE_SUPPLY: GenvexNabtoDatapoint(address=18, divider=100),
             GenvexNabtoDatapointKey.DUTYCYCLE_EXTRACT: GenvexNabtoDatapoint(address=19, divider=100),
             GenvexNabtoDatapointKey.RPM_SUPPLY: GenvexNabtoDatapoint(address=35),
-            GenvexNabtoDatapointKey.RPM_EXTRACT: GenvexNabtoDatapoint(address=36, divider=10),
+            GenvexNabtoDatapointKey.RPM_EXTRACT: GenvexNabtoDatapoint(address=36),
             GenvexNabtoDatapointKey.PREHEAT_PWM: GenvexNabtoDatapoint(address=41, divider=100),
             GenvexNabtoDatapointKey.REHEAT_PWM: GenvexNabtoDatapoint(address=42, divider=100),
             GenvexNabtoDatapointKey.BYPASS_ACTIVE: GenvexNabtoDatapoint(address=53),
