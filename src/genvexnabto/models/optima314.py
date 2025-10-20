@@ -27,15 +27,16 @@ class GenvexNabtoOptima314(GenvexNabtoBaseModel):
             GenvexNabtoSetpointKey.BOOST_ENABLE: GenvexNabtoSetpoint(read_address=30, write_address=70, min=0, max=1),
             GenvexNabtoSetpointKey.BOOST_TIME: GenvexNabtoSetpoint(read_address=70, write_address=150, min=1, max=120),
             GenvexNabtoSetpointKey.FILTER_DAYS: GenvexNabtoSetpoint(read_address=100, write_address=210, min=0, max=65535),
-            GenvexNabtoSetpointKey.FILTER_RESET: GenvexNabtoSetpoint(read_address=50, write_address=110, min=0, max=2),
-            GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL1: GenvexNabtoSetpoint(read_address=10, write_address=30, min=0, max=100),
-            GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL2: GenvexNabtoSetpoint(read_address=11, write_address=32, min=0, max=100),
-            GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL3: GenvexNabtoSetpoint(read_address=12, write_address=34, min=0, max=100),
-            GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL4: GenvexNabtoSetpoint(read_address=8, write_address=26, min=0, max=100),
-            GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL1: GenvexNabtoSetpoint(read_address=13, write_address=36, min=0, max=100),
-            GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL2: GenvexNabtoSetpoint(read_address=14, write_address=38, min=0, max=100),
-            GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL3: GenvexNabtoSetpoint(read_address=15, write_address=40, min=0, max=100),
-            GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL4: GenvexNabtoSetpoint(read_address=9, write_address=28, min=0, max=100)
+            GenvexNabtoSetpointKey.FILTER_RESET: GenvexNabtoSetpoint(read_address=50, write_address=110, min=0, max=2)
+            # Setpoints not included, due to them being write locked in the gateway.
+            #GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL1: GenvexNabtoSetpoint(read_address=10, write_address=30, min=0, max=100),
+            #GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL2: GenvexNabtoSetpoint(read_address=11, write_address=32, min=0, max=100),
+            #GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL3: GenvexNabtoSetpoint(read_address=12, write_address=34, min=0, max=100),
+            #GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL4: GenvexNabtoSetpoint(read_address=8, write_address=26, min=0, max=100),
+            #GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL1: GenvexNabtoSetpoint(read_address=13, write_address=36, min=0, max=100),
+            #GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL2: GenvexNabtoSetpoint(read_address=14, write_address=38, min=0, max=100),
+            #GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL3: GenvexNabtoSetpoint(read_address=15, write_address=40, min=0, max=100),
+            #GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL4: GenvexNabtoSetpoint(read_address=9, write_address=28, min=0, max=100)
         }
 
     def getModelName(self):
