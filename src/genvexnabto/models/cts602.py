@@ -90,7 +90,7 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
         self._defaultSetpointRequest = [
             GenvexNabtoSetpointKey.FAN_SPEED,
             GenvexNabtoSetpointKey.TEMP_SETPOINT,
-            GenvexNabtoSetpointKey.FILTER_DAYS_SETTING
+            GenvexNabtoSetpointKey.FILTER_DAYS_SETTING,
         ]
 
         self._quirks = {
@@ -138,12 +138,19 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
                 40, 41, 43, 44, 45, 144, 244
             ],
             "heatpumpData": [ 44, 144, 244 ],
-            "centralHeat": [ 20, 21, 23, 38, 43, 45 ]
+            "centralHeat": [ 20, 21, 23, 38, 43, 45 ],
+            "disableCoolingMode": [ 23 ]
         }
         
     
     def addDeviceQuirks(self):
         # Add quirks unique to the connected device
+
+        # Some models do not have cooling. Don't use the control mode for that model.
+        if not self.deviceHasQuirk("disableCoolingMode", self._slaveDeviceModel):  
+            self._setpoints[GenvexNabtoSetpointKey.CTS602_CONTROL_MODE_SET] = GenvexNabtoSetpoint(read_address=138, write_address=138, min=0, max=4)
+            self._defaultSetpointRequest.append(GenvexNabtoSetpointKey.CTS602_CONTROL_MODE_SET)
+        
         if self.deviceHasQuirk("hotwaterTempSensor", self._slaveDeviceModel):
             self._datapoints[GenvexNabtoDatapointKey.HOTWATER_TOP] = GenvexNabtoDatapoint(address=42, divider=100)
             self._defaultDatapointRequest.append(GenvexNabtoDatapointKey.HOTWATER_TOP)
