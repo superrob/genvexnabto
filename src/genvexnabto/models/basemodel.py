@@ -39,6 +39,8 @@ class GenvexNabtoDatapointKey:
     ROTOR_SPEED = "rotor_speed"
     # Indicates if the bypass currently is active (Opened)
     BYPASS_ACTIVE = "bypass_active"
+    # The analog value of the bypass
+    BYPASS_ANALOG = "bypass_analog"
     # The temperature of the hot water in the tank in the top
     HOTWATER_TOP = "hotwater_top"
     # The temperature of the hot water in the tank in the bottom
@@ -116,6 +118,7 @@ class GenvexNabtoSetpointKey:
     CENTRALHEAT_PUMP_MODE = "centralheat_pump_mode"
     CENTRALHEAT_TYPE = "centralheat_type"
     CENTRALHEAT_SELECT = "centralheat_select"
+    CTS602_CONTROL_MODE_SET = "cts602_control_mode_set"
 
 
 class GenvexNabtoDatapoint(TypedDict):
