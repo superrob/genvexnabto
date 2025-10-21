@@ -19,6 +19,8 @@ class GenvexNabtoDatapointKey:
     TEMP_ROOM = "temp_room"
     # Temperature of the heater
     TEMP_HEATER = "temp_heater"
+    # Frostprotection temperature 
+    TEMP_FROSTPROTECTION = "temp_frostprotection"
     HUMIDITY = "humidity"
     # The current fan level from 0 to 4
     FAN_LEVEL_SUPPLY = "fan_level_supply"
