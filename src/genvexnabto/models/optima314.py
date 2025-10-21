@@ -70,13 +70,5 @@ class GenvexNabtoOptima314(GenvexNabtoBaseModel):
             GenvexNabtoSetpointKey.HUMIDITY_CONTROL,
             GenvexNabtoSetpointKey.FILTER_DAYS,
             GenvexNabtoSetpointKey.BOOST_ENABLE,
-            GenvexNabtoSetpointKey.BOOST_TIME,
-            GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL1,
-            GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL2,
-            GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL3,
-            GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL4,
-            GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL1,
-            GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL2,
-            GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL3,
-            GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL4
+            GenvexNabtoSetpointKey.BOOST_TIME
         ]
