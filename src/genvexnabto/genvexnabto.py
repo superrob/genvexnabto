@@ -303,6 +303,7 @@ class GenvexNabto():
             self._socket.sendto(GenvexPacket().build_packet(self._client_id, self._server_id, GenvexPacketType.DATA, 3, [Payload]), (self._device_ip, self._device_port))
             self._last_dataupdate = time.time() - DATAPOINT_UPDATEINTERVAL + 1 # Ensure updates are check for next thread loop.
             self._last_setpointupdate = time.time() - SETPOINT_UPDATEINTERVAL + 1
+            self._model_adapter._values[setpointKey] = newValue # Tempoary update the cached values to improve responsiveness. This might not be correct if the device rejects the setpoint.
         except Exception as e:
             _LOGGER.error(f'Error sending setpoint write request: {e}')
 
