@@ -102,6 +102,12 @@ class GenvexNabtoModelAdapter:
                 if (self.hasValue(key)):
                     method(-1, self._values[key])
     
+    def notifyUpdateHandlerForKey(self, key: GenvexNabtoSetpointKey|GenvexNabtoDatapointKey, newValue):
+        if key in self._values and newValue != self._values[key]:
+                if key in self._update_handlers:
+                    for method in self._update_handlers[key]:
+                        method(self._values[key], newValue)
+    
     def getDatapointRequestList(self, sequenceId):
         if sequenceId not in self._currentDatapointList:
             return False
@@ -160,10 +166,7 @@ class GenvexNabtoModelAdapter:
                 newValue /= self._loadedModel._setpoints[valueKey]['divider']
 
             # Check if the value has changed, if so notify update handlers for that key                
-            if valueKey in self._values and newValue != self._values[valueKey]:
-                if valueKey in self._update_handlers:
-                    for method in self._update_handlers[valueKey]:
-                        method(self._values[valueKey], newValue)
+            self.notifyUpdateHandlerForKey(valueKey, newValue)
             
             self._values[valueKey] = newValue
         return
