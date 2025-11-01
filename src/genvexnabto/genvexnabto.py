@@ -272,7 +272,10 @@ class GenvexNabto():
             return
         Payload = GenvexPayloadCrypt()
         Payload.setData(GenvexCommandDatapointReadList.buildCommand(datalist))
-        self._socket.sendto(GenvexPacket().build_packet(self._client_id, self._server_id, GenvexPacketType.DATA, sequenceId, [Payload]), (self._device_ip, self._device_port))
+        try:
+            self._socket.sendto(GenvexPacket().build_packet(self._client_id, self._server_id, GenvexPacketType.DATA, sequenceId, [Payload]), (self._device_ip, self._device_port))
+        except Exception as e:
+            _LOGGER.error(f'Error sending data state request: {e}')
 
     def sendSetpointStateRequest(self, sequenceId):
         Payload = GenvexPayloadCrypt()
@@ -280,8 +283,11 @@ class GenvexNabto():
         if datalist is False:
             return
         Payload.setData(GenvexCommandSetpointReadList.buildCommand(datalist))
-        self._socket.sendto(GenvexPacket().build_packet(self._client_id, self._server_id, GenvexPacketType.DATA, sequenceId, [Payload]), (self._device_ip, self._device_port))
-
+        try:
+            self._socket.sendto(GenvexPacket().build_packet(self._client_id, self._server_id, GenvexPacketType.DATA, sequenceId, [Payload]), (self._device_ip, self._device_port))
+        except Exception as e:
+            _LOGGER.error(f'Error sending setpoint state request: {e}')
+            
     def setSetpoint(self, setpointKey: GenvexNabtoSetpointKey, newValue) -> bool:
         if self._model_adapter is None:
             return False
@@ -293,9 +299,12 @@ class GenvexNabto():
             return False
         Payload = GenvexPayloadCrypt()
         Payload.setData(GenvexCommandSetpointWriteList.buildCommand([(setpointData['write_obj'], setpointData['write_address'], newValue)]))
-        self._socket.sendto(GenvexPacket().build_packet(self._client_id, self._server_id, GenvexPacketType.DATA, 3, [Payload]), (self._device_ip, self._device_port))
-        self._last_dataupdate = time.time() - DATAPOINT_UPDATEINTERVAL + 1 # Ensure updates are check for next thread loop.
-        self._last_setpointupdate = time.time() - SETPOINT_UPDATEINTERVAL + 1
+        try:
+            self._socket.sendto(GenvexPacket().build_packet(self._client_id, self._server_id, GenvexPacketType.DATA, 3, [Payload]), (self._device_ip, self._device_port))
+            self._last_dataupdate = time.time() - DATAPOINT_UPDATEINTERVAL + 1 # Ensure updates are check for next thread loop.
+            self._last_setpointupdate = time.time() - SETPOINT_UPDATEINTERVAL + 1
+        except Exception as e:
+            _LOGGER.error(f'Error sending setpoint write request: {e}')
 
     def handleRecieve(self):
         try:
