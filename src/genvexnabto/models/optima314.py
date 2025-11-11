@@ -11,6 +11,10 @@ class GenvexNabtoOptima314(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.TEMP_EXHAUST: GenvexNabtoDatapoint(obj=0, address=22, divider=10, offset=-300),
             GenvexNabtoDatapointKey.TEMP_EXTRACT: GenvexNabtoDatapoint(obj=0, address=64, divider=10, offset=-300),
             GenvexNabtoDatapointKey.TEMP_FROSTPROTECTION: GenvexNabtoDatapoint(address=24, divider=10, offset=-300),
+            GenvexNabtoDatapointKey.HPS_TEMP_BEFORE_CONDENSER: GenvexNabtoDatapoint(address=65, divider=10, offset=-300), #T5
+            GenvexNabtoDatapointKey.TEMP_EVAPORATOR: GenvexNabtoDatapoint(address=66, divider=10, offset=-300), #T6
+            GenvexNabtoDatapointKey.HOTWATER_TOP: GenvexNabtoDatapoint(address=23, divider=10, offset=-300), #T7
+            GenvexNabtoDatapointKey.HOTWATER_BOTTOM: GenvexNabtoDatapoint(address=24, divider=10, offset=-300), #T8    
             GenvexNabtoDatapointKey.HUMIDITY: GenvexNabtoDatapoint(obj=0, address=26),
             GenvexNabtoDatapointKey.DUTYCYCLE_SUPPLY: GenvexNabtoDatapoint(obj=0, address=18, divider=100),
             GenvexNabtoDatapointKey.DUTYCYCLE_EXTRACT: GenvexNabtoDatapoint(obj=0, address=19, divider=100),
@@ -53,6 +57,10 @@ class GenvexNabtoOptima314(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.TEMP_EXHAUST,
             GenvexNabtoDatapointKey.TEMP_EXTRACT,
             GenvexNabtoDatapointKey.TEMP_FROSTPROTECTION,
+            GenvexNabtoDatapointKey.HPS_TEMP_BEFORE_CONDENSER,
+            GenvexNabtoDatapointKey.TEMP_EVAPORATOR,
+            GenvexNabtoDatapointKey.HOTWATER_TOP,
+            GenvexNabtoDatapointKey.HOTWATER_BOTTOM,
             GenvexNabtoDatapointKey.HUMIDITY,
             GenvexNabtoDatapointKey.DUTYCYCLE_SUPPLY,
             GenvexNabtoDatapointKey.DUTYCYCLE_EXTRACT,
