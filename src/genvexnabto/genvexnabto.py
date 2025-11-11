@@ -294,11 +294,11 @@ class GenvexNabto():
         if self._model_adapter.providesValue(setpointKey) is False:
             return False
         setpointData = self._model_adapter._loadedModel._setpoints[setpointKey]
-        newValue = int((newValue * setpointData["divider"]) - setpointData['offset'])
-        if newValue < setpointData['min'] or newValue > setpointData['max']:
+        payloadValue = int((newValue * setpointData["divider"]) - setpointData['offset'])
+        if payloadValue < setpointData['min'] or payloadValue > setpointData['max']:
             return False
         Payload = GenvexPayloadCrypt()
-        Payload.setData(GenvexCommandSetpointWriteList.buildCommand([(setpointData['write_obj'], setpointData['write_address'], newValue)]))
+        Payload.setData(GenvexCommandSetpointWriteList.buildCommand([(setpointData['write_obj'], setpointData['write_address'], payloadValue)]))
         try:
             self._socket.sendto(GenvexPacket().build_packet(self._client_id, self._server_id, GenvexPacketType.DATA, 3, [Payload]), (self._device_ip, self._device_port))
             self._last_dataupdate = time.time() - DATAPOINT_UPDATEINTERVAL + 1 # Ensure updates are check for next thread loop.
