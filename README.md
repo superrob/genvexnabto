@@ -1,5 +1,5 @@
 # GenvexNabto
-Library for local interfacing with HVAC systems running Genvex Connect or Nilan gateways. These systems are typically cloud-accessible, but after extensive development, a local solution is now available. 
+Library for local interfacing with HVAC systems running Genvex Connect or Nilan gateways. These systems are only officially cloud-accessible, but after extensive development, a local solution is now available. 
 
 ### Supported controller models
 |Controller         | Gateway required     | Supported       | Tested  |
