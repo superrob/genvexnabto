@@ -3,18 +3,18 @@ Library for local interfacing with HVAC systems running Genvex Connect or Nilan 
 
 ### Supported controller models
 |Controller         | Gateway required     | Supported       | Tested  |
-|------------------:|:---------------------:|:---------------:|:-------:|
-|Optima 250         | Yes, internet gateway | ✅              | ✅      |
-|Optima 251         | Yes, internet gateway | ✅              | ✅      |
-|Optima 260         | Yes, internet gateway | ✅              |         |
+|------------------:|:---------------------:|:---------------:|:------:|
+|Optima 250         | Yes, internet gateway | ✅              | ✅     |
+|Optima 251         | Yes, internet gateway | ✅              | ✅     |
+|Optima 260         | Yes, internet gateway | ✅              |        |
 |Optima 270         | Built in              | ✅              | ✅     |
 |Optima 301         | Yes, internet gateway | ✅              | ✅     |
-|Optima 312         | Yes, internet gateway | ✅              |         |
-|Optima 314         | Built in              | ✅              |         |
+|Optima 312         | Yes, internet gateway | ✅              | ✅     |
+|Optima 314         | Built in              | ✅              |        |
 |Nilan CTS400       | Yes, nilan gateway    | ✅              | ✅     |
 |Nilan CTS602       | Yes, nilan gateway    | ✅              | ✅     |
-|Nilan CTS602 Light | Yes, nilan gateway    | ✅              |         |
-|Nilan CTS602 Geo   | Yes, nilan gateway    | ✅              |         |
+|Nilan CTS602 Light | Yes, nilan gateway    | ✅              | ✅     |
+|Nilan CTS602 Geo   | Yes, nilan gateway    | ✅              |        |
 
 For controllers that require a gateway, it is mandatory that the device supports Modbus. Note that Optima controllers delivered before 2014 may not have Modbus support.
 
