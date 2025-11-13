@@ -17,14 +17,21 @@ class GenvexNabtoOptima312(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.HUMIDITY: GenvexNabtoDatapoint(address=10),
             GenvexNabtoDatapointKey.DUTYCYCLE_SUPPLY: GenvexNabtoDatapoint(address=102),
             GenvexNabtoDatapointKey.DUTYCYCLE_EXTRACT: GenvexNabtoDatapoint(address=103),
-            GenvexNabtoDatapointKey.BYPASS_ACTIVE: GenvexNabtoDatapoint(address=104)
+            GenvexNabtoDatapointKey.BYPASS_ACTIVE: GenvexNabtoDatapoint(address=104),
+            GenvexNabtoDatapointKey.HPS_HEATPUMP_ACTIVE: GenvexNabtoDatapoint(address=11),
+            GenvexNabtoDatapointKey.HPS_HEATER_ACTIVE: GenvexNabtoDatapoint(address=12),            
+            GenvexNabtoDatapointKey.REHEAT_ACTIVE: GenvexNabtoDatapoint(address=13),
+            GenvexNabtoDatapointKey.DEFROST_ACTIVE: GenvexNabtoDatapoint(address=14),
+            GenvexNabtoDatapointKey.HPS_WATER_HEATING: GenvexNabtoDatapoint(address=15),
+            GenvexNabtoDatapointKey.HPS_ROOM_HEATING: GenvexNabtoDatapoint(address=16)
         }
 
         self._setpoints = {
             GenvexNabtoSetpointKey.FAN_SPEED: GenvexNabtoSetpoint(read_address=100, write_address=100, min=0, max=4),
             GenvexNabtoSetpointKey.HOTWATER_TEMP: GenvexNabtoSetpoint(read_address=1, write_address=1, divider=10, min=0, max=550),
             GenvexNabtoSetpointKey.TEMP_SETPOINT: GenvexNabtoSetpoint(read_address=0, write_address=0, divider=10, offset=100, min=0, max=200, step=0.5),         
-            GenvexNabtoSetpointKey.REHEATING: GenvexNabtoSetpoint(read_address=21, write_address=21, min=0, max=1),
+            GenvexNabtoSetpointKey.REHEATING: GenvexNabtoSetpoint(read_address=21, write_address=21, min=0, max=1),         
+            GenvexNabtoSetpointKey.HOTWATER_HEATER_ENABLE: GenvexNabtoSetpoint(read_address=2, write_address=2, min=0, max=1),
             GenvexNabtoSetpointKey.FILTER_RESET: GenvexNabtoSetpoint(read_address=105, write_address=105, min=0, max=1),          
             GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL1: GenvexNabtoSetpoint(read_address=6, write_address=6, min=0, max=100),
             GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL2: GenvexNabtoSetpoint(read_address=7, write_address=7, min=0, max=100),
@@ -53,7 +60,13 @@ class GenvexNabtoOptima312(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.HUMIDITY,
             GenvexNabtoDatapointKey.DUTYCYCLE_SUPPLY,
             GenvexNabtoDatapointKey.DUTYCYCLE_EXTRACT,
-            GenvexNabtoDatapointKey.BYPASS_ACTIVE
+            GenvexNabtoDatapointKey.BYPASS_ACTIVE,
+            GenvexNabtoDatapointKey.HPS_HEATPUMP_ACTIVE,
+            GenvexNabtoDatapointKey.HPS_HEATER_ACTIVE,
+            GenvexNabtoDatapointKey.REHEAT_ACTIVE,
+            GenvexNabtoDatapointKey.DEFROST_ACTIVE,
+            GenvexNabtoDatapointKey.HPS_WATER_HEATING,
+            GenvexNabtoDatapointKey.HPS_ROOM_HEATING
         ]
     
     def getDefaultSetpointRequest(self) -> List[GenvexNabtoSetpointKey]:
@@ -62,6 +75,7 @@ class GenvexNabtoOptima312(GenvexNabtoBaseModel):
             GenvexNabtoSetpointKey.HOTWATER_TEMP,
             GenvexNabtoSetpointKey.TEMP_SETPOINT,
             GenvexNabtoSetpointKey.REHEATING,
+            GenvexNabtoSetpointKey.HOTWATER_HEATER_ENABLE,
             GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL1,
             GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL2,
             GenvexNabtoSetpointKey.SUPPLY_AIR_LEVEL3,

@@ -37,6 +37,8 @@ class GenvexNabtoDatapointKey:
     # The current PWM of the heating elements from 0 to 100
     PREHEAT_PWM = "preheat_pwm"
     REHEAT_PWM = "reheat_pwm"
+    # Is the reheater active?
+    REHEAT_ACTIVE = "reheat_active"
     # The current RPM of the rotor from 0 to its max RPM
     ROTOR_SPEED = "rotor_speed"
     # Indicates if the bypass currently is active (Opened)
@@ -78,6 +80,10 @@ class GenvexNabtoDatapointKey:
     HPS_TEMP_BUFFERTANK = "hps_temp_buffertank" # Heatpump equiped T18
     HPS_TEMP_HEATPUMP_OUTDOOR = "hps_temp_heatpump_outdoor" # Heatpump equiped T20
     HPS_TEMP_PRESSURE_PIPE = "hps_temp_pressure_pipe" # Heatpump equiped T19
+    # Optima 312 specific
+    HPS_WATER_HEATING = "hps_water_heating"
+    HPS_ROOM_HEATING = "hps_room_heating"
+
 
     CENTRALHEAT_TEMP_SUPPLY = "centralheat_temp_supply"
     CENTRALHEAT_TEMP_RETURN = "centralheat_temp_return"
@@ -107,6 +113,7 @@ class GenvexNabtoSetpointKey:
     EXTRACT_AIR_LEVEL4 = "extract_air_level4"
     HOTWATER_TEMP = "hotwater_temp"
     HOTWATER_BOOSTTEMP = "hotwater_boosttemp"
+    HOTWATER_HEATER_ENABLE = "hotwater_heather_enable"
     ANTILEGIONELLA_DAY = "antilegionella_day"
     SUPPLYAIR_MIN_TEMP_SUMMER = "supplyair_min_temp_summer"
     SUPPLYAIR_MAX_TEMP_SUMMER = "supplyair_max_temp_summer"
