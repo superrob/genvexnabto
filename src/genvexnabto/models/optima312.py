@@ -9,7 +9,7 @@ class GenvexNabtoOptima312(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.TEMP_SUPPLY: GenvexNabtoDatapoint(address=0, divider=10, offset=-300), #T1
             GenvexNabtoDatapointKey.TEMP_OUTSIDE: GenvexNabtoDatapoint(address=2, divider=10, offset=-300), #T3
             GenvexNabtoDatapointKey.TEMP_EXHAUST: GenvexNabtoDatapoint(address=3, divider=10, offset=-300), #T4
-            GenvexNabtoDatapointKey.TEMP_EXTRACT: GenvexNabtoDatapoint(address=1, divider=10, offset=-300), #T2?
+            GenvexNabtoDatapointKey.TEMP_ROOM: GenvexNabtoDatapoint(address=9, divider=10, offset=-300), #T2panel    
             GenvexNabtoDatapointKey.HPS_TEMP_BEFORE_CONDENSER: GenvexNabtoDatapoint(address=4, divider=10, offset=-300), #T5
             GenvexNabtoDatapointKey.TEMP_EVAPORATOR: GenvexNabtoDatapoint(address=5, divider=10, offset=-300), #T6
             GenvexNabtoDatapointKey.HOTWATER_TOP: GenvexNabtoDatapoint(address=6, divider=10, offset=-300), #T7
@@ -45,7 +45,7 @@ class GenvexNabtoOptima312(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.TEMP_SUPPLY,
             GenvexNabtoDatapointKey.TEMP_OUTSIDE,
             GenvexNabtoDatapointKey.TEMP_EXHAUST,
-            GenvexNabtoDatapointKey.TEMP_EXTRACT,
+            GenvexNabtoDatapointKey.TEMP_ROOM,
             GenvexNabtoDatapointKey.HPS_TEMP_BEFORE_CONDENSER,
             GenvexNabtoDatapointKey.TEMP_EVAPORATOR,
             GenvexNabtoDatapointKey.HOTWATER_TOP,
