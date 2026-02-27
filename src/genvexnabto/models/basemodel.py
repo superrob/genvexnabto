@@ -62,7 +62,8 @@ class GenvexNabtoDatapointKey:
     # The time since the last defrost
     DEFORST_TIMESINCELAST = "defrost_timesincelast"
     CONTROLSTATE_602 = "controlstate_602"
-    ALARM_OPTIMA270 = "alarm_optima270"
+    ALARM_OPTIMA270_1 = "alarm_optima270_1"
+    ALARM_OPTIMA270_2 = "alarm_optima270_2"
     ALARM_CTS602NO1 = "alarm_cts602no1"
     ALARM_CTS602NO2 = "alarm_cts602no2"
     ALARM_CTS602NO3 = "alarm_cts602no3"

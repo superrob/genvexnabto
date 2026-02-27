@@ -300,6 +300,7 @@ class GenvexNabto():
         Payload = GenvexPayloadCrypt()
         Payload.setData(GenvexCommandSetpointWriteList.buildCommand([(setpointData['write_obj'], setpointData['write_address'], payloadValue)]))
         try:
+            _LOGGER.debug(f'Sending setpoint: {payloadValue}')
             self._socket.sendto(GenvexPacket().build_packet(self._client_id, self._server_id, GenvexPacketType.DATA, 3, [Payload]), (self._device_ip, self._device_port))
             self._last_dataupdate = time.time() - DATAPOINT_UPDATEINTERVAL + 1 # Ensure updates are check for next thread loop.
             self._last_setpointupdate = time.time() - SETPOINT_UPDATEINTERVAL + 1

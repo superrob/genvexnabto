@@ -20,7 +20,8 @@ class GenvexNabtoOptima270(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.REHEAT_PWM: GenvexNabtoDatapoint(address=42, divider=100),
             GenvexNabtoDatapointKey.BYPASS_ACTIVE: GenvexNabtoDatapoint(address=53),
             GenvexNabtoDatapointKey.BYPASS_ANALOG: GenvexNabtoDatapoint(address=40),
-            GenvexNabtoDatapointKey.ALARM_OPTIMA270: GenvexNabtoDatapoint(address=38),
+            GenvexNabtoDatapointKey.ALARM_OPTIMA270_1: GenvexNabtoDatapoint(address=114),
+            GenvexNabtoDatapointKey.ALARM_OPTIMA270_2: GenvexNabtoDatapoint(address=115),
             GenvexNabtoDatapointKey.ROTOR_SPEED: GenvexNabtoDatapoint(address=50)             
         }
 
@@ -67,7 +68,8 @@ class GenvexNabtoOptima270(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.REHEAT_PWM,
             GenvexNabtoDatapointKey.BYPASS_ACTIVE,
             GenvexNabtoDatapointKey.BYPASS_ANALOG,
-            GenvexNabtoDatapointKey.ALARM_OPTIMA270,
+            GenvexNabtoDatapointKey.ALARM_OPTIMA270_1,
+            GenvexNabtoDatapointKey.ALARM_OPTIMA270_2,
             GenvexNabtoDatapointKey.ROTOR_SPEED
         ]
     
