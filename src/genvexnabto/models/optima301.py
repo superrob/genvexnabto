@@ -17,7 +17,8 @@ class GenvexNabtoOptima301(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.HUMIDITY: GenvexNabtoDatapoint(address=10),
             GenvexNabtoDatapointKey.DUTYCYCLE_SUPPLY: GenvexNabtoDatapoint(address=102),
             GenvexNabtoDatapointKey.DUTYCYCLE_EXTRACT: GenvexNabtoDatapoint(address=103),
-            GenvexNabtoDatapointKey.BYPASS_ACTIVE: GenvexNabtoDatapoint(address=104)
+            GenvexNabtoDatapointKey.BYPASS_ACTIVE: GenvexNabtoDatapoint(address=104),
+            GenvexNabtoDatapointKey.ALARM_OPTIMA25X: GenvexNabtoDatapoint(obj=0, address=101)
         }
 
         self._setpoints = {
@@ -54,7 +55,8 @@ class GenvexNabtoOptima301(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.HUMIDITY,
             GenvexNabtoDatapointKey.DUTYCYCLE_SUPPLY,
             GenvexNabtoDatapointKey.DUTYCYCLE_EXTRACT,
-            GenvexNabtoDatapointKey.BYPASS_ACTIVE
+            GenvexNabtoDatapointKey.BYPASS_ACTIVE,
+            GenvexNabtoDatapointKey.ALARM_OPTIMA25X
         ]
     
     def getDefaultSetpointRequest(self) -> List[GenvexNabtoSetpointKey]:

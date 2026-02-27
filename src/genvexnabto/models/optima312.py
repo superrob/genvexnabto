@@ -23,7 +23,8 @@ class GenvexNabtoOptima312(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.REHEAT_ACTIVE: GenvexNabtoDatapoint(address=13),
             GenvexNabtoDatapointKey.DEFROST_ACTIVE: GenvexNabtoDatapoint(address=14),
             GenvexNabtoDatapointKey.HPS_WATER_HEATING: GenvexNabtoDatapoint(address=15),
-            GenvexNabtoDatapointKey.HPS_ROOM_HEATING: GenvexNabtoDatapoint(address=16)
+            GenvexNabtoDatapointKey.HPS_ROOM_HEATING: GenvexNabtoDatapoint(address=16),
+            GenvexNabtoDatapointKey.ALARM_OPTIMA25X: GenvexNabtoDatapoint(obj=0, address=101)
         }
 
         self._setpoints = {
@@ -66,7 +67,8 @@ class GenvexNabtoOptima312(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.REHEAT_ACTIVE,
             GenvexNabtoDatapointKey.DEFROST_ACTIVE,
             GenvexNabtoDatapointKey.HPS_WATER_HEATING,
-            GenvexNabtoDatapointKey.HPS_ROOM_HEATING
+            GenvexNabtoDatapointKey.HPS_ROOM_HEATING,
+            GenvexNabtoDatapointKey.ALARM_OPTIMA25X
         ]
     
     def getDefaultSetpointRequest(self) -> List[GenvexNabtoSetpointKey]:
