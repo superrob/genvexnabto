@@ -65,6 +65,8 @@ class GenvexNabtoDatapointKey:
     ALARM_OPTIMA25X = "alarm_optima25x"
     ALARM_OPTIMA270_1 = "alarm_optima270_1"
     ALARM_OPTIMA270_2 = "alarm_optima270_2"
+    ALARM_OPTIMA314_1 = "alarm_optima314_1"
+    ALARM_OPTIMA314_2 = "alarm_optima314_2"
     ALARM_CTS602NO1 = "alarm_cts602no1"
     ALARM_CTS602NO2 = "alarm_cts602no2"
     ALARM_CTS602NO3 = "alarm_cts602no3"

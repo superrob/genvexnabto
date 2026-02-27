@@ -22,7 +22,9 @@ class GenvexNabtoOptima314(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.RPM_EXTRACT: GenvexNabtoDatapoint(obj=0, address=36),
             GenvexNabtoDatapointKey.BYPASS_ACTIVE: GenvexNabtoDatapoint(obj=0, address=12),
             GenvexNabtoDatapointKey.HPS_HEATER_ACTIVE: GenvexNabtoDatapoint(obj=0, address=58),
-            GenvexNabtoDatapointKey.HPS_HEATPUMP_ACTIVE: GenvexNabtoDatapoint(obj=0, address=75)
+            GenvexNabtoDatapointKey.HPS_HEATPUMP_ACTIVE: GenvexNabtoDatapoint(obj=0, address=75),
+            GenvexNabtoDatapointKey.ALARM_OPTIMA314_1: GenvexNabtoDatapoint(address=114),
+            GenvexNabtoDatapointKey.ALARM_OPTIMA314_2: GenvexNabtoDatapoint(address=115),
         }
 
         self._setpoints = {
@@ -70,7 +72,9 @@ class GenvexNabtoOptima314(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.RPM_EXTRACT,
             GenvexNabtoDatapointKey.BYPASS_ACTIVE,
             GenvexNabtoDatapointKey.HPS_HEATER_ACTIVE,
-            GenvexNabtoDatapointKey.HPS_HEATPUMP_ACTIVE
+            GenvexNabtoDatapointKey.HPS_HEATPUMP_ACTIVE,
+            GenvexNabtoDatapointKey.ALARM_OPTIMA314_1,
+            GenvexNabtoDatapointKey.ALARM_OPTIMA314_2
         ]
     
     def getDefaultSetpointRequest(self) -> List[GenvexNabtoSetpointKey]:
