@@ -24,7 +24,7 @@ class GenvexNabtoOptima312(GenvexNabtoBaseModel):
             GenvexNabtoDatapointKey.DEFROST_ACTIVE: GenvexNabtoDatapoint(address=14),
             GenvexNabtoDatapointKey.HPS_WATER_HEATING: GenvexNabtoDatapoint(address=15),
             GenvexNabtoDatapointKey.HPS_ROOM_HEATING: GenvexNabtoDatapoint(address=16),
-            GenvexNabtoDatapointKey.ALARM_OPTIMA25X: GenvexNabtoDatapoint(obj=0, address=101)
+            GenvexNabtoDatapointKey.ALARM_OPTIMA25X: GenvexNabtoDatapoint(address=101)
         }
 
         self._setpoints = {
