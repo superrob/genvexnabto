@@ -20,6 +20,8 @@ class GenvexNabtoConnectionErrorType:
     TIMEOUT = "timeout"
     AUTHENTICATION_ERROR = "authentication_error"
     UNSUPPORTED_MODEL = "unsupported_model"
+    BUSY = "busy"
+    UNKNOWN_ERROR = "unknown_error"
 
 class GenvexNabto():
     def __init__(self, _authorized_email = "") -> None:
@@ -226,14 +228,24 @@ class GenvexNabto():
         packetType = message[8].to_bytes(1, 'big')
         if (packetType == GenvexPacketType.U_CONNECT):
             _LOGGER.debug(f'{self._client_id} U_CONNECT responce packet')
-            if (message[20:24] == b'\x00\x00\x00\x01'):
+            length = int.from_bytes(message[18:20], 'big')
+            payload = message[22:20+length]
+            responceCode = payload[0:2]
+            if (responceCode == b'\x00\x01'):
                 self._server_id = message[24:28]
                 _LOGGER.debug(f'{self._client_id} Connected, pinging to get model number')
                 if not self._is_connected:
                     self.sendPing()
             else:                
                 _LOGGER.error(f'{self._client_id} Received unsucessfull response')
-                self._connection_error = GenvexNabtoConnectionErrorType.AUTHENTICATION_ERROR
+                if (responceCode == b'\x80\x04'):                    
+                    self._connection_error = GenvexNabtoConnectionErrorType.AUTHENTICATION_ERROR
+                elif (responceCode == b'\x80\x09'):
+                    self._connection_error = GenvexNabtoConnectionErrorType.BUSY
+                    _LOGGER.error(f'{self._client_id} Indicates that the device is busy.')
+                else:
+                    _LOGGER.debug(''.join(r'\x'+hex(letter)[2:] for letter in payload))
+                    self._connection_error = GenvexNabtoConnectionErrorType.UNKNOWN_ERROR
 
         elif (packetType == GenvexPacketType.DATA): # 0x16
             _LOGGER.debug(f'{self._client_id} Data packet: {message[16]}')
