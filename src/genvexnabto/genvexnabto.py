@@ -242,7 +242,8 @@ class GenvexNabto():
                     self._connection_error = GenvexNabtoConnectionErrorType.AUTHENTICATION_ERROR
                 elif (responceCode == b'\x80\x09'):
                     self._connection_error = GenvexNabtoConnectionErrorType.BUSY
-                    _LOGGER.error(f'{self._client_id} Indicates that the device is busy.')
+                    _LOGGER.error(f'{self._client_id} Indicated that the device is busy.')
+
                 else:
                     _LOGGER.debug(''.join(r'\x'+hex(letter)[2:] for letter in payload))
                     self._connection_error = GenvexNabtoConnectionErrorType.UNKNOWN_ERROR
@@ -341,5 +342,6 @@ class GenvexNabto():
                 if time.time() - self._last_setpointupdate > SETPOINT_UPDATEINTERVAL:                    
                     self.sendSetpointStateRequest(200)
                 if time.time() - self._last_responce > SECONDS_UNTILRECONNECT:
+                    _LOGGER.info(f'{self._client_id} Reconnecting..')
                     self.connectToDevice()
                     
