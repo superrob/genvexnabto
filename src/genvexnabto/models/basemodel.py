@@ -97,6 +97,10 @@ class GenvexNabtoSetpointKey:
     FAN_SPEED = "fan_speed"
     TEMP_SETPOINT = "temp_setpoint"
     BYPASS_OPENOFFSET = "bypass_openoffset" # EE1
+    BYPASS_TURNOFF = "bypass_turnoff" # EE2
+    BYPASS_FORCE_SPEED = "bypass_force_speed" # EE3
+    BYPASS_FORCE_TEMP = "bypass_force_temp" # EE4
+    BYPASS_MIN_ON = "bypass_min_on" # EE5
     REHEATING = "reheating" # A1
     PREHEATING = "preheating" # A1
     HUMIDITY_CONTROL = "humidity_control" # A2
