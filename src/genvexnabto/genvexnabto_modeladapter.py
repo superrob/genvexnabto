@@ -141,14 +141,17 @@ class GenvexNabtoModelAdapter:
             newValue = (int.from_bytes(payloadSlice, 'big', signed=True) + self._loadedModel._datapoints[valueKey]['offset'])
             if self._loadedModel._datapoints[valueKey]['divider'] > 1:
                 newValue /= self._loadedModel._datapoints[valueKey]['divider']
-            
+          
             # Check if the value has changed, if so notify update handlers for that key
             if valueKey in self._values and newValue != self._values[valueKey]:
+                # Save old value for notification and update the current value.
+                oldValue = self._values[valueKey]
+                self._values[valueKey] = newValue
                 if valueKey in self._update_handlers:
                     for method in self._update_handlers[valueKey]:
-                        method(self._values[valueKey], newValue)
-
-            self._values[valueKey] = newValue
+                        method(oldValue, newValue)
+            else:
+                self._values[valueKey] = newValue
         return
     
     def parseSetpointResponce(self, responceSeq, responcePayload):
@@ -164,10 +167,15 @@ class GenvexNabtoModelAdapter:
             newValue = (int.from_bytes(payloadSlice, 'big') + self._loadedModel._setpoints[valueKey]['offset'])
             if self._loadedModel._setpoints[valueKey]['divider'] > 1:
                 newValue /= self._loadedModel._setpoints[valueKey]['divider']
-
-            # Check if the value has changed, if so notify update handlers for that key                
-            self.notifyUpdateHandlerForKey(valueKey, newValue)
-            
-            self._values[valueKey] = newValue
+                
+            # Check if the value has changed, if so notify update handlers for that key
+            if valueKey in self._values and newValue != self._values[valueKey]:
+                # Save old value for notification and update the current value.
+                oldValue = self._values[valueKey]
+                self._values[valueKey] = newValue
+                if valueKey in self._update_handlers:
+                    for method in self._update_handlers[valueKey]:
+                        method(oldValue, newValue)
+            else:
+                self._values[valueKey] = newValue
         return
-
