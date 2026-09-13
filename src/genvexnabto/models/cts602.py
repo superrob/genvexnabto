@@ -138,7 +138,7 @@ class GenvexNabtoCTS602(GenvexNabtoBaseModel):
                 40, 41, 43, 44, 45, 144, 244
             ],
             "heatpumpData": [ 44, 144, 244 ],
-            "centralHeat": [ 20, 21, 23, 38, 43, 45 ],
+            "centralHeat": [ 20, 21, 23, 38, 43, 45, 244 ],
             "disableCoolingMode": [ 23 ]
         }
         
