@@ -137,6 +137,11 @@ class GenvexNabtoSetpointKey:
     CENTRALHEAT_SELECT = "centralheat_select"
     CTS602_CONTROL_MODE_SET = "cts602_control_mode_set"
 
+    CTS400_HUMIDITY_LOW_LEVEL = "cts400_humidity_low_level"
+    CTS400_HUMIDITY_LOW_STEP = "cts400_humidity_low_step"
+    CTS400_HUMIDITY_HIGH_STEP = "cts400_humidity_high_step"
+    CTS400_HUMIDITY_HIGH_MAX_TIME = "cts400_humidity_high_max_time"
+
 
 class GenvexNabtoDatapoint(TypedDict):
     obj: NotRequired[int] # Default 0

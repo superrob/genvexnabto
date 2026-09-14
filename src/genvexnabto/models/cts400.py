@@ -36,7 +36,11 @@ class GenvexNabtoCTS400(GenvexNabtoBaseModel):
             GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL2: GenvexNabtoSetpoint(read_address=64, write_address=64, divider=10, min=200, max=1000),
             GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL3: GenvexNabtoSetpoint(read_address=65, write_address=65, divider=10, min=200, max=1000),
             GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL4: GenvexNabtoSetpoint(read_address=66, write_address=66, divider=10, min=200, max=1000),
-            GenvexNabtoSetpointKey.VENTILATION_ENABLE: GenvexNabtoSetpoint(read_address=70, write_address=70, min=0, max=1)
+            GenvexNabtoSetpointKey.VENTILATION_ENABLE: GenvexNabtoSetpoint(read_address=70, write_address=70, min=0, max=1),
+            GenvexNabtoSetpointKey.CTS400_HUMIDITY_LOW_LEVEL: GenvexNabtoSetpoint(read_address=31, write_address=31, divider=10, min=150, max=450),
+            GenvexNabtoSetpointKey.CTS400_HUMIDITY_LOW_STEP: GenvexNabtoSetpoint(read_address=32, write_address=32, min=0, max=3),
+            GenvexNabtoSetpointKey.CTS400_HUMIDITY_HIGH_STEP: GenvexNabtoSetpoint(read_address=33, write_address=33, min=2, max=4),
+            GenvexNabtoSetpointKey.CTS400_HUMIDITY_HIGH_MAX_TIME: GenvexNabtoSetpoint(read_address=34, write_address=34, min=0, max=180),
         }
 
         self._defaultDatapointRequest = [
@@ -69,7 +73,11 @@ class GenvexNabtoCTS400(GenvexNabtoBaseModel):
             GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL2,
             GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL3,
             GenvexNabtoSetpointKey.EXTRACT_AIR_LEVEL4,
-            GenvexNabtoSetpointKey.VENTILATION_ENABLE
+            GenvexNabtoSetpointKey.VENTILATION_ENABLE,
+            GenvexNabtoSetpointKey.CTS400_HUMIDITY_LOW_LEVEL,
+            GenvexNabtoSetpointKey.CTS400_HUMIDITY_LOW_STEP,
+            GenvexNabtoSetpointKey.CTS400_HUMIDITY_HIGH_STEP,
+            GenvexNabtoSetpointKey.CTS400_HUMIDITY_HIGH_MAX_TIME
         ]
 
     def getModelName(self):
